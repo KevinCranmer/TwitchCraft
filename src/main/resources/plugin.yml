@@ -1,0 +1,6 @@
+name: StreamCraft
+version: ${project.version}
+main: me.crazycranberry.streamcraft.StreamCraft
+api-version: 1.20
+authors: [CrazyCranberry]
+description: A plugin that allows stream viewers to interact with the minecraft world.
