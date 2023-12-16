@@ -4,3 +4,16 @@ main: me.crazycranberry.streamcraft.StreamCraft
 api-version: 1.20
 authors: [CrazyCranberry]
 description: A plugin that allows stream viewers to interact with the minecraft world.
+commands:
+  screfresh:
+    description: Refresh yml configurations
+    permission: admin
+    permission-message: You do not have permission to refresh.
+  screconnect:
+    description: Restart the Twitch WebSocket connection
+    permission: admin
+    permission-message: You do not have permission to refresh.
+permissions:
+  admin:
+    description: Vanilla Hunger Games Admin permission
+    default: op
