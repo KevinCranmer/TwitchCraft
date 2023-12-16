@@ -3,7 +3,6 @@ package me.crazycranberry.streamcraft.twitch.websocket;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import me.crazycranberry.streamcraft.StreamCraftConfig;
 import me.crazycranberry.streamcraft.events.ReconnectRequestedEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;
