@@ -2,6 +2,8 @@ package me.crazycranberry.streamcraft;
 
 import me.crazycranberry.streamcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
+import me.crazycranberry.streamcraft.config.StreamCraftConfig;
+import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
 import me.crazycranberry.streamcraft.managers.ReconnectRequestedManager;
 import me.crazycranberry.streamcraft.twitch.websocket.TwitchClient;
@@ -40,6 +42,7 @@ public final class StreamCraft extends JavaPlugin {
     private void registerManagers() {
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
+        getServer().getPluginManager().registerEvents(new ActionManager(), this);
     }
 
     private void registerCommands() {

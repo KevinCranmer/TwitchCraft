@@ -1,3 +1,10 @@
 access_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 refresh_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 broadcaster_id: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
+actions:
+  - type: ENTITY_SPAWN
+    trigger:
+      type: channel.follow
+    entity: ZOMBIE
+    quantity: 5
+    radiusFromPlayer: 5

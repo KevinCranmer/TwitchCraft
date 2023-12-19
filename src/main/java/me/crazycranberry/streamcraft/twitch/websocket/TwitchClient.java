@@ -3,7 +3,9 @@ package me.crazycranberry.streamcraft.twitch.websocket;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.crazycranberry.streamcraft.StreamCraftConfig;
+import me.crazycranberry.streamcraft.config.StreamCraftConfig;
+import me.crazycranberry.streamcraft.config.model.TriggerType;
+import me.crazycranberry.streamcraft.events.ActionEvent;
 import me.crazycranberry.streamcraft.events.ReconnectRequestedEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;
 import me.crazycranberry.streamcraft.twitch.websocket.model.eventsubscription.Condition;
@@ -17,6 +19,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -106,6 +109,7 @@ public class TwitchClient {
                 break;
             case "notification":
                 logger().info("It's a notification message: " + twitchMessage);
+                handleNotificationMessage(twitchMessage);
                 break;
             case "session_keepalive":
                 break;
@@ -114,6 +118,28 @@ public class TwitchClient {
                 break;
             default:
                 logger().info("Unkown Twitch Message Type: " + twitchMessage.getMetadata().getMessage_type());
+        }
+    }
+
+    private void handleNotificationMessage(Message twitchMessage) {
+        for (TriggerType triggerType : TriggerType.values()) {
+            if (triggerType.value().equals(twitchMessage.getPayload().getSubscription().getType())) {
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
+                                    Constructor c = triggerType.event().getConstructor(Message.class);
+                                    c.setAccessible(true);
+                                    ActionEvent instance = (ActionEvent) c.newInstance(twitchMessage);
+                                    Bukkit.getPluginManager().callEvent(instance);
+                                    return true;
+                                });
+                            }
+                        },
+                        1
+                );
+            }
         }
     }
 
