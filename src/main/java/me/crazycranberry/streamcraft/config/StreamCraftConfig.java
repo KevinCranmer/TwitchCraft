@@ -1,10 +1,14 @@
-package me.crazycranberry.streamcraft;
+package me.crazycranberry.streamcraft.config;
 
 import lombok.Getter;
+import me.crazycranberry.streamcraft.config.model.Action;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
@@ -17,6 +21,7 @@ public class StreamCraftConfig {
     private String accessToken;
     private String refreshToken;
     private String broadcasterId;
+    private List<Action> actions;
 
     public StreamCraftConfig(YamlConfiguration config) {
         originalConfig = loadOriginalConfig("stream_craft.yml");
@@ -48,6 +53,7 @@ public class StreamCraftConfig {
         accessToken = config.getString("access_token", originalConfig.getString("access_token")).trim();
         refreshToken = config.getString("refresh_token", originalConfig.getString("refresh_token")).trim();
         broadcasterId = config.getString("broadcaster_id", originalConfig.getString("broadcaster_id")).trim();
+        actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c)).peek(System.out::println).filter(Objects::nonNull).toList();
     }
 
     public void setAccessToken(String accessToken) {
