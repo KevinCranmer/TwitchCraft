@@ -1,42 +1,63 @@
 package me.crazycranberry.streamcraft.actionexecutors;
 
+import me.crazycranberry.streamcraft.config.model.Action;
 import me.crazycranberry.streamcraft.config.model.actions.EntitySpawn;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.crazycranberry.streamcraft.actionexecutors.Executors.getTargetedPlayers;
+import static me.crazycranberry.streamcraft.StreamCraft.logger;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.getTargetedPlayers;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.randomFromList;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.triggerer;
 
-public class EntitySpawnExecutor {
-    public static void execute(Message twitchMessage, EntitySpawn action) {
-        for (Player p : getTargetedPlayers(action)) {
+public class EntitySpawnExecutor implements Executor {
+    public void execute(Message twitchMessage, Action action) {
+        if (!(action instanceof EntitySpawn)) {
+            logger().warning("Somehow the following action was passed to " + this.getClass().getName() + ": " + action + "\nAborting execution.");
+            return;
+        }
+        EntitySpawn es = (EntitySpawn) action;
+        for (Player p : getTargetedPlayers(es)) {
+            p.sendMessage(String.format("Spawning %s%s's%s, courtesy of %s%s%s", ChatColor.GOLD, es.getEntity().name(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            double x = Math.floor(p.getLocation().getX()) + 0.5;
+            double y = p.getLocation().getY();
+            double z = Math.floor(p.getLocation().getZ()) + 0.5;
             List<Location> possibleSpawnLocations = new ArrayList<>();
-            for (int i = -action.getRadiusFromPlayer(); i < action.getRadiusFromPlayer(); i++) {
-                for (int j = -action.getRadiusFromPlayer(); j < action.getRadiusFromPlayer(); j++) {
-                    for (int k = -action.getRadiusFromPlayer(); k < action.getRadiusFromPlayer(); k++) {
-                        Location potentialLoc = p.getLocation().add(i, j, k);
-                        if (potentialLoc.equals(p.getLocation())) {
+            for (int i = -es.getRadiusFromPlayer(); i < es.getRadiusFromPlayer(); i++) {
+                for (int j = -es.getRadiusFromPlayer(); j < es.getRadiusFromPlayer(); j++) {
+                    for (int k = -es.getRadiusFromPlayer(); k < es.getRadiusFromPlayer(); k++) {
+                        Location potentialLoc = new Location(p.getWorld(), x + i, y + j, z + k);
+                        if (i == 0 && j == 0 && k == 0) {
                             continue; // We will always add the player location in the event that there are no valid spawns
                         }
-                        if (potentialLoc.add(0, 1, 0).getBlock().getType().equals(Material.AIR) && potentialLoc.add(0, 2, 0).getBlock().getType().equals(Material.AIR)) {
+                        if (isValidSpawnBlock(potentialLoc)) {
                             possibleSpawnLocations.add(potentialLoc);
                         }
                     }
                 }
             }
-            possibleSpawnLocations.add(p.getLocation());
-            for (int l = 0; l < action.getQuantity(); l++) {
-                int randomIndex = (int) (Math.random() * possibleSpawnLocations.size());
-                Entity entity = p.getWorld().spawnEntity(possibleSpawnLocations.get(randomIndex), action.getEntity());
+            possibleSpawnLocations.add(new Location(p.getWorld(), x, y, z));
+            for (int l = 0; l < es.getQuantity(); l++) {
+                Entity entity = p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), es.getEntity());
                 entity.setCustomName(twitchMessage.getPayload().getEvent().getUser_name());
                 entity.setCustomNameVisible(true);
             }
         }
+    }
 
+    /** Makes sure there is a 1x2x1 box open at the given location. */
+    private boolean isValidSpawnBlock(Location loc) {
+        Block blockAbove = loc.getBlock().getRelative(0, 1, 0);
+        Block blockAboveAbove = loc.getBlock().getRelative(0, 2, 0);
+        return (blockAbove.getType().equals(Material.AIR) || blockAbove.getType().equals(Material.WATER)) &&
+                (blockAboveAbove.getType().equals(Material.AIR) || blockAboveAbove.getType().equals(Material.WATER));
     }
 }

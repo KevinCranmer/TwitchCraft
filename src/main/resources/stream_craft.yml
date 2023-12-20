@@ -7,4 +7,10 @@ actions:
       type: channel.follow
     entity: ZOMBIE
     quantity: 5
-    radiusFromPlayer: 5
+    radius_from_player: 5
+  - type: POTION_EFFECT
+    trigger:
+      type: channel.follow
+    potion_type: STRENGTH
+    level: 2
+    duration_seconds: 15

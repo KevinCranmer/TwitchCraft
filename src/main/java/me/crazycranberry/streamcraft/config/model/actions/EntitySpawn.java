@@ -30,14 +30,16 @@ public class EntitySpawn extends Action {
         this.radiusFromPlayer = radiusFromPlayer;
     }
 
+    /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
     public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+        System.out.println("Constructing an EntitySpawn Action");
         EntityType entity = validateEntity(input.get("entity"));
         Integer quantity = validateQuantity(input.get("quantity"));
         Integer radiusFromPlayer = validateRadius(input.get("radius_from_player"));
         if (anyNull(actionType, trigger, entity, quantity, radiusFromPlayer)) {
             return null;
         }
-        EntitySpawn e = EntitySpawn.builder()
+        return EntitySpawn.builder()
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
@@ -45,7 +47,6 @@ public class EntitySpawn extends Action {
                 .quantity(quantity)
                 .radiusFromPlayer(radiusFromPlayer)
                 .build();
-        return e;
     }
 
     private static <T> Integer validateQuantity(T quantity) {
@@ -70,8 +71,7 @@ public class EntitySpawn extends Action {
             return null;
         }
         try {
-            EntityType type = EntityType.valueOf(((String) entity).toUpperCase().replaceAll("[^a-zA-Z]+", "_"));
-            return type;
+            return EntityType.valueOf(((String) entity).toUpperCase().replaceAll("[^a-zA-Z]+", "_"));
         } catch (IllegalArgumentException ex) {
             logger().warning("Unable to parse the entity name: " + entity);
             return null;
