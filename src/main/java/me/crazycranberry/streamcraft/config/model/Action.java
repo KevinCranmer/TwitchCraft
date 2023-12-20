@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import me.crazycranberry.streamcraft.config.model.actions.EntitySpawn;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
@@ -26,9 +27,11 @@ public class Action {
         if (type == null || trigger == null) {
             return null;
         }
-        switch(type) {
-            case ENTITY_SPAWN:
-                return EntitySpawn.fromYaml(type, trigger, target, input);
+        try {
+            Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, LinkedHashMap.class);
+            return (Action) m.invoke(null, type, trigger, target, input);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
         return null;
     }

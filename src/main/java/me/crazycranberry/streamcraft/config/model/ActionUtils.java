@@ -9,4 +9,13 @@ public class ActionUtils {
         }
         return false;
     }
+
+    public static boolean allNull(Object ... objs) {
+        for (Object o : objs) {
+            if (o != null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
