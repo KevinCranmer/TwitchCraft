@@ -22,7 +22,6 @@ public class PotionEffectExecutor implements Executor {
             logger().warning("Somehow the following action was passed to " + this.getClass().getName() + ": " + action + "\nAborting execution.");
             return;
         }
-        System.out.println("Potion effect action triggered");
         PotionEffect pe = (PotionEffect) action;
         for (Player p : getTargetedPlayers(pe)) {
             PotionEffectType type = pe.getPotionType();

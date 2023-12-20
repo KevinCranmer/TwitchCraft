@@ -29,9 +29,7 @@ public class Action {
         }
         try {
             Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, LinkedHashMap.class);
-            Action a = (Action) m.invoke(null, type, trigger, target, input);
-            System.out.println("Action created: " + a);
-            return a;
+            return (Action) m.invoke(null, type, trigger, target, input);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }

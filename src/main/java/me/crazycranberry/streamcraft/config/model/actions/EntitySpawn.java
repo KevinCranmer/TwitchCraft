@@ -32,7 +32,6 @@ public class EntitySpawn extends Action {
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
     public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
-        System.out.println("Constructing an EntitySpawn Action");
         EntityType entity = validateEntity(input.get("entity"));
         Integer quantity = validateQuantity(input.get("quantity"));
         Integer radiusFromPlayer = validateRadius(input.get("radius_from_player"));

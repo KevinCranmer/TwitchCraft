@@ -35,12 +35,10 @@ public class PotionEffect extends Action {
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
     public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
-        System.out.println("Constructing an PotionEffect Action");
         PotionEffectType potionType = validatePotionType(input.get("potion_type"));
         PotionRandom potionRandom = validatePotionRandom(input.get("potion_type"));
         Integer level = validateLevel(input.get("level"));
         Integer durationSeconds = validateDurationSeconds(input.get("duration_seconds"));
-        System.out.println("" + potionType + potionRandom + level + durationSeconds);
         if (anyNull(actionType, trigger, level, durationSeconds) || allNull(potionType, potionRandom)) {
             return null;
         }
