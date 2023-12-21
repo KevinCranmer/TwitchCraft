@@ -15,7 +15,7 @@ import static me.crazycranberry.streamcraft.StreamCraft.logger;
 @Setter
 @ToString
 @AllArgsConstructor
-public class Action {
+public abstract class Action {
     private ActionType type;
     private Trigger trigger;
     private String target;
@@ -35,6 +35,8 @@ public class Action {
         }
         return null;
     }
+
+    public abstract String pollMessage(Action action);
 
     private static <T> String validateTarget(T target) {
         if (target == null) {
@@ -65,5 +67,13 @@ public class Action {
             logger().warning("The following Action type is invalid: " + type);
         }
         return t;
+    }
+
+    public static <T, R> R validateField(T field, Class<R> clazz, String fieldName) {
+        if (!(clazz.isInstance(field))) {
+            logger().warning("A " + fieldName + " was not a " + clazz.getName());
+            return null;
+        }
+        return clazz.cast(field);
     }
 }
