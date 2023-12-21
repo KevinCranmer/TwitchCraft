@@ -30,11 +30,16 @@ public class EntitySpawn extends Action {
         this.radiusFromPlayer = radiusFromPlayer;
     }
 
+    @Override
+    public String pollMessage(Action action) {
+        return String.format("Spawn %s %s%s", getQuantity(), getEntity().name(), getQuantity() > 1 ?  "'s" : "");
+    }
+
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
     public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
         EntityType entity = validateEntity(input.get("entity"));
-        Integer quantity = validateQuantity(input.get("quantity"));
-        Integer radiusFromPlayer = validateRadius(input.get("radius_from_player"));
+        Integer quantity = validateField(input.get("quantity"), Integer.class, "quantity");
+        Integer radiusFromPlayer = validateField(input.get("radius_from_player"), Integer.class, "radius_from_player");
         if (anyNull(actionType, trigger, entity, quantity, radiusFromPlayer)) {
             return null;
         }
@@ -46,22 +51,6 @@ public class EntitySpawn extends Action {
                 .quantity(quantity)
                 .radiusFromPlayer(radiusFromPlayer)
                 .build();
-    }
-
-    private static <T> Integer validateQuantity(T quantity) {
-        if (!(quantity instanceof Integer)) {
-            logger().warning("A quantity was not an Integer.");
-            return null;
-        }
-        return (Integer) quantity;
-    }
-
-    private static <T> Integer validateRadius(T radius) {
-        if (!(radius instanceof Integer)) {
-            logger().warning("A radius_from_player was not an Integer.");
-            return null;
-        }
-        return (Integer) radius;
     }
 
     private static <T> EntityType validateEntity(T entity) {

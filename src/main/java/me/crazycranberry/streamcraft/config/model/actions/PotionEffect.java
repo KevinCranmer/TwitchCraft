@@ -33,12 +33,17 @@ public class PotionEffect extends Action {
         this.durationSeconds = durationSeconds;
     }
 
+    @Override
+    public String pollMessage(Action action) {
+        return String.format("%s potion effect", getPotionType() == null ? getPotionRandom().name() : getPotionType().getName());
+    }
+
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
     public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
         PotionEffectType potionType = validatePotionType(input.get("potion_type"));
         PotionRandom potionRandom = validatePotionRandom(input.get("potion_type"));
-        Integer level = validateLevel(input.get("level"));
-        Integer durationSeconds = validateDurationSeconds(input.get("duration_seconds"));
+        Integer level = validateField(input.get("level"), Integer.class, "level");
+        Integer durationSeconds = validateField(input.get("duration_seconds"), Integer.class, "duration_seconds");
         if (anyNull(actionType, trigger, level, durationSeconds) || allNull(potionType, potionRandom)) {
             return null;
         }
@@ -68,22 +73,6 @@ public class PotionEffect extends Action {
             default:
                 return null;
         }
-    }
-
-    private static <T> Integer validateLevel(T level) {
-        if (!(level instanceof Integer)) {
-            logger().warning("A level was not an Integer.");
-            return null;
-        }
-        return (Integer) level;
-    }
-
-    private static <T> Integer validateDurationSeconds(T duration) {
-        if (!(duration instanceof Integer)) {
-            logger().warning("A duration_seconds was not an Integer.");
-            return null;
-        }
-        return (Integer) duration;
     }
 
     private static <T> PotionEffectType validatePotionType(T potionType) {

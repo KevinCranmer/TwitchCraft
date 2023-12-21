@@ -13,6 +13,8 @@ commands:
     description: Restart the Twitch WebSocket connection
     permission: admin
     permission-message: You do not have permission to refresh.
+  cf:
+    description: Only for testing. Delete me.
 permissions:
   admin:
     description: Vanilla Hunger Games Admin permission

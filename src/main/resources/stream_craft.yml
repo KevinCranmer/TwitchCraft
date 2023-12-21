@@ -14,3 +14,8 @@ actions:
     potion_type: STRENGTH
     level: 2
     duration_seconds: 15
+  - type: RANDOM_ITEM_REMOVAL
+    trigger:
+      type: channel.follow
+    num_stacks: 2
+    num_per_stack: 2

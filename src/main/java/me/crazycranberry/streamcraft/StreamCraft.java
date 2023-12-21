@@ -2,6 +2,7 @@ package me.crazycranberry.streamcraft;
 
 import me.crazycranberry.streamcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
+import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
@@ -28,7 +29,7 @@ public final class StreamCraft extends JavaPlugin {
         plugin = this;
         logger = this.getLogger();
         refreshConfigs();
-        twitchClient = new TwitchClient();
+        //twitchClient = new TwitchClient();
         registerCommands();
         registerManagers();
     }
@@ -36,7 +37,7 @@ public final class StreamCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        twitchClient.close();
+        //twitchClient.close();
     }
 
     private void registerManagers() {
@@ -48,6 +49,7 @@ public final class StreamCraft extends JavaPlugin {
     private void registerCommands() {
         setCommandManager("screfresh", new RefreshConfigCommand());
         setCommandManager("screconnect", new ReconnectToTwitchCommand());
+        setCommandManager("cf", new TriggerChannelFollowEvent());
     }
 
     private void setCommandManager(String command, CommandExecutor commandManager) {

@@ -19,6 +19,7 @@ import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.random
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.triggerer;
 
 public class EntitySpawnExecutor implements Executor {
+    @Override
     public void execute(Message twitchMessage, Action action) {
         if (!(action instanceof EntitySpawn)) {
             logger().warning("Somehow the following action was passed to " + this.getClass().getName() + ": " + action + "\nAborting execution.");

@@ -17,6 +17,7 @@ import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.trigge
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.getTargetedPlayers;
 
 public class PotionEffectExecutor implements Executor {
+    @Override
     public void execute(Message twitchMessage, Action action) {
         if (!(action instanceof PotionEffect)) {
             logger().warning("Somehow the following action was passed to " + this.getClass().getName() + ": " + action + "\nAborting execution.");
