@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.getTargetedPlayers;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.triggerer;
 
 public class RandomItemRemovalExecutor implements Executor {
@@ -57,7 +58,7 @@ public class RandomItemRemovalExecutor implements Executor {
         if (itemsBeingRemovedStr.isBlank()) {
             return;
         }
-        p.sendMessage(String.format("Randomly removed %s%s%s, courtesy of %s%s%s",
+        maybeSendPlayerMessage(p, String.format("Randomly removed %s%s%s, courtesy of %s%s%s",
                 ChatColor.GOLD,
                 itemsBeingRemovedStr,
                 ChatColor.RESET,
