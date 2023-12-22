@@ -1,6 +1,7 @@
 access_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 refresh_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 broadcaster_id: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
+send_message_on_event: true
 actions:
   - type: ENTITY_SPAWN
     trigger:
@@ -19,3 +20,7 @@ actions:
       type: channel.follow
     num_stacks: 2
     num_per_stack: 2
+  - type: WATERLOG
+    trigger:
+     type: channel.follow
+    duration_seconds: 10

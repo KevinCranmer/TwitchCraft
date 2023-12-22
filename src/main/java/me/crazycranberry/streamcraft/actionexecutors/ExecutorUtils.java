@@ -9,7 +9,11 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
+import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
+
 public class ExecutorUtils {
+    public static final long TICKS_PER_SECOND = 20L;
+
     public static List<Player> getTargetedPlayers(Action action) {
         List<String> targets = Arrays.asList(action.getTarget().split(","));
         return Bukkit.getOnlinePlayers().stream().filter(p -> targets.contains(p.getName()) || targets.contains("*")).map(OfflinePlayer::getPlayer).toList();
@@ -23,5 +27,11 @@ public class ExecutorUtils {
     public static <T> T randomFromList(List<T> list) {
         int randomIndex = (int) (Math.random() * list.size());
         return list.get(randomIndex);
+    }
+
+    public static void maybeSendPlayerMessage(Player p, String message) {
+        if (getPlugin().config().isSendMessageOnEvent()) {
+            p.sendMessage(message);
+        }
     }
 }

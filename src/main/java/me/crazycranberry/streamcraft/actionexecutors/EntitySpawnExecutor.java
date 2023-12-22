@@ -15,6 +15,7 @@ import java.util.List;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.getTargetedPlayers;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.randomFromList;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.triggerer;
 
@@ -27,7 +28,7 @@ public class EntitySpawnExecutor implements Executor {
         }
         EntitySpawn es = (EntitySpawn) action;
         for (Player p : getTargetedPlayers(es)) {
-            p.sendMessage(String.format("Spawning %s%s's%s, courtesy of %s%s%s", ChatColor.GOLD, es.getEntity().name(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("Spawning %s%s's%s, courtesy of %s%s%s", ChatColor.GOLD, es.getEntity().name(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
             double x = Math.floor(p.getLocation().getX()) + 0.5;
             double y = p.getLocation().getY();
             double z = Math.floor(p.getLocation().getZ()) + 0.5;

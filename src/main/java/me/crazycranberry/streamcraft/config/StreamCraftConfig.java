@@ -21,6 +21,7 @@ public class StreamCraftConfig {
     private String accessToken;
     private String refreshToken;
     private String broadcasterId;
+    private boolean sendMessageOnEvent;
     private List<Action> actions;
 
     public StreamCraftConfig(YamlConfiguration config) {
@@ -53,6 +54,7 @@ public class StreamCraftConfig {
         accessToken = config.getString("access_token", originalConfig.getString("access_token")).trim();
         refreshToken = config.getString("refresh_token", originalConfig.getString("refresh_token")).trim();
         broadcasterId = config.getString("broadcaster_id", originalConfig.getString("broadcaster_id")).trim();
+        sendMessageOnEvent = config.getBoolean("send_message_on_event", originalConfig.getBoolean("send_message_on_event"));
         actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c)).peek(System.out::println).filter(Objects::nonNull).toList();
     }
 

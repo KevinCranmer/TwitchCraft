@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.randomFromList;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.triggerer;
 import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.getTargetedPlayers;
@@ -30,7 +31,7 @@ public class PotionEffectExecutor implements Executor {
                 type = getRandomPotionType(pe.getPotionRandom());
             }
             String isRandomPotion = pe.getPotionRandom() == null ? "" : pe.getPotionRandom().name() + " ";
-            p.sendMessage(String.format("Giving you the %s%s%s%s potion effect, courtesy of %s%s%s", ChatColor.GOLD, isRandomPotion, type.getName(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("Giving you the %s%s%s%s potion effect, courtesy of %s%s%s", ChatColor.GOLD, isRandomPotion, type.getName(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
             if (!applyPossibleInstantEffects(p, type, pe.getLevel())) {
                 p.addPotionEffect(new org.bukkit.potion.PotionEffect(type, pe.getDurationSeconds() * 20, pe.getLevel() - 1));
             }
