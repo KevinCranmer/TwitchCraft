@@ -3,10 +3,12 @@ package me.crazycranberry.streamcraft.config.model;
 import lombok.AllArgsConstructor;
 import me.crazycranberry.streamcraft.events.ActionEvent;
 import me.crazycranberry.streamcraft.events.ChannelFollowEvent;
+import me.crazycranberry.streamcraft.events.PollEndEvent;
 
 @AllArgsConstructor
 public enum TriggerType {
-    CHANNEL_FOLLOW(false, "channel.follow", ChannelFollowEvent.class);
+    CHANNEL_FOLLOW(false, "channel.follow", ChannelFollowEvent.class),
+    POLL(false, "channel.poll.end", PollEndEvent.class);
 
     private boolean requirePredicate;
     private String value;
@@ -25,10 +27,10 @@ public enum TriggerType {
     }
 
     public static TriggerType fromValue(String triggerType) {
-        String t = triggerType.toLowerCase().replaceAll("[^a-zA-Z]+", ".");
+        String t = triggerType.toUpperCase().replaceAll("[^a-zA-Z]+", "_");
 
         for (TriggerType b : TriggerType.values()) {
-            if (b.value.equals(t)) {
+            if (b.name().equals(t)) {
                 return b;
             }
         }

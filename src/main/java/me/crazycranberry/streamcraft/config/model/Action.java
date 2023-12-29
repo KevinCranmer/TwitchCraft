@@ -36,7 +36,7 @@ public abstract class Action {
         return null;
     }
 
-    public abstract String pollMessage(Action action);
+    public abstract String pollMessage();
 
     private static <T> String validateTarget(T target) {
         if (target == null) {

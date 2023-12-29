@@ -23,7 +23,7 @@ public class WaterLog extends Action {
     }
 
     @Override
-    public String pollMessage(Action action) {
+    public String pollMessage() {
         return "Waterlog";
     }
 

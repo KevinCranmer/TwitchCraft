@@ -8,6 +8,7 @@ import me.crazycranberry.streamcraft.config.model.TriggerType;
 import me.crazycranberry.streamcraft.events.ActionEvent;
 import me.crazycranberry.streamcraft.events.ReconnectRequestedEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;
+import me.crazycranberry.streamcraft.twitch.websocket.model.createpoll.CreatePoll;
 import me.crazycranberry.streamcraft.twitch.websocket.model.eventsubscription.Condition;
 import me.crazycranberry.streamcraft.twitch.websocket.model.eventsubscription.EventSubscription;
 import me.crazycranberry.streamcraft.twitch.websocket.model.eventsubscription.Transport;
@@ -34,6 +35,7 @@ public class TwitchClient {
     public final static Integer KEEP_ALIVE_SECONDS = 10;
     public final static String WEBSOCKET_CONNECTION_URL = "wss://eventsub.wss.twitch.tv/ws";
     private final static String subscriptionUrl = "https://streamcraft-0a9a58085ccc.herokuapp.com/subscribe";
+    private final static String createPollUrl = "https://streamcraft-0a9a58085ccc.herokuapp.com/poll";
     private final static String refreshUrl = "https://streamcraft-0a9a58085ccc.herokuapp.com/refresh";
     private ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
     private String sessionId = "";
@@ -182,10 +184,18 @@ public class TwitchClient {
 
     private void subscribeToEvents() {
         subscribeToFollowEvents();
+        subscribeToPollEvents();
+    }
+
+    private boolean subscribeToPollEvents() {
+        EventSubscription eventSubscription = eventSubscription("channel.follow", "2", sessionId);
+        HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
+        logger().info("response from subscription: " + response.statusCode() + response.body());
+        return logResponse(response);
     }
 
     private boolean subscribeToFollowEvents() {
-        EventSubscription eventSubscription = eventSubscription("channel.follow", "2", sessionId);
+        EventSubscription eventSubscription = eventSubscription("channel.poll.end", "1", sessionId);
         HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
         logger().info("response from subscription: " + response.statusCode() + response.body());
         return logResponse(response);
@@ -276,6 +286,21 @@ public class TwitchClient {
                 .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(subscription)))
                 .build();
         return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HttpResponse<?> sendCreatePoll(CreatePoll createPoll) {
+        try {
+            HttpClient httpClient = HttpClient.newBuilder().build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(createPollUrl))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(createPoll)))
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;

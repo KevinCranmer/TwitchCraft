@@ -31,8 +31,8 @@ public class EntitySpawn extends Action {
     }
 
     @Override
-    public String pollMessage(Action action) {
-        return String.format("Spawn %s %s%s", getQuantity(), getEntity().name(), getQuantity() > 1 ?  "'s" : "");
+    public String pollMessage() {
+        return String.format("%s %s%s", getQuantity(), getEntity().name(), getQuantity() > 1 ?  "'s" : "");
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */

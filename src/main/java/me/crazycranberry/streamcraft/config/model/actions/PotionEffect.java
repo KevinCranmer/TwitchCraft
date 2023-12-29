@@ -34,8 +34,8 @@ public class PotionEffect extends Action {
     }
 
     @Override
-    public String pollMessage(Action action) {
-        return String.format("%s potion effect", getPotionType() == null ? getPotionRandom().name() : getPotionType().getName());
+    public String pollMessage() {
+        return String.format("%s", getPotionType() == null ? getPotionRandom().name().toLowerCase().replace("_", " ") + " potion effect" : getPotionType().getName().toLowerCase().replace("_", " "));
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */

@@ -25,8 +25,8 @@ public class RandomItemRemoval extends Action {
     }
 
     @Override
-    public String pollMessage(Action action) {
-        return String.format("Randomly remove %s item%s from %s item stack%s", getNumPerStack(), getNumPerStack() > 1 ? "s" : "", getNumStacks(), getNumStacks() > 1 ? "s" : "");
+    public String pollMessage() {
+        return String.format("Remove %s x %s item%s", getNumPerStack(), getNumStacks(), getNumPerStack() * getNumStacks() > 1 ? "s" : "");
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
