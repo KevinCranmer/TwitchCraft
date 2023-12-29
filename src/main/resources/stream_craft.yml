@@ -24,3 +24,7 @@ actions:
     trigger:
      type: channel.follow
     duration_seconds: 10
+  - type: MEGA_JUMP
+    trigger:
+      type: channel.follow
+    num_jumps: 3

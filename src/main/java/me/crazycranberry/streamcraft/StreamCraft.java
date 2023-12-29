@@ -6,6 +6,7 @@ import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
+import me.crazycranberry.streamcraft.managers.MegaJumpManager;
 import me.crazycranberry.streamcraft.managers.ReconnectRequestedManager;
 import me.crazycranberry.streamcraft.twitch.websocket.TwitchClient;
 import org.bukkit.command.CommandExecutor;
@@ -44,6 +45,7 @@ public final class StreamCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
+        getServer().getPluginManager().registerEvents(new MegaJumpManager(), this);
     }
 
     private void registerCommands() {

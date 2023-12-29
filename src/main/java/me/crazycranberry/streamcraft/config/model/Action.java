@@ -69,6 +69,17 @@ public abstract class Action {
         return t;
     }
 
+    public static <T, R> R validateField(T field, Class<R> clazz, String fieldName, boolean required) {
+        if (!required && field == null) {
+            return null;
+        }
+        if (!(clazz.isInstance(field))) {
+            logger().warning("A " + fieldName + " was not a " + clazz.getName());
+            return null;
+        }
+        return clazz.cast(field);
+    }
+
     public static <T, R> R validateField(T field, Class<R> clazz, String fieldName) {
         if (!(clazz.isInstance(field))) {
             logger().warning("A " + fieldName + " was not a " + clazz.getName());
