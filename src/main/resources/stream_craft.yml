@@ -32,3 +32,10 @@ actions:
     trigger:
       type: channel.follow
     num_jumps: 3
+  - type: NO_JUMPING
+    trigger:
+     type: channel.follow
+    duration_seconds: 10
+  - type: DROP_ALL_ITEMS
+    trigger:
+      type: channel.follow
