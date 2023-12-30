@@ -27,7 +27,7 @@ public class MegaJump extends Action {
     }
 
     @Override
-    public String pollMessage(Action action) {
+    public String pollMessage() {
         return "Mega Jump";
     }
 

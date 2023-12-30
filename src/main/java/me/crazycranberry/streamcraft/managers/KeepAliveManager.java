@@ -11,6 +11,7 @@ import java.time.Instant;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
+import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.TICKS_PER_SECOND;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.KEEP_ALIVE_SECONDS;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
@@ -28,6 +29,6 @@ public class KeepAliveManager implements Listener {
                 logger().warning("The Websocket connection has timed out. Attempting to reconnect.");
                 Bukkit.getPluginManager().callEvent(new ReconnectRequestedEvent());
             }
-        }, KEEP_ALIVE_SECONDS /*<-- the initial delay */, 20L * KEEP_ALIVE_SECONDS /*<-- the interval */).getTaskId();
+        }, KEEP_ALIVE_SECONDS /*<-- the initial delay */, TICKS_PER_SECOND * KEEP_ALIVE_SECONDS /*<-- the interval */).getTaskId();
     }
 }
