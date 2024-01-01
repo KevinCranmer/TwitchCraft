@@ -25,6 +25,9 @@ public class ExecutorUtils {
     }
 
     public static <T> T randomFromList(List<T> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
         int randomIndex = (int) (Math.random() * list.size());
         return list.get(randomIndex);
     }

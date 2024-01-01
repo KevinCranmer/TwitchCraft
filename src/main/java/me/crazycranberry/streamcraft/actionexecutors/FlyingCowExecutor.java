@@ -61,6 +61,9 @@ public class FlyingCowExecutor implements Executor {
         p.getWorld().playSound(p.getLocation(), ENTITY_COW_AMBIENT, 1, 1);
         Location pLoc = p.getLocation().clone();
         Vector spawnOffset = randomFromList(possibleSpawnOffsets(fc.getDistanceFromPlayer(), p));
+        if (spawnOffset == null) {
+            return;
+        }
         Location spawnLoc = pLoc.add(spawnOffset);
         Cow cow = (Cow) pLoc.getWorld().spawnEntity(spawnLoc, EntityType.COW);
         Vector cowVel = cowVelocity(spawnOffset, fc.getCowVelocity());
