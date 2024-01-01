@@ -6,6 +6,7 @@ import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
 import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
+import me.crazycranberry.streamcraft.managers.FlyingCowManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
 import me.crazycranberry.streamcraft.managers.MegaJumpManager;
 import me.crazycranberry.streamcraft.managers.NoJumpingManager;
@@ -47,12 +48,13 @@ public final class StreamCraft extends JavaPlugin {
     }
 
     private void registerManagers() {
-        getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
-        getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
-        getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
+        getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
+        getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
         getServer().getPluginManager().registerEvents(new MegaJumpManager(), this);
         getServer().getPluginManager().registerEvents(new NoJumpingManager(), this);
+        getServer().getPluginManager().registerEvents(new PollManager(), this);
+        getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
     }
 
     private void registerCommands() {

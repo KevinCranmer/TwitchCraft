@@ -1,7 +1,6 @@
 package me.crazycranberry.streamcraft.actionexecutors;
 
 import me.crazycranberry.streamcraft.config.model.Action;
-import me.crazycranberry.streamcraft.config.model.actions.MegaJump;
 import me.crazycranberry.streamcraft.config.model.actions.NoJumping;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
