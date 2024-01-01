@@ -9,33 +9,40 @@ polls:
 actions:
   - type: ENTITY_SPAWN
     trigger:
-      type: channel.follow
+      type: CHANNEL_FOLLOW
     entity: ZOMBIE
     quantity: 5
     radius_from_player: 5
   - type: POTION_EFFECT
     trigger:
-      type: channel.follow
+      type: CHANNEL_FOLLOW
     potion_type: STRENGTH
     level: 2
     duration_seconds: 15
   - type: RANDOM_ITEM_REMOVAL
     trigger:
-      type: channel.follow
+      type: CHANNEL_FOLLOW
     num_stacks: 2
     num_per_stack: 2
   - type: WATERLOG
     trigger:
-     type: channel.follow
+     type: CHANNEL_FOLLOW
     duration_seconds: 10
   - type: MEGA_JUMP
     trigger:
-      type: channel.follow
+      type: CHANNEL_FOLLOW
     num_jumps: 3
   - type: NO_JUMPING
     trigger:
-     type: channel.follow
+     type: CHANNEL_FOLLOW
     duration_seconds: 10
   - type: DROP_ALL_ITEMS
     trigger:
-      type: channel.follow
+      type: CHANNEL_FOLLOW
+  - type: FLYING_COW
+    trigger:
+      type: CHANNEL_FOLLOW
+    num_cows: 5
+    seconds_between_cows: 5
+    distance_from_player: 10
+    cow_velocity: 0.8

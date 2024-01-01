@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import me.crazycranberry.streamcraft.actionexecutors.DropAllItemsExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.EntitySpawnExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.Executor;
+import me.crazycranberry.streamcraft.actionexecutors.FlyingCowExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.MegaJumpExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.NoJumpingExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.PotionEffectExecutor;
@@ -11,6 +12,7 @@ import me.crazycranberry.streamcraft.actionexecutors.RandomItemRemovalExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.WaterLogExecutor;
 import me.crazycranberry.streamcraft.config.model.actions.DropAllItems;
 import me.crazycranberry.streamcraft.config.model.actions.EntitySpawn;
+import me.crazycranberry.streamcraft.config.model.actions.FlyingCow;
 import me.crazycranberry.streamcraft.config.model.actions.MegaJump;
 import me.crazycranberry.streamcraft.config.model.actions.NoJumping;
 import me.crazycranberry.streamcraft.config.model.actions.PotionEffect;
@@ -21,6 +23,7 @@ import me.crazycranberry.streamcraft.config.model.actions.WaterLog;
 public enum ActionType {
     DROP_ALL_ITEMS("DROP_ALL_ITEMS", DropAllItems.class, DropAllItemsExecutor.class),
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),
+    FLYING_COW("FLYING_COW", FlyingCow.class, FlyingCowExecutor.class),
     MEGA_JUMP("MEGA_JUMP", MegaJump.class, MegaJumpExecutor.class),
     NO_JUMPING("NO_JUMPING", NoJumping.class, NoJumpingExecutor.class),
     POTION_EFFECT("POTION_EFFECT", PotionEffect.class, PotionEffectExecutor.class),
