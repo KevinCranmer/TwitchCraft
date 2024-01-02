@@ -6,10 +6,12 @@ import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
 import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
+import me.crazycranberry.streamcraft.managers.ExplosionManager;
 import me.crazycranberry.streamcraft.managers.FlyingCowManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
 import me.crazycranberry.streamcraft.managers.MegaJumpManager;
 import me.crazycranberry.streamcraft.managers.NoJumpingManager;
+import me.crazycranberry.streamcraft.managers.PinataChickenManager;
 import me.crazycranberry.streamcraft.managers.PollManager;
 import me.crazycranberry.streamcraft.managers.ReconnectRequestedManager;
 import me.crazycranberry.streamcraft.twitch.websocket.TwitchClient;
@@ -36,7 +38,7 @@ public final class StreamCraft extends JavaPlugin {
         plugin = this;
         logger = this.getLogger();
         refreshConfigs();
-        //twitchClient = new TwitchClient();
+        twitchClient = new TwitchClient();
         registerCommands();
         registerManagers();
     }
@@ -44,15 +46,17 @@ public final class StreamCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        //twitchClient.close();
+        twitchClient.close();
     }
 
     private void registerManagers() {
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
+        getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
         getServer().getPluginManager().registerEvents(new MegaJumpManager(), this);
         getServer().getPluginManager().registerEvents(new NoJumpingManager(), this);
+        getServer().getPluginManager().registerEvents(new PinataChickenManager(), this);
         getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
     }

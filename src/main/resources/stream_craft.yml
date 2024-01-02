@@ -46,3 +46,11 @@ actions:
     seconds_between_cows: 5
     distance_from_player: 10
     cow_velocity: 0.8
+  - type: EXPLOSION
+    trigger:
+      type: CHANNEL_FOLLOW
+    power: 6
+  - type: PINATA_CHICKENS
+    trigger:
+      type: CHANNEL_FOLLOW
+    num_chickens: 6

@@ -49,8 +49,10 @@ public class EntitySpawnExecutor implements Executor {
             possibleSpawnLocations.add(new Location(p.getWorld(), x, y, z));
             for (int l = 0; l < es.getQuantity(); l++) {
                 Entity entity = p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), es.getEntity());
-                entity.setCustomName(twitchMessage.getPayload().getEvent().getUser_name());
-                entity.setCustomNameVisible(true);
+                if (twitchMessage.getPayload().getEvent().getUser_name() != null) {
+                    entity.setCustomName(twitchMessage.getPayload().getEvent().getUser_name());
+                    entity.setCustomNameVisible(true);
+                }
             }
         }
     }
