@@ -6,6 +6,7 @@ import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
 import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
+import me.crazycranberry.streamcraft.managers.ChestOfGoodiesManager;
 import me.crazycranberry.streamcraft.managers.ExplosionManager;
 import me.crazycranberry.streamcraft.managers.FlyingCowManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
@@ -38,7 +39,7 @@ public final class StreamCraft extends JavaPlugin {
         plugin = this;
         logger = this.getLogger();
         refreshConfigs();
-        twitchClient = new TwitchClient();
+        //twitchClient = new TwitchClient();
         registerCommands();
         registerManagers();
     }
@@ -46,11 +47,12 @@ public final class StreamCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        twitchClient.close();
+        //twitchClient.close();
     }
 
     private void registerManagers() {
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
+        getServer().getPluginManager().registerEvents(new ChestOfGoodiesManager(), this);
         getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
