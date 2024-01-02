@@ -60,8 +60,17 @@ public class StreamCraftConfig {
         sendMessageOnEvent = config.getBoolean("send_message_on_event", originalConfig.getBoolean("send_message_on_event"));
         pollDuration = config.getInt("polls.duration_seconds", originalConfig.getInt("polls.duration_seconds"));
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
-        pollNumChoices = config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices"));
+        pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
         actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c)).peek(System.out::println).filter(Objects::nonNull).toList();
+    }
+
+    private Integer validatePollNumChoices(Integer maybeNumChoices) {
+        if (maybeNumChoices < 2 || maybeNumChoices > 5) {
+            logger().warning("polls.num_choices must be between 2 and 5");
+            if (maybeNumChoices < 2) return 2;
+            return 5;
+        }
+        return maybeNumChoices;
     }
 
     public void setAccessToken(String accessToken) {
