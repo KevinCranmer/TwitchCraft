@@ -105,7 +105,6 @@ public class ChestOfGoodiesExecutor implements Executor {
     }
 
     public static boolean protectPlayer(Player p) {
-        System.out.println("contains?" + protectedPlayers.contains(p));
         if (protectedPlayers.contains(p)) {
             return true;
         }
