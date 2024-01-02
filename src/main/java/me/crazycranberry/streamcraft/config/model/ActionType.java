@@ -1,6 +1,7 @@
 package me.crazycranberry.streamcraft.config.model;
 
 import lombok.AllArgsConstructor;
+import me.crazycranberry.streamcraft.actionexecutors.ChestOfGoodiesExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.DropAllItemsExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.EntitySpawnExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.Executor;
@@ -12,6 +13,7 @@ import me.crazycranberry.streamcraft.actionexecutors.PinataChickensExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.PotionEffectExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.RandomItemRemovalExecutor;
 import me.crazycranberry.streamcraft.actionexecutors.WaterLogExecutor;
+import me.crazycranberry.streamcraft.config.model.actions.ChestOfGoodies;
 import me.crazycranberry.streamcraft.config.model.actions.DropAllItems;
 import me.crazycranberry.streamcraft.config.model.actions.EntitySpawn;
 import me.crazycranberry.streamcraft.config.model.actions.Explosion;
@@ -25,6 +27,7 @@ import me.crazycranberry.streamcraft.config.model.actions.WaterLog;
 
 @AllArgsConstructor
 public enum ActionType {
+    CHEST_OF_GOODIES("CHEST_OF_GOODIES", ChestOfGoodies.class, ChestOfGoodiesExecutor.class),
     DROP_ALL_ITEMS("DROP_ALL_ITEMS", DropAllItems.class, DropAllItemsExecutor.class),
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),
     EXPLOSION("EXPLOSION", Explosion.class, ExplosionExecutor.class),

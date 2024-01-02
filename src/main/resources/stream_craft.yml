@@ -54,3 +54,19 @@ actions:
     trigger:
       type: CHANNEL_FOLLOW
     num_chickens: 6
+  - type: CHEST_OF_GOODIES
+    trigger:
+      type: CHANNEL_FOLLOW
+    chest_items:
+      - name: LEATHER_HELMET
+        chance: 0.8
+        min: 1
+        max: 2
+      - name: LEATHER
+        chance: 0.9
+        min: 4
+        max: 7
+      - name: BREAD
+        chance: 0.9
+        min: 3
+        max: 9
