@@ -11,7 +11,7 @@ import java.time.Instant;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
-import static me.crazycranberry.streamcraft.actionexecutors.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.KEEP_ALIVE_SECONDS;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */

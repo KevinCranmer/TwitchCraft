@@ -1,9 +1,9 @@
 package me.crazycranberry.streamcraft.managers;
 
-import me.crazycranberry.streamcraft.actionexecutors.Executor;
-import me.crazycranberry.streamcraft.config.model.Action;
-import me.crazycranberry.streamcraft.config.model.ActionType;
-import me.crazycranberry.streamcraft.config.model.TriggerType;
+import me.crazycranberry.streamcraft.actions.Executor;
+import me.crazycranberry.streamcraft.config.Action;
+import me.crazycranberry.streamcraft.config.ActionType;
+import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.events.ChannelFollowEvent;
 import me.crazycranberry.streamcraft.events.PollEndEvent;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;

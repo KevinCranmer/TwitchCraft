@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
-import me.crazycranberry.streamcraft.config.model.TriggerType;
+import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.events.ActionEvent;
 import me.crazycranberry.streamcraft.events.ReconnectRequestedEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;

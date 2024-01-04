@@ -1,7 +1,6 @@
 package me.crazycranberry.streamcraft.config;
 
 import lombok.Getter;
-import me.crazycranberry.streamcraft.config.model.Action;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
