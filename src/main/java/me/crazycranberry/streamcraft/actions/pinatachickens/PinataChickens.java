@@ -26,7 +26,7 @@ public class PinataChickens extends Action {
 
     @Override
     public String pollMessage() {
-        return "Piñata Chickens";
+        return String.format("%s Piñata Chickens", numChickens);
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */

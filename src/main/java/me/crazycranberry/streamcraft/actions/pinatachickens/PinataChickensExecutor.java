@@ -6,7 +6,6 @@ import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Creeper;
@@ -15,12 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getPossibleSpawnLocations;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
@@ -46,38 +45,13 @@ public class PinataChickensExecutor implements Executor {
         PinataChickens pc = (PinataChickens) action;
         for (Player p : getTargetedPlayers(pc)) {
             maybeSendPlayerMessage(p, String.format("Piñata chickens! courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
-            double x = Math.floor(p.getLocation().getX()) + 0.5;
-            double y = p.getLocation().getY();
-            double z = Math.floor(p.getLocation().getZ()) + 0.5;
-            List<Location> possibleSpawnLocations = new ArrayList<>();
-            for (int i = -5; i < 5; i++) {
-                for (int j = -5; j < 5; j++) {
-                    for (int k = -5; k < 5; k++) {
-                        Location potentialLoc = new Location(p.getWorld(), x + i, y + j, z + k);
-                        if (i == 0 && j == 0 && k == 0) {
-                            continue; // We will always add the player location in the event that there are no valid spawns
-                        }
-                        if (isValidSpawnBlock(potentialLoc)) {
-                            possibleSpawnLocations.add(potentialLoc);
-                        }
-                    }
-                }
-            }
-            possibleSpawnLocations.add(new Location(p.getWorld(), x, y, z));
+            List<Location> possibleSpawnLocations = getPossibleSpawnLocations(p, 5);
             for (int l = 0; l < pc.getNumChickens(); l++) {
                 Chicken chicken = (Chicken) p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), EntityType.CHICKEN);
                 chicken.setCustomName("Piñata");
                 chicken.setCustomNameVisible(true);
             }
         }
-    }
-
-    /** Makes sure there is a 1x2x1 box open at the given location. */
-    private boolean isValidSpawnBlock(Location loc) {
-        Block blockAbove = loc.getBlock().getRelative(0, 1, 0);
-        Block blockAboveAbove = loc.getBlock().getRelative(0, 2, 0);
-        return (blockAbove.getType().equals(Material.AIR) || blockAbove.getType().equals(Material.WATER)) &&
-                (blockAboveAbove.getType().equals(Material.AIR) || blockAboveAbove.getType().equals(Material.WATER));
     }
 
     public static class Goodies {
