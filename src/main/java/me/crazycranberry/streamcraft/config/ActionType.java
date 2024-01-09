@@ -1,6 +1,8 @@
 package me.crazycranberry.streamcraft.config;
 
 import lombok.AllArgsConstructor;
+import me.crazycranberry.streamcraft.actions.buildahouse.BuildAHouse;
+import me.crazycranberry.streamcraft.actions.buildahouse.BuildAHouseExecutor;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodiesExecutor;
 import me.crazycranberry.streamcraft.actions.dropallitems.DropAllItemsExecutor;
 import me.crazycranberry.streamcraft.actions.entityspawn.EntitySpawnExecutor;
@@ -27,6 +29,7 @@ import me.crazycranberry.streamcraft.actions.waterlog.WaterLog;
 
 @AllArgsConstructor
 public enum ActionType {
+    BUILD_A_HOUSE("BUILD_A_HOUSE", BuildAHouse.class, BuildAHouseExecutor.class),
     CHEST_OF_GOODIES("CHEST_OF_GOODIES", ChestOfGoodies.class, ChestOfGoodiesExecutor.class),
     DROP_ALL_ITEMS("DROP_ALL_ITEMS", DropAllItems.class, DropAllItemsExecutor.class),
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),

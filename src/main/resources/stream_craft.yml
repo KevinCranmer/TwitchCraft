@@ -70,3 +70,6 @@ actions:
         chance: 0.9
         min: 3
         max: 9
+  - type: BUILD_A_HOUSE
+    trigger:
+      type: CHANNEL_FOLLOW
