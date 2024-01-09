@@ -104,7 +104,7 @@ public class BuildAHouseExecutor implements Executor {
 
     private void handleBed(HouseTracker house, HouseStep houseStep, Block blockToChange, Bed directional) {
         Block bedHeadBlock = blockToChange.getRelative(house.getDirection().getDirectionalTranslation().apply(houseStep.getBlockFace()));
-        bedHeadBlock.setType(houseStep.getBlock().apply(house.getStylings()));
+        bedHeadBlock.setType(houseStep.getBlock().apply(house.getStylings()), false);
         BlockState bedHeadState = bedHeadBlock.getState();
         Bed bedHead = (Bed) bedHeadState.getBlockData();
         bedHead.setPart(Bed.Part.HEAD);
@@ -196,12 +196,15 @@ public class BuildAHouseExecutor implements Executor {
             new HouseStep(3, 0, -2, HouseStep::getPlank),
             new HouseStep(3, 0, -1, HouseStep::getPlank),
             // Row 2
-            new HouseStep(3, 1, 1, HouseStep::getPlank),
-            new HouseStep(3, 1, 2, HouseStep::getWood, BlockFace.UP),
-            new HouseStep(2, 1, 2, HouseStep::getPlank),
             new HouseStep(1, 1, 2, HouseStep::getGlassPane),
             new HouseStep(0, 1, 2, HouseStep::getGlassPane),
             new HouseStep(-1, 1, 2, HouseStep::getGlassPane),
+            new HouseStep(-1, 1, -3, HouseStep::getGlassPane),
+            new HouseStep(0, 1, -3, HouseStep::getGlassPane),
+            new HouseStep(1, 1, -3, HouseStep::getGlassPane),
+            new HouseStep(3, 1, 1, HouseStep::getPlank),
+            new HouseStep(3, 1, 2, HouseStep::getWood, BlockFace.UP),
+            new HouseStep(2, 1, 2, HouseStep::getPlank),
             new HouseStep(-2, 1, 2, HouseStep::getPlank),
             new HouseStep(-3, 1, 2, HouseStep::getWood, BlockFace.UP),
             new HouseStep(-3, 1, 1, HouseStep::getPlank),
@@ -210,9 +213,6 @@ public class BuildAHouseExecutor implements Executor {
             new HouseStep(-3, 1, -2, HouseStep::getPlank),
             new HouseStep(-3, 1, -3, HouseStep::getWood, BlockFace.UP),
             new HouseStep(-2, 1, -3, HouseStep::getPlank),
-            new HouseStep(-1, 1, -3, HouseStep::getGlassPane),
-            new HouseStep(0, 1, -3, HouseStep::getGlassPane),
-            new HouseStep(1, 1, -3, HouseStep::getGlassPane),
             new HouseStep(2, 1, -3, HouseStep::getPlank),
             new HouseStep(3, 1, -3, HouseStep::getWood, BlockFace.UP),
             new HouseStep(3, 1, -2, HouseStep::getPlank),
