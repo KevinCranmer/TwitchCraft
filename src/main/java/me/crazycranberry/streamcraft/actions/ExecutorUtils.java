@@ -1,6 +1,5 @@
 package me.crazycranberry.streamcraft.actions;
 
-import me.crazycranberry.streamcraft.actions.entityspawn.EntitySpawn;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
