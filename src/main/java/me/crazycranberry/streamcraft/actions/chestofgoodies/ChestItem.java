@@ -1,4 +1,4 @@
-package me.crazycranberry.streamcraft.config;
+package me.crazycranberry.streamcraft.actions.chestofgoodies;
 
 import lombok.Getter;
 import org.bukkit.Material;

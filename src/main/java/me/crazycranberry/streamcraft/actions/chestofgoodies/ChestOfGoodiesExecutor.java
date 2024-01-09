@@ -2,7 +2,6 @@ package me.crazycranberry.streamcraft.actions.chestofgoodies;
 
 import me.crazycranberry.streamcraft.actions.Executor;
 import me.crazycranberry.streamcraft.config.Action;
-import me.crazycranberry.streamcraft.config.ChestItem;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

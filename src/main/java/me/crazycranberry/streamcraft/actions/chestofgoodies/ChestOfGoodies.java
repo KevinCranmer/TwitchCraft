@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.config.ActionType;
-import me.crazycranberry.streamcraft.config.ChestItem;
 import me.crazycranberry.streamcraft.config.Trigger;
 
 import java.util.ArrayList;
