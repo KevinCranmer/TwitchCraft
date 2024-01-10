@@ -30,10 +30,10 @@ public class FileUtils {
     public static YamlConfiguration loadOriginalConfig(String configName) {
         YamlConfiguration config = new YamlConfiguration();
         try {
-            InputStream defaultChanceConfigStream = getPlugin().getResource(configName);
-            assert defaultChanceConfigStream != null;
-            InputStreamReader defaultChanceConfigReader = new InputStreamReader(defaultChanceConfigStream);
-            config.load(defaultChanceConfigReader);
+            InputStream defaultConfigStream = getPlugin().getResource(configName);
+            assert defaultConfigStream != null;
+            InputStreamReader defaultConfigReader = new InputStreamReader(defaultConfigStream);
+            config.load(defaultConfigReader);
         } catch (InvalidConfigurationException | IOException e) {
             logger().info("An error occured while trying to load the (default) " + configName + " file.");
             e.printStackTrace();
