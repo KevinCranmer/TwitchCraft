@@ -1,6 +1,7 @@
 package me.crazycranberry.streamcraft.managers;
 
 import me.crazycranberry.streamcraft.config.Action;
+import me.crazycranberry.streamcraft.config.Trigger;
 import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.events.PollEndEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;
@@ -12,10 +13,11 @@ import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
-import static me.crazycranberry.streamcraft.StreamCraft.logger;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
 public class PollManager implements Listener {
@@ -57,29 +59,24 @@ public class PollManager implements Listener {
     public static void createRandomPoll() {
         List<Action> pollActions = new ArrayList<>(pollActions());
         List<Action> selectedPollActions = new ArrayList<>();
-        if (pollActions().size() <= getPlugin().config().getPollNumChoices()) {
+        if (pollActions.size() <= getPlugin().config().getPollNumChoices()) {
             selectedPollActions = pollActions;
-        } else if (validPollChances(pollActions)) {
-            Double randMultiplier = 1.0;
+        } else {
+            cleanPollActions(pollActions);
+            Double randMultiplier = pollActions.stream().map(a -> a.getTrigger().getWeight()).reduce(0.0, Double::sum);
             for (int i = 0; i < getPlugin().config().getPollNumChoices(); i++) {
-                Double rand = Math.random() * randMultiplier;
+                double rand = Math.random() * randMultiplier;
                 Double tracker = 0.0;
                 for (Action a : pollActions) {
-                    if (rand < a.getTrigger().getChance() + tracker) {
+                    if (rand < a.getTrigger().getWeight() + tracker) {
                         pollActions.remove(a);
                         selectedPollActions.add(a);
-                        randMultiplier -= a.getTrigger().getChance();
+                        randMultiplier -= a.getTrigger().getWeight();
                         break;
                     } else {
-                        tracker += a.getTrigger().getChance();
+                        tracker += a.getTrigger().getWeight();
                     }
                 }
-            }
-        } else {
-            for (int i = 0; i < getPlugin().config().getPollNumChoices(); i++) {
-                int randomIndex = (int) (Math.random() * pollActions.size());
-                selectedPollActions.add(pollActions.get(randomIndex));
-                pollActions.remove(randomIndex);
             }
         }
         Collections.shuffle(selectedPollActions);
@@ -99,11 +96,16 @@ public class PollManager implements Listener {
             .toList();
     }
 
-    private static boolean validPollChances(List<Action> pollActions) {
-        if (pollActions.stream().anyMatch(a -> a.getTrigger().getChance() == null)) {
-            logger().warning("At least one pollActions chance is null, giving all POLL actions equal odds");
-            return false;
+    private static void cleanPollActions(List<Action> pollActions) {
+        Optional<Double> defaultWeight;
+        if (pollActions.stream().noneMatch(p -> p.getTrigger().getWeight() != null)) {
+            defaultWeight = Optional.of(0.1);
+        } else {
+            defaultWeight = pollActions.stream().map(Action::getTrigger).filter(a -> a.getWeight() != null).min(Comparator.comparing(Trigger::getWeight)).map(Trigger::getWeight);
         }
-        return pollActions.stream().map(a -> a.getTrigger().getChance()).reduce(0.0, Double::sum) == 1.0;
+         if (defaultWeight.isEmpty()) {
+             throw new IllegalStateException(String.format("Could not get a defaultWeight. This would happen if pollActions is empty. But if pollActions is empty then we should not have gotten here. PollAction size: %s", pollActions.size()));
+        }
+        pollActions.stream().filter(p -> p.getTrigger().getWeight() == null).forEach(p -> p.getTrigger().setWeight(defaultWeight.get()));
     }
 }

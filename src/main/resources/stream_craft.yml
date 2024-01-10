@@ -41,7 +41,8 @@ actions:
       type: CHANNEL_FOLLOW
   - type: FLYING_COW
     trigger:
-      type: CHANNEL_FOLLOW
+      type: POLL
+      weight: 0.5
     num_cows: 5
     seconds_between_cows: 5
     distance_from_player: 10
