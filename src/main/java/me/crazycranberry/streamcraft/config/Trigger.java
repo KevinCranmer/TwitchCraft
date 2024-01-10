@@ -18,23 +18,23 @@ import static me.crazycranberry.streamcraft.config.TriggerType.POLL;
 public class Trigger {
     private String predicate;
     private TriggerType type;
-    private Double chance;
+    private Double weight;
 
     public static Trigger fromYaml(LinkedHashMap<String, ?> input) {
         TriggerType type = validateType(input.get("type"));
         if (type == null) {
             return null;
         }
-        Double chance = null;
+        Double weight = null;
         if (type.equals(POLL)) {
-            chance = validateChance(input.get("chance"));
+            weight = input.get("weight") == null ? null : validateWeight(input.get("weight"));
         }
         String predicate = validatePredicate(input.get("predicate"), type);
         if (predicate == null && type.requirePredicate()) {
             logger().warning("A predicate is required for a " + type.value() + " action.");
             return null;
         }
-        return new Trigger(predicate, type, chance);
+        return new Trigger(predicate, type, weight);
     }
 
     private static <T> String validatePredicate(T predicate, TriggerType triggerType) {
@@ -47,12 +47,12 @@ public class Trigger {
         return (String) predicate;
     }
 
-    private static <T> Double validateChance(T chance) {
-        if (!(chance instanceof Double)) {
-            logger().warning("An Action's Trigger chance was not a Double.");
+    private static <T> Double validateWeight(T weight) {
+        if (!(weight instanceof Double)) {
+            logger().warning("An Action's Trigger weight was not a Double.");
             return null;
         }
-        return (Double) chance;
+        return (Double) weight;
     }
 
     private static <T> TriggerType validateType(T type) {

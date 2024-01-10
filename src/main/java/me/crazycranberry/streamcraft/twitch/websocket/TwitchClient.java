@@ -163,8 +163,8 @@ public class TwitchClient {
     private void handleWelcomeMessage(Message twitchMessage) {
         logger().info("Welcome message received");
         sessionId = twitchMessage.getPayload().getSession().getId();
-        sendWebSocketConnectedEvent();
         subscribeToEvents();
+        sendWebSocketConnectedEvent();
     }
 
     private void sendWebSocketConnectedEvent() {
