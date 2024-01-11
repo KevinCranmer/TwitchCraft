@@ -38,7 +38,7 @@ public class ExecutorUtils {
     }
 
     public static void maybeSendPlayerMessage(Player p, String message, Action action) {
-        if (getPlugin().config().isSendMessageOnEvent() && action.getSendMessage()) {
+        if (getPlugin().config().isSendActionMessageByDefault() && action.getSendMessage()) {
             p.sendMessage(message);
         }
     }

@@ -20,7 +20,7 @@ public class StreamCraftConfig {
     private String accessToken;
     private String refreshToken;
     private String broadcasterId;
-    private boolean sendMessageOnEvent;
+    private boolean sendActionMessageByDefault;
     private Integer pollDuration;
     private Integer pollInterval;
     private Integer pollNumChoices;
@@ -56,7 +56,7 @@ public class StreamCraftConfig {
         accessToken = config.getString("access_token", originalConfig.getString("access_token")).trim();
         refreshToken = config.getString("refresh_token", originalConfig.getString("refresh_token")).trim();
         broadcasterId = config.getString("broadcaster_id", originalConfig.getString("broadcaster_id")).trim();
-        sendMessageOnEvent = config.getBoolean("send_message_on_event", originalConfig.getBoolean("send_message_on_event"));
+        sendActionMessageByDefault = config.getBoolean("send_action_message_by_default", originalConfig.getBoolean("send_action_message_by_default"));
         pollDuration = config.getInt("polls.duration_seconds", originalConfig.getInt("polls.duration_seconds"));
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
