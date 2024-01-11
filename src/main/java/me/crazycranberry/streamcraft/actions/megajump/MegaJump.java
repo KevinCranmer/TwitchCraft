@@ -20,8 +20,8 @@ public class MegaJump extends Action {
     private Integer numJumps;
 
     @Builder
-    private MegaJump(ActionType type, Trigger trigger, String target, Integer durationSeconds, Integer numJumps) {
-        super(type, trigger, target);
+    private MegaJump(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer durationSeconds, Integer numJumps) {
+        super(type, trigger, target, sendMessage);
         this.durationSeconds = durationSeconds;
         this.numJumps = numJumps;
     }
@@ -32,7 +32,7 @@ public class MegaJump extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer durationSeconds = validateField(input.get("duration_seconds"), Integer.class, "duration_seconds", false);
         Integer numJumps = validateField(input.get("num_jumps"), Integer.class, "num_jumps", false);
         if (durationSeconds == null && numJumps == null) {
@@ -43,6 +43,7 @@ public class MegaJump extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .durationSeconds(durationSeconds)
                 .numJumps(numJumps)
                 .build();

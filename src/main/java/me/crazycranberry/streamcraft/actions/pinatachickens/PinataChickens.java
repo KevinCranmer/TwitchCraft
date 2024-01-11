@@ -19,8 +19,8 @@ public class PinataChickens extends Action {
     private Integer numChickens;
 
     @Builder
-    private PinataChickens(ActionType type, Trigger trigger, String target, Integer numChickens) {
-        super(type, trigger, target);
+    private PinataChickens(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer numChickens) {
+        super(type, trigger, target, sendMessage);
         this.numChickens = numChickens;
     }
 
@@ -30,7 +30,7 @@ public class PinataChickens extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer numChickens = validateField(input.get("num_chickens"), Integer.class, "num_chickens", false);
         if (numChickens == null) {
             logger().warning("The num_chickens field was blank for an Pinata Chicken action");
@@ -40,6 +40,7 @@ public class PinataChickens extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .numChickens(numChickens)
                 .build();
     }

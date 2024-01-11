@@ -25,7 +25,7 @@ public class EntitySpawnExecutor implements Executor {
         }
         EntitySpawn es = (EntitySpawn) action;
         for (Player p : getTargetedPlayers(es)) {
-            maybeSendPlayerMessage(p, String.format("Spawning %s%s's%s, courtesy of %s%s%s", ChatColor.GOLD, es.getEntity().name(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("Spawning %s%s's%s, courtesy of %s%s%s", ChatColor.GOLD, es.getEntity().name(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             List<Location> possibleSpawnLocations = getPossibleSpawnLocations(p, es.getRadiusFromPlayer());
             for (int l = 0; l < es.getQuantity(); l++) {
                 Entity entity = p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), es.getEntity());

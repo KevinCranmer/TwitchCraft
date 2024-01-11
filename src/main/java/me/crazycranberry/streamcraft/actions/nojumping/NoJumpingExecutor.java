@@ -42,14 +42,14 @@ public class NoJumpingExecutor implements Executor {
                         timeLeftMap.put(p, secondsLeft);
                     }
                     if (timeLeftMap.isEmpty() && timeLeftTaskId != null) {
-                        maybeSendPlayerMessage(p, "You can jump again.");
+                        maybeSendPlayerMessage(p, "You can jump again.", action);
                         Bukkit.getScheduler().cancelTask(timeLeftTaskId);
                     }
                 }
             }, TICKS_PER_SECOND /*<-- the initial delay */, TICKS_PER_SECOND /*<-- the interval */).getTaskId();
         }
         for (Player p : getTargetedPlayers(nj)) {
-            maybeSendPlayerMessage(p, String.format("You cannot jump for %s%s seconds%s, courtesy of %s%s%s", ChatColor.GOLD, nj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, nj), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("You cannot jump for %s%s seconds%s, courtesy of %s%s%s", ChatColor.GOLD, nj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, nj), ChatColor.RESET), action);
             timeLeftMap.put(p, nj.getDurationSeconds());
         }
     }

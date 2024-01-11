@@ -17,8 +17,8 @@ public class WaterLog extends Action {
     private Integer durationSeconds;
 
     @Builder
-    private WaterLog(ActionType type, Trigger trigger, String target, Integer durationSeconds) {
-        super(type, trigger, target);
+    private WaterLog(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer durationSeconds) {
+        super(type, trigger, target, sendMessage);
         this.durationSeconds = durationSeconds;
     }
 
@@ -28,7 +28,7 @@ public class WaterLog extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer durationSeconds = validateField(input.get("duration_seconds"), Integer.class, "duration_seconds");
         if (durationSeconds == null) {
             return null;
@@ -37,6 +37,7 @@ public class WaterLog extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .durationSeconds(durationSeconds)
                 .build();
     }

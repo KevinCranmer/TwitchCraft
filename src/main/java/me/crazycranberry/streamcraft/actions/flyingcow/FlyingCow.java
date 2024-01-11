@@ -22,8 +22,8 @@ public class FlyingCow extends Action {
     private Double cowVelocity;
 
     @Builder
-    private FlyingCow(ActionType type, Trigger trigger, String target, Integer numCows, Integer secondsBetweenCows, Integer distanceFromPlayer, Double cowVelocity) {
-        super(type, trigger, target);
+    private FlyingCow(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer numCows, Integer secondsBetweenCows, Integer distanceFromPlayer, Double cowVelocity) {
+        super(type, trigger, target, sendMessage);
         this.numCows = numCows;
         this.secondsBetweenCows = secondsBetweenCows;
         this.distanceFromPlayer = distanceFromPlayer;
@@ -36,7 +36,7 @@ public class FlyingCow extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer numCows = validateField(input.get("num_cows"), Integer.class, "num_cows");
         Integer secondsBetweenCows = validateField(input.get("seconds_between_cows"), Integer.class, "seconds_between_cows");
         Integer distanceFromPlayer = validateField(input.get("distance_from_player"), Integer.class, "distance_from_player");
@@ -49,6 +49,7 @@ public class FlyingCow extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .numCows(numCows)
                 .secondsBetweenCows(secondsBetweenCows)
                 .distanceFromPlayer(distanceFromPlayer)

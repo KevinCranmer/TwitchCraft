@@ -35,7 +35,7 @@ public class WaterLogExecutor implements Executor {
         }
         WaterLog wl = (WaterLog) action;
         for (Player p : getTargetedPlayers(wl)) {
-            maybeSendPlayerMessage(p, String.format("You've been %swaterlogged!!%s Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("You've been %swaterlogged!!%s Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             if (waterLogStats.containsKey(p)) {
                 waterLogStats.get(p).setWaterLogTimeRemaining(wl.getDurationSeconds());
             } else {
