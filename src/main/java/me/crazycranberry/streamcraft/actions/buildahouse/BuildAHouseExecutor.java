@@ -8,6 +8,7 @@ import me.crazycranberry.streamcraft.actions.Executor;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -31,7 +32,9 @@ import java.util.function.Function;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.triggerer;
 
 public class BuildAHouseExecutor implements Executor {
     private Map<Player, HouseTracker> houses = new HashMap<>();
@@ -44,6 +47,7 @@ public class BuildAHouseExecutor implements Executor {
         }
         BuildAHouse bah = (BuildAHouse) action;
         for (Player p : getTargetedPlayers(bah)) {
+            maybeSendPlayerMessage(p, String.format("This looks like a good place for a %shouse%s. Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, bah), ChatColor.RESET), action);
             int randomAccentIndex = (int) (Math.random() * houseAccent.size());
             houses.put(p, HouseTracker.builder()
                 .startingBlock(p.getLocation().getBlock())

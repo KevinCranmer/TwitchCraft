@@ -64,6 +64,7 @@ public class RandomItemRemovalExecutor implements Executor {
                 ChatColor.RESET,
                 ChatColor.GOLD,
                 triggerer(twitchMessage, action),
-                ChatColor.RESET));
+                ChatColor.RESET),
+                action);
     }
 }

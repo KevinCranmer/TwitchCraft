@@ -19,8 +19,8 @@ public class Explosion extends Action {
     private Integer power;
 
     @Builder
-    private Explosion(ActionType type, Trigger trigger, String target, Integer power) {
-        super(type, trigger, target);
+    private Explosion(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer power) {
+        super(type, trigger, target, sendMessage);
         this.power = power;
     }
 
@@ -30,7 +30,7 @@ public class Explosion extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer power = validateField(input.get("power"), Integer.class, "power", false);
         if (power == null) {
             logger().warning("The power field was blank for an Explosion action");
@@ -40,6 +40,7 @@ public class Explosion extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .power(power)
                 .build();
     }

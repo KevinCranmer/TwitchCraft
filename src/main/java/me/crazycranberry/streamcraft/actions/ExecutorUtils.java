@@ -37,8 +37,8 @@ public class ExecutorUtils {
         return list.get(randomIndex);
     }
 
-    public static void maybeSendPlayerMessage(Player p, String message) {
-        if (getPlugin().config().isSendMessageOnEvent()) {
+    public static void maybeSendPlayerMessage(Player p, String message, Action action) {
+        if (getPlugin().config().isSendActionMessageByDefault() && action.getSendMessage()) {
             p.sendMessage(message);
         }
     }

@@ -19,21 +19,30 @@ public abstract class Action {
     private ActionType type;
     private Trigger trigger;
     private String target;
+    private Boolean sendMessage;
 
     public static Action fromYaml(LinkedHashMap<String, ?> input) {
         ActionType type = validateType(input.get("type"));
         Trigger trigger = validateTrigger(input.get("trigger"));
         String target = validateTarget(input.get("target"));
+        Boolean sendMessage = validateSendMessage(input.get("send_message"));
         if (type == null || trigger == null) {
             return null;
         }
         try {
-            Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, LinkedHashMap.class);
-            return (Action) m.invoke(null, type, trigger, target, input);
+            Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, Boolean.class, LinkedHashMap.class);
+            return (Action) m.invoke(null, type, trigger, target, sendMessage, input);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static <T> Boolean validateSendMessage(T send_message) {
+        if (!(send_message instanceof Boolean)) {
+            return true;
+        }
+        return (Boolean) send_message;
     }
 
     public abstract String pollMessage();

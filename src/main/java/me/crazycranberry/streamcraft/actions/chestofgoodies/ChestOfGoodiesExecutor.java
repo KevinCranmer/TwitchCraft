@@ -37,7 +37,7 @@ public class ChestOfGoodiesExecutor implements Executor {
         }
         ChestOfGoodies cog = (ChestOfGoodies) action;
         for (Player p : getTargetedPlayers(cog)) {
-            maybeSendPlayerMessage(p, String.format("A chest of goodies! Courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, cog), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("A chest of goodies! Courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, cog), ChatColor.RESET), action);
             protectedPlayers.add(p);
             removeFromProtectedPlayersIn5Seconds(p);
             Vector offset = getOffsetFromDirection(p.getLocation().getDirection());

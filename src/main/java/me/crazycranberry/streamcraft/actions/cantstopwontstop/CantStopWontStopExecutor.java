@@ -35,7 +35,7 @@ public class CantStopWontStopExecutor implements Executor {
         }
         CantStopWontStop csws = (CantStopWontStop) action;
         for (Player p : getTargetedPlayers(csws)) {
-            maybeSendPlayerMessage(p, String.format("Can't Stop Won't Stop!!%s Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET));
+            maybeSendPlayerMessage(p, String.format("Can't Stop Won't Stop!!%s Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             if (cantStopWontStopStats.containsKey(p)) {
                 cantStopWontStopStats.get(p).setTimeRemaining((int) (((double)TICKS_PER_SECOND / (double)numTicksBetweenChecks) * csws.getDurationSeconds()));
             } else {

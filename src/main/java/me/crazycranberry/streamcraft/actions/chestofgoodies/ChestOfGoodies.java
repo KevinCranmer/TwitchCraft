@@ -21,8 +21,8 @@ public class ChestOfGoodies extends Action {
     private List<ChestItem> chestItems;
 
     @Builder
-    private ChestOfGoodies(ActionType type, Trigger trigger, String target, List<ChestItem> chestItems) {
-        super(type, trigger, target);
+    private ChestOfGoodies(ActionType type, Trigger trigger, String target, Boolean sendMessage, List<ChestItem> chestItems) {
+        super(type, trigger, target, sendMessage);
         this.chestItems = chestItems;
     }
 
@@ -32,7 +32,7 @@ public class ChestOfGoodies extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         if (input.get("chest_items") == null || !(input.get("chest_items") instanceof ArrayList<?>)) {
             logger().warning("The chest_items in a Chest Of Goodies actions was not a valid list");
             return null;
@@ -42,6 +42,7 @@ public class ChestOfGoodies extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .chestItems(chestItems)
                 .build();
     }

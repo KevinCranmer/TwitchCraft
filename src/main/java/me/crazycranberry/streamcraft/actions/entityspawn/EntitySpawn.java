@@ -23,8 +23,8 @@ public class EntitySpawn extends Action {
     private Integer radiusFromPlayer;
 
     @Builder
-    private EntitySpawn(ActionType type, Trigger trigger, String target, EntityType entity, Integer quantity, Integer radiusFromPlayer) {
-        super(type, trigger, target);
+    private EntitySpawn(ActionType type, Trigger trigger, String target, Boolean sendMessage, EntityType entity, Integer quantity, Integer radiusFromPlayer) {
+        super(type, trigger, target, sendMessage);
         this.entity = entity;
         this.quantity = quantity;
         this.radiusFromPlayer = radiusFromPlayer;
@@ -36,7 +36,7 @@ public class EntitySpawn extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         EntityType entity = validateEntity(input.get("entity"));
         Integer quantity = validateField(input.get("quantity"), Integer.class, "quantity");
         Integer radiusFromPlayer = validateField(input.get("radius_from_player"), Integer.class, "radius_from_player");
@@ -47,6 +47,7 @@ public class EntitySpawn extends Action {
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .entity(entity)
                 .quantity(quantity)
                 .radiusFromPlayer(radiusFromPlayer)

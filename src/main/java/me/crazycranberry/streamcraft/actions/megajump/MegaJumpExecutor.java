@@ -46,7 +46,7 @@ public class MegaJumpExecutor implements Executor {
                         timeLeftMap.put(p, secondsLeft);
                     }
                     if (timeLeftMap.isEmpty() && timeLeftTaskId != null) {
-                        maybeSendPlayerMessage(p, "Mega Jump Ended.");
+                        maybeSendPlayerMessage(p, "Mega Jump Ended.", action);
                         Bukkit.getScheduler().cancelTask(timeLeftTaskId);
                     }
                 }
@@ -54,10 +54,10 @@ public class MegaJumpExecutor implements Executor {
         }
         for (Player p : getTargetedPlayers(mj)) {
             if (mj.getDurationSeconds() != null) {
-                maybeSendPlayerMessage(p, String.format("You've been granted %s%s seconds of mega jump%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET));
+                maybeSendPlayerMessage(p, String.format("You've been granted %s%s seconds of mega jump%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
                 timeLeftMap.put(p, mj.getDurationSeconds());
             } else {
-                maybeSendPlayerMessage(p, String.format("You've been granted %s%s mega jump%s%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getNumJumps(), mj.getNumJumps() > 1 ? "s" : "", ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET));
+                maybeSendPlayerMessage(p, String.format("You've been granted %s%s mega jump%s%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getNumJumps(), mj.getNumJumps() > 1 ? "s" : "", ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
                 jumpsLeftMap.put(p, mj.getNumJumps());
             }
         }

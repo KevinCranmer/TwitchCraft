@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 
 public class DropAllItems extends Action {
     @Builder
-    private DropAllItems(ActionType type, Trigger trigger, String target) {
-        super(type, trigger, target);
+    private DropAllItems(ActionType type, Trigger trigger, String target, Boolean sendMessage) {
+        super(type, trigger, target, sendMessage);
     }
 
     @Override
@@ -19,11 +19,12 @@ public class DropAllItems extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         return DropAllItems.builder()
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
+                .sendMessage(sendMessage)
                 .build();
     }
 }
