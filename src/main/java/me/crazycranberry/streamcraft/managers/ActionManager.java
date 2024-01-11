@@ -23,15 +23,9 @@ import static me.crazycranberry.streamcraft.StreamCraft.logger;
 public class ActionManager implements Listener {
     @EventHandler
     private void onFollowTrigger(ChannelFollowEvent event) {
-        List<Action> followActions = getPlugin().config().getActions().stream()
+        getPlugin().config().getActions().stream()
                 .filter(a -> a.getTrigger().getType().equals(TriggerType.CHANNEL_FOLLOW))
-                .toList();
-        if (followActions.size() > 1) {
-            logger().warning("Conflicting actions on follow trigger. Selecting the first action from this list: " + followActions);
-        }
-        if (followActions.size() > 0) {
-            executeAction(event.twitchMessage(), followActions.get(0));
-        }
+                .forEach(a -> executeAction(event.twitchMessage(), a));
     }
     @EventHandler
     private void onPollEndTrigger(PollEndEvent event) {
@@ -39,14 +33,14 @@ public class ActionManager implements Listener {
             return;
         }
         Optional<MessagePollChoice> winningPollChoice = event.twitchMessage().getPayload().getEvent().getChoices().stream().max(Comparator.comparingInt(MessagePollChoice::getVotes));
-        if (!winningPollChoice.isPresent()) {
+        if (winningPollChoice.isEmpty()) {
             return;
         }
         Optional<Action> winningAction = getPlugin().config().getActions()
                 .stream()
                 .filter(a -> a.pollMessage().equals(winningPollChoice.get().getTitle()))
                 .findFirst();
-        if (!winningAction.isPresent()) {
+        if (winningAction.isEmpty()) {
             logger().warning("Somehow the action for \"" + winningPollChoice.get().getTitle() + "\" could not be found.");
             return;
         }

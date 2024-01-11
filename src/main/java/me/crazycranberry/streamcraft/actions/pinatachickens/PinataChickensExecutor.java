@@ -101,6 +101,12 @@ public class PinataChickensExecutor implements Executor {
                 new ItemStack(Material.SLIME_BALL),
                 new ItemStack(Material.TORCH, 10),
                 new ItemStack(Material.FROG_SPAWN_EGG),
+                new ItemStack(Material.STICK),
+                new ItemStack(Material.COMPOSTER),
+                new ItemStack(Material.BLACK_BANNER),
+                new ItemStack(Material.PURPLE_DYE),
+                new ItemStack(Material.NETHER_BRICK_WALL),
+                new ItemStack(Material.GRASS_BLOCK),
                 new ItemStack(Material.CHERRY_BOAT)
         );
 

@@ -24,6 +24,7 @@ public class StreamCraftConfig {
     private Integer pollDuration;
     private Integer pollInterval;
     private Integer pollNumChoices;
+    private Double pollDefaultWeight;
     private List<Action> actions;
 
     public StreamCraftConfig(YamlConfiguration config) {
@@ -60,6 +61,7 @@ public class StreamCraftConfig {
         pollDuration = config.getInt("polls.duration_seconds", originalConfig.getInt("polls.duration_seconds"));
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
+        pollDefaultWeight = config.getDouble("polls.default_weight", originalConfig.getInt("polls.default_weight"));
         actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c)).peek(System.out::println).filter(Objects::nonNull).toList();
     }
 
