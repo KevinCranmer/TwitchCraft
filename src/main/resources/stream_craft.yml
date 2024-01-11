@@ -74,3 +74,13 @@ actions:
   - type: BUILD_A_HOUSE
     trigger:
       type: CHANNEL_FOLLOW
+  - type: ROTATING_HOTBAR
+    trigger:
+      type: CHANNEL_FOLLOW
+    num_rotations: 10
+    seconds_between_rotations: 2
+  - type: CUSTOM_COMMAND
+    trigger:
+      type: CHANNEL_FOLLOW
+    command: summon zombie {PLAYER_LOCATION}
+    poll_message: Spawn Zombie

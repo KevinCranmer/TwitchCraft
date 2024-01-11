@@ -6,6 +6,8 @@ import me.crazycranberry.streamcraft.actions.buildahouse.BuildAHouseExecutor;
 import me.crazycranberry.streamcraft.actions.cantstopwontstop.CantStopWontStop;
 import me.crazycranberry.streamcraft.actions.cantstopwontstop.CantStopWontStopExecutor;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodiesExecutor;
+import me.crazycranberry.streamcraft.actions.customcommand.CustomCommand;
+import me.crazycranberry.streamcraft.actions.customcommand.CustomCommandExecutor;
 import me.crazycranberry.streamcraft.actions.dropallitems.DropAllItemsExecutor;
 import me.crazycranberry.streamcraft.actions.entityspawn.EntitySpawnExecutor;
 import me.crazycranberry.streamcraft.actions.Executor;
@@ -16,6 +18,8 @@ import me.crazycranberry.streamcraft.actions.nojumping.NoJumpingExecutor;
 import me.crazycranberry.streamcraft.actions.pinatachickens.PinataChickensExecutor;
 import me.crazycranberry.streamcraft.actions.potioneffect.PotionEffectExecutor;
 import me.crazycranberry.streamcraft.actions.randomitemremoval.RandomItemRemovalExecutor;
+import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbar;
+import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbarExecutor;
 import me.crazycranberry.streamcraft.actions.waterlog.WaterLogExecutor;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodies;
 import me.crazycranberry.streamcraft.actions.dropallitems.DropAllItems;
@@ -34,6 +38,7 @@ public enum ActionType {
     BUILD_A_HOUSE("BUILD_A_HOUSE", BuildAHouse.class, BuildAHouseExecutor.class),
     CANT_STOP_WONT_STOP("CANT_STOP_WONT_STOP", CantStopWontStop.class, CantStopWontStopExecutor.class),
     CHEST_OF_GOODIES("CHEST_OF_GOODIES", ChestOfGoodies.class, ChestOfGoodiesExecutor.class),
+    CUSTOM_COMMAND("CUSTOM_COMMAND", CustomCommand.class, CustomCommandExecutor.class),
     DROP_ALL_ITEMS("DROP_ALL_ITEMS", DropAllItems.class, DropAllItemsExecutor.class),
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),
     EXPLOSION("EXPLOSION", Explosion.class, ExplosionExecutor.class),
@@ -43,6 +48,7 @@ public enum ActionType {
     PINATA_CHICKENS("PINATA_CHICKENS", PinataChickens.class, PinataChickensExecutor.class),
     POTION_EFFECT("POTION_EFFECT", PotionEffect.class, PotionEffectExecutor.class),
     RANDOM_ITEM_REMOVAL("RANDOM_ITEM_REMOVAL", RandomItemRemoval.class, RandomItemRemovalExecutor.class),
+    ROTATING_HOTBAR("ROTATING_HOTBAR", RotatingHotbar.class, RotatingHotbarExecutor.class),
     WATERLOG("WATERLOG", WaterLog.class, WaterLogExecutor.class);
 
     private String value;
