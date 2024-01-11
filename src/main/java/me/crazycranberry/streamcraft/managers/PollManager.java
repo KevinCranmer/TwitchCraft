@@ -97,15 +97,6 @@ public class PollManager implements Listener {
     }
 
     private static void cleanPollActions(List<Action> pollActions) {
-        Optional<Double> defaultWeight;
-        if (pollActions.stream().noneMatch(p -> p.getTrigger().getWeight() != null)) {
-            defaultWeight = Optional.of(0.1);
-        } else {
-            defaultWeight = pollActions.stream().map(Action::getTrigger).filter(a -> a.getWeight() != null).min(Comparator.comparing(Trigger::getWeight)).map(Trigger::getWeight);
-        }
-         if (defaultWeight.isEmpty()) {
-             throw new IllegalStateException(String.format("Could not get a defaultWeight. This would happen if pollActions is empty. But if pollActions is empty then we should not have gotten here. PollAction size: %s", pollActions.size()));
-        }
-        pollActions.stream().filter(p -> p.getTrigger().getWeight() == null).forEach(p -> p.getTrigger().setWeight(defaultWeight.get()));
+        pollActions.stream().filter(p -> p.getTrigger().getWeight() == null).forEach(p -> p.getTrigger().setWeight(getPlugin().config().getPollDefaultWeight()));
     }
 }

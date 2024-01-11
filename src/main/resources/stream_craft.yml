@@ -6,6 +6,7 @@ polls:
   duration_seconds: 30
   seconds_until_next_poll: 120
   num_choices: 3
+  default_weight: 1.0
 actions:
   - type: ENTITY_SPAWN
     trigger:
