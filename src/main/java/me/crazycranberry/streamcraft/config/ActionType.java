@@ -17,6 +17,8 @@ import me.crazycranberry.streamcraft.actions.megajump.MegaJumpExecutor;
 import me.crazycranberry.streamcraft.actions.nojumping.NoJumpingExecutor;
 import me.crazycranberry.streamcraft.actions.pinatachickens.PinataChickensExecutor;
 import me.crazycranberry.streamcraft.actions.potioneffect.PotionEffectExecutor;
+import me.crazycranberry.streamcraft.actions.raid.Raid;
+import me.crazycranberry.streamcraft.actions.raid.RaidExecutor;
 import me.crazycranberry.streamcraft.actions.randomitemremoval.RandomItemRemovalExecutor;
 import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbar;
 import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbarExecutor;
@@ -47,6 +49,7 @@ public enum ActionType {
     NO_JUMPING("NO_JUMPING", NoJumping.class, NoJumpingExecutor.class),
     PINATA_CHICKENS("PINATA_CHICKENS", PinataChickens.class, PinataChickensExecutor.class),
     POTION_EFFECT("POTION_EFFECT", PotionEffect.class, PotionEffectExecutor.class),
+    RAID("RAID", Raid.class, RaidExecutor.class),
     RANDOM_ITEM_REMOVAL("RANDOM_ITEM_REMOVAL", RandomItemRemoval.class, RandomItemRemovalExecutor.class),
     ROTATING_HOTBAR("ROTATING_HOTBAR", RotatingHotbar.class, RotatingHotbarExecutor.class),
     WATERLOG("WATERLOG", WaterLog.class, WaterLogExecutor.class);
