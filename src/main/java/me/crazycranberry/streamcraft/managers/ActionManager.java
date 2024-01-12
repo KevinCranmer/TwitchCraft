@@ -14,15 +14,23 @@ import org.bukkit.event.Listener;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 
 public class ActionManager implements Listener {
+    private Set<String> usersWhoveAlreadyFollowed = new HashSet<>();
+
     @EventHandler
     private void onFollowTrigger(ChannelFollowEvent event) {
+        String username = event.twitchMessage().getPayload().getEvent().getUser_name();
+        if (!getPlugin().config().isFollowAllowRepeats() && usersWhoveAlreadyFollowed.contains(username)) {
+            return;
+        }
+        usersWhoveAlreadyFollowed.add(username);
         getPlugin().config().getActions().stream()
                 .filter(a -> a.getTrigger().getType().equals(TriggerType.CHANNEL_FOLLOW))
                 .forEach(a -> executeAction(event.twitchMessage(), a));
