@@ -34,6 +34,8 @@ import me.crazycranberry.streamcraft.actions.pinatachickens.PinataChickens;
 import me.crazycranberry.streamcraft.actions.potioneffect.PotionEffect;
 import me.crazycranberry.streamcraft.actions.randomitemremoval.RandomItemRemoval;
 import me.crazycranberry.streamcraft.actions.waterlog.WaterLog;
+import me.crazycranberry.streamcraft.actions.weepingangel.WeepingAngel;
+import me.crazycranberry.streamcraft.actions.weepingangel.WeepingAngelExecutor;
 
 @AllArgsConstructor
 public enum ActionType {
@@ -52,7 +54,8 @@ public enum ActionType {
     RAID("RAID", Raid.class, RaidExecutor.class),
     RANDOM_ITEM_REMOVAL("RANDOM_ITEM_REMOVAL", RandomItemRemoval.class, RandomItemRemovalExecutor.class),
     ROTATING_HOTBAR("ROTATING_HOTBAR", RotatingHotbar.class, RotatingHotbarExecutor.class),
-    WATERLOG("WATERLOG", WaterLog.class, WaterLogExecutor.class);
+    WATERLOG("WATERLOG", WaterLog.class, WaterLogExecutor.class),
+    WEEPING_ANGEL("WEEPING_ANGEL", WeepingAngel.class, WeepingAngelExecutor.class);
 
     private String value;
     private Class<? extends Action> actionDefinition;

@@ -23,6 +23,7 @@ import java.util.Map;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getPossiblePerimeterSpawnLocations;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
@@ -60,7 +61,7 @@ public class FlyingCowExecutor implements Executor {
     private void sendCow(Player p, FlyingCow fc) {
         p.getWorld().playSound(p.getLocation(), ENTITY_COW_AMBIENT, 1, 1);
         Location pLoc = p.getLocation().clone();
-        Vector spawnOffset = randomFromList(possibleSpawnOffsets(fc.getDistanceFromPlayer(), p));
+        Vector spawnOffset = randomFromList(getPossiblePerimeterSpawnLocations(fc.getDistanceFromPlayer(), ySpawnRange, p));
         if (spawnOffset == null) {
             return;
         }
@@ -98,35 +99,6 @@ public class FlyingCowExecutor implements Executor {
             }
         }
         return blocks;
-    }
-
-    private List<Vector> possibleSpawnOffsets(int distanceFromPlayer, Player p) {
-        List<Vector> possibleSpawnOffsets = new ArrayList<>();
-        for (int i = -distanceFromPlayer; i < distanceFromPlayer; i++) {
-            for (int k = -ySpawnRange; k < ySpawnRange; k++) {
-                Vector potentialOffset1 = new Vector(i, k, distanceFromPlayer);
-                Vector potentialOffset2 = new Vector(i, k, -distanceFromPlayer);
-                if (isValidSpawnBlock(p.getLocation().add(new Vector(potentialOffset1.getX(), potentialOffset1.getY(), potentialOffset1.getZ())))) {
-                    possibleSpawnOffsets.add(potentialOffset1);
-                }
-                if (isValidSpawnBlock(p.getLocation().add(new Vector(potentialOffset2.getX(), potentialOffset2.getY(), potentialOffset2.getZ())))) {
-                    possibleSpawnOffsets.add(potentialOffset2);
-                }
-            }
-        }
-        for (int j = -distanceFromPlayer; j < distanceFromPlayer; j++) {
-            for (int k = -ySpawnRange; k < ySpawnRange; k++) {
-                Vector potentialOffset1 = new Vector(distanceFromPlayer, k, j);
-                Vector potentialOffset2 = new Vector(-distanceFromPlayer, k, j);
-                if (isValidSpawnBlock(p.getLocation().add(new Vector(potentialOffset1.getX(), potentialOffset1.getY(), potentialOffset1.getZ())))) {
-                    possibleSpawnOffsets.add(potentialOffset1);
-                }
-                if (isValidSpawnBlock(p.getLocation().add(new Vector(potentialOffset2.getX(), potentialOffset2.getY(), potentialOffset2.getZ())))) {
-                    possibleSpawnOffsets.add(potentialOffset2);
-                }
-            }
-        }
-        return possibleSpawnOffsets;
     }
 
     private Vector cowVelocity(Vector spawnOffset, double xzVelocity) {

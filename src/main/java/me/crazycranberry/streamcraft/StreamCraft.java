@@ -9,6 +9,7 @@ import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodiesManager;
 import me.crazycranberry.streamcraft.actions.explosion.ExplosionManager;
 import me.crazycranberry.streamcraft.actions.flyingcow.FlyingCowManager;
+import me.crazycranberry.streamcraft.managers.CleanUpManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
 import me.crazycranberry.streamcraft.actions.megajump.MegaJumpManager;
 import me.crazycranberry.streamcraft.actions.nojumping.NoJumpingManager;
@@ -53,6 +54,7 @@ public final class StreamCraft extends JavaPlugin {
     private void registerManagers() {
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
         getServer().getPluginManager().registerEvents(new ChestOfGoodiesManager(), this);
+        getServer().getPluginManager().registerEvents(new CleanUpManager(), this);
         getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);

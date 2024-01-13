@@ -87,3 +87,8 @@ actions:
       type: CHANNEL_FOLLOW
     command: summon zombie {PLAYER_LOCATION}
     poll_message: Spawn Zombie
+  - type: WEEPING_ANGEL
+    trigger:
+      type: CHANNEL_FOLLOW
+    seconds_till_despawn: 1800
+    distance_from_player: 20
