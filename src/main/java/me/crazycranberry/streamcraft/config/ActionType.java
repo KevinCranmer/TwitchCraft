@@ -24,6 +24,8 @@ import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbar;
 import me.crazycranberry.streamcraft.actions.rotatinghotbar.RotatingHotbarExecutor;
 import me.crazycranberry.streamcraft.actions.sendtonether.SendToNether;
 import me.crazycranberry.streamcraft.actions.sendtonether.SendToNetherExecutor;
+import me.crazycranberry.streamcraft.actions.soupman.SoupMan;
+import me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor;
 import me.crazycranberry.streamcraft.actions.waterlog.WaterLogExecutor;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodies;
 import me.crazycranberry.streamcraft.actions.dropallitems.DropAllItems;
@@ -57,6 +59,7 @@ public enum ActionType {
     RANDOM_ITEM_REMOVAL("RANDOM_ITEM_REMOVAL", RandomItemRemoval.class, RandomItemRemovalExecutor.class),
     ROTATING_HOTBAR("ROTATING_HOTBAR", RotatingHotbar.class, RotatingHotbarExecutor.class),
     SEND_TO_NETHER("SEND_TO_NETHER", SendToNether.class, SendToNetherExecutor.class),
+    SOUP_MAN("SOUP_MAN", SoupMan.class, SoupManExecutor.class),
     WATERLOG("WATERLOG", WaterLog.class, WaterLogExecutor.class),
     WEEPING_ANGEL("WEEPING_ANGEL", WeepingAngel.class, WeepingAngelExecutor.class);
 

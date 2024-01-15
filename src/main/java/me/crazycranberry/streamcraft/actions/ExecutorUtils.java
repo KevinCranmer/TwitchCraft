@@ -180,4 +180,9 @@ public class ExecutorUtils {
         }
         return atLeastALittleLOS;
     }
+
+    public static boolean isAboveGround(Player p) {
+        RayTraceResult result = p.getWorld().rayTraceBlocks(p.getLocation(), new Vector(0, 1, 0), 256);
+        return result == null || result.getHitBlock() == null;
+    }
 }
