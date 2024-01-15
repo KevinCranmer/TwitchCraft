@@ -1,5 +1,6 @@
 package me.crazycranberry.streamcraft;
 
+import me.crazycranberry.streamcraft.actions.sendtonether.SendToNetherManager;
 import me.crazycranberry.streamcraft.commands.CreatePollCommand;
 import me.crazycranberry.streamcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
@@ -9,6 +10,7 @@ import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodiesManager;
 import me.crazycranberry.streamcraft.actions.explosion.ExplosionManager;
 import me.crazycranberry.streamcraft.actions.flyingcow.FlyingCowManager;
+import me.crazycranberry.streamcraft.managers.CleanUpManager;
 import me.crazycranberry.streamcraft.managers.KeepAliveManager;
 import me.crazycranberry.streamcraft.actions.megajump.MegaJumpManager;
 import me.crazycranberry.streamcraft.actions.nojumping.NoJumpingManager;
@@ -53,6 +55,7 @@ public final class StreamCraft extends JavaPlugin {
     private void registerManagers() {
         getServer().getPluginManager().registerEvents(new ActionManager(), this);
         getServer().getPluginManager().registerEvents(new ChestOfGoodiesManager(), this);
+        getServer().getPluginManager().registerEvents(new CleanUpManager(), this);
         getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
@@ -61,6 +64,7 @@ public final class StreamCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PinataChickenManager(), this);
         getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
+        getServer().getPluginManager().registerEvents(new SendToNetherManager(), this);
     }
 
     private void registerCommands() {
