@@ -21,10 +21,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.WanderingTrader;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -41,6 +44,7 @@ import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlaye
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
 
 public class SoupManExecutor implements Executor {
+    private static final int intervalTicks = 20;
     private static Map<Player, SoupManStats> stats = new HashMap<>();
 
     @Override
@@ -65,13 +69,14 @@ public class SoupManExecutor implements Executor {
             soupMan.customName(Component.text("Soup Man"));
             soupMan.setCustomNameVisible(true);
             stats.put(p, SoupManStats.builder()
-                    .intervalsLeft(sm.getMinutesTillAngry() * 20)
+                    .intervalsLeft((int) (sm.getMinutesTillAngry() * (60 / (intervalTicks / TICKS_PER_SECOND))))
                     .soupMan(soupMan)
+                    .action(sm)
                     .taskId(Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> {
                         SoupManStats sms = stats.get(p);
                         if (sms != null) {
-                            if (sms.getIntervalsLeft() == sm.getMinutesTillAngry() * 10) {
-                                maybeSendPlayerMessage(p, String.format("<SoupMan>If I don't get my soup in %s minutes, I might get %sANGRY!%s", (sm.getMinutesTillAngry() * 10), ChatColor.RED, ChatColor.RESET), action);
+                            if (sms.getIntervalsLeft() == (int) (sm.getMinutesTillAngry() * (30 / (intervalTicks / TICKS_PER_SECOND)))) {
+                                maybeSendPlayerMessage(p, String.format("<SoupMan>If I don't get my soup in %s minutes, I might get %sANGRY!%s", (sm.getMinutesTillAngry() / 2), ChatColor.RED, ChatColor.RESET), action);
                             } else if (sms.getIntervalsLeft() <= 0 && sms.getSoupMan().getMetadata("ispissed").stream().anyMatch(m -> "false".equals(m.value()))) {
                                 makeSoupManAngry(p, sms.getSoupMan(), sm);
                             } else if (sms.getIntervalsLeft() <= 0 && p.getLocation().toVector().subtract(sms.getSoupMan().getLocation().toVector()).lengthSquared() <= 81) {
@@ -83,10 +88,10 @@ public class SoupManExecutor implements Executor {
                                     p.getWorld().createExplosion(p.getLocation().add(x, 0, z), 2);
                                 }
                             }
-                            soupMan.setInvisible(false);
+                            soupMan.setWanderingTowards(p.getLocation());
                             sms.setIntervalsLeft(sms.getIntervalsLeft() - 1);
                         }
-                    }, 1 /*<-- the initial delay */, TICKS_PER_SECOND * 3 /*<-- the interval */).getTaskId())
+                    }, 1 /*<-- the initial delay */, intervalTicks /*<-- the interval */).getTaskId())
                     .build());
         }
     }
@@ -109,6 +114,7 @@ public class SoupManExecutor implements Executor {
         maybeSendPlayerMessage(p, String.format("<SoupMan>%sNO SOUP?! NOW YOU MUST DIE!%s", ChatColor.RED, ChatColor.RESET), sm);
         soupMan.customName(Component.text("ANGRY!", Style.style(NamedTextColor.RED)));
         soupMan.setMetadata("ispissed", new FixedMetadataValue(getPlugin(), "true"));
+        soupMan.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 36000, 2));
     }
 
     public static void playerDied(Player p) {
@@ -132,18 +138,15 @@ public class SoupManExecutor implements Executor {
         stats.remove(p);
     }
 
-    public static boolean isPlayerTradingWrongSoupMan(Player p, Entity rightClicked) {
-        return stats.containsKey(p) && rightClicked.getMetadata("soupman").stream().anyMatch(m -> "true".equals(m.value())) && stats.get(p).getSoupMan().equals(rightClicked);
+    public static boolean isPlayerTradingCorrectSoupMan(Player p, Entity rightClicked) {
+        return rightClicked.getMetadata("soupman").stream().anyMatch(m -> "true".equals(m.value())) && stats.entrySet().stream().anyMatch(e -> e.getValue().getSoupMan().equals(rightClicked) && e.getKey().equals(p));
     }
 
-    public static boolean wasASoupTrade(HumanEntity whoClicked, Inventory clickedInventory, ItemStack currentItem) {
-        if (!(whoClicked instanceof Player)) {
-            System.out.println("It wasn't even a player...");
+    public static boolean wasASoupTrade(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) {
             return false;
         }
-        Player p = (Player) whoClicked;
-        System.out.println("Do the inventories match? " + clickedInventory.equals(stats.get(p).getSoupMan().getInventory()));
-        return currentItem.getType().equals(Material.EXPERIENCE_BOTTLE) && clickedInventory.equals(stats.get(p).getSoupMan().getInventory());
+        return event.getCurrentItem().getType().equals(Material.EXPERIENCE_BOTTLE);
     }
 
     @Getter
