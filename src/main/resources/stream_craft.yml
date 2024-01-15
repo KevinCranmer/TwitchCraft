@@ -92,3 +92,7 @@ actions:
       type: CHANNEL_FOLLOW
     seconds_till_despawn: 1800
     distance_from_player: 20
+  - type: SEND_TO_NETHER
+    trigger:
+      type: CHANNEL_FOLLOW
+    nether_portal_possible_radius: 30

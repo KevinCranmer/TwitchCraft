@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 
@@ -48,6 +49,11 @@ public class ExecutorUtils {
 
     @NotNull
     public static List<Location> getPossibleSpawnLocations(Player p, int radius) {
+        return getPossibleSpawnLocations(p, radius, ExecutorUtils::isValidSpawnBlock);
+    }
+
+    @NotNull
+    public static List<Location> getPossibleSpawnLocations(Player p, int radius, Function<Location, Boolean> validityFunction) {
         List<Location> possibleSpawnLocations = new ArrayList<>();
         double x = Math.floor(p.getLocation().getX()) + 0.5;
         double y = p.getLocation().getY();
@@ -59,7 +65,7 @@ public class ExecutorUtils {
                     if (i == 0 && j == 0 && k == 0) {
                         continue; // We will always add the player location in the event that there are no valid spawns
                     }
-                    if (isValidSpawnBlock(potentialLoc)) {
+                    if (validityFunction.apply(potentialLoc)) {
                         possibleSpawnLocations.add(potentialLoc);
                     }
                 }
