@@ -96,3 +96,7 @@ actions:
     trigger:
       type: CHANNEL_FOLLOW
     nether_portal_possible_radius: 30
+  - type: SOAP_MAN
+    trigger:
+      type: CHANNEL_FOLLOW
+    minutes_till_angry: 20

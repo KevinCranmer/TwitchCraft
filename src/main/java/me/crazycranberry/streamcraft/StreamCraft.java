@@ -1,6 +1,7 @@
 package me.crazycranberry.streamcraft;
 
 import me.crazycranberry.streamcraft.actions.sendtonether.SendToNetherManager;
+import me.crazycranberry.streamcraft.actions.soupman.SoupManManager;
 import me.crazycranberry.streamcraft.commands.CreatePollCommand;
 import me.crazycranberry.streamcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
@@ -65,6 +66,7 @@ public final class StreamCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
         getServer().getPluginManager().registerEvents(new SendToNetherManager(), this);
+        getServer().getPluginManager().registerEvents(new SoupManManager(), this);
     }
 
     private void registerCommands() {
