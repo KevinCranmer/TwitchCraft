@@ -16,7 +16,8 @@ import static me.crazycranberry.streamcraft.config.TriggerType.POLL;
 @ToString
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Trigger {
-    private String predicate;
+    private Integer min;
+    private Integer max;
     private TriggerType type;
     private Double weight;
 
@@ -29,22 +30,31 @@ public class Trigger {
         if (type.equals(POLL)) {
             weight = input.get("weight") == null ? null : validateWeight(input.get("weight"));
         }
-        String predicate = validatePredicate(input.get("predicate"), type);
-        if (predicate == null && type.requirePredicate()) {
-            logger().warning("A predicate is required for a " + type.value() + " action.");
-            return null;
-        }
-        return new Trigger(predicate, type, weight);
+        Integer min = validateMin(input.get("min"));
+        Integer max = validateMax(input.get("max"));
+        min = min == null ? 0 : Math.max(min, 0);
+        max = max == null ? Integer.MAX_VALUE : Math.max(min, max);
+        return new Trigger(min, max, type, weight);
     }
 
-    private static <T> String validatePredicate(T predicate, TriggerType triggerType) {
-        if (!(predicate instanceof String)) {
-            if (triggerType.requirePredicate()) {
-                logger().warning("An Action's Trigger type was not a String.");
+    private static <T> Integer validateMin(T min) {
+        if (!(min instanceof Integer)) {
+            if (min != null) {
+                logger().warning("An Action's Trigger min was not an Integer.");
             }
             return null;
         }
-        return (String) predicate;
+        return (Integer) min;
+    }
+
+    private static <T> Integer validateMax(T max) {
+        if (!(max instanceof Integer)) {
+            if (max != null) {
+                logger().warning("An Action's Trigger max was not an Integer.");
+            }
+            return null;
+        }
+        return (Integer) max;
     }
 
     private static <T> Double validateWeight(T weight) {

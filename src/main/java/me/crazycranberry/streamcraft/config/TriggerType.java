@@ -2,21 +2,24 @@ package me.crazycranberry.streamcraft.config;
 
 import lombok.AllArgsConstructor;
 import me.crazycranberry.streamcraft.events.ActionEvent;
+import me.crazycranberry.streamcraft.events.ChannelCheerEvent;
 import me.crazycranberry.streamcraft.events.ChannelFollowEvent;
+import me.crazycranberry.streamcraft.events.ChannelResubscribeEvent;
+import me.crazycranberry.streamcraft.events.ChannelSubscribeEvent;
+import me.crazycranberry.streamcraft.events.ChannelSubscriptionGiftEvent;
 import me.crazycranberry.streamcraft.events.PollEndEvent;
 
 @AllArgsConstructor
 public enum TriggerType {
-    CHANNEL_FOLLOW(false, "channel.follow", ChannelFollowEvent.class),
-    POLL(false, "channel.poll.end", PollEndEvent.class);
+    CHANNEL_FOLLOW("channel.follow", ChannelFollowEvent.class),
+    CHANNEL_SUBSCRIBE("channel.subscribe", ChannelSubscribeEvent.class),
+    CHANNEL_RESUBSCRIBE("channel.subscription.message", ChannelResubscribeEvent.class),
+    SUB_GIFT("channel.subscription.gift", ChannelSubscriptionGiftEvent.class),
+    CHANNEL_CHEER("channel.cheer", ChannelCheerEvent.class),
+    POLL("channel.poll.end", PollEndEvent.class);
 
-    private boolean requirePredicate;
     private String value;
     private Class<? extends ActionEvent> event;
-
-    public boolean requirePredicate() {
-        return requirePredicate;
-    }
 
     public String value() {
         return value;

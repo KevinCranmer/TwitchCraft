@@ -123,7 +123,7 @@ public class TwitchClient {
         }
     }
 
-    private void handleNotificationMessage(Message twitchMessage) {
+    public static void handleNotificationMessage(Message twitchMessage) {
         for (TriggerType triggerType : TriggerType.values()) {
             if (triggerType.value().equals(twitchMessage.getPayload().getSubscription().getType())) {
                 new java.util.Timer().schedule(

@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
+import static me.crazycranberry.streamcraft.config.TriggerType.CHANNEL_CHEER;
+import static me.crazycranberry.streamcraft.config.TriggerType.SUB_GIFT;
 
 public class ExecutorUtils {
     public static final long TICKS_PER_SECOND = 20L;
@@ -29,8 +31,14 @@ public class ExecutorUtils {
     }
 
     public static String triggerer(Message twitchMessage, Action action) {
+        String totalGiftedOrBits = "";
+        if (action.getTrigger().getType().equals(SUB_GIFT)) {
+            totalGiftedOrBits = " with " + twitchMessage.getPayload().getEvent().getTotal() + " gifted subs!";
+        } else if (action.getTrigger().getType().equals(CHANNEL_CHEER)) {
+            totalGiftedOrBits = " with " + twitchMessage.getPayload().getEvent().getBits() + " bits!";
+        }
         String userThatTriggered = twitchMessage.getPayload().getEvent().getUser_name();
-        return userThatTriggered == null ? "a channel poll" : userThatTriggered + " triggering " + action.getTrigger().getType();
+        return userThatTriggered == null ? "a channel poll" : userThatTriggered + " triggering " + action.getTrigger().getType() + totalGiftedOrBits;
     }
 
     public static <T> T randomFromList(List<T> list) {
