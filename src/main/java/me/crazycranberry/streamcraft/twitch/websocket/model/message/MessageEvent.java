@@ -1,5 +1,6 @@
 package me.crazycranberry.streamcraft.twitch.websocket.model.message;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,4 +32,14 @@ public class MessageEvent {
     private String started_at;
     private String ended_at;
     private String status;
+    private String tier;
+    private Boolean is_gift;
+    private JsonNode message; // This is either a string or an object. Why tf does Twitch have two typings for the same variable smh...
+    private Integer cumulative_months;
+    private Integer streak_months;
+    private Integer duration_months;
+    private Integer total;
+    private Integer cumulative_total;
+    private Boolean is_anonymous;
+    private Integer bits;
 }

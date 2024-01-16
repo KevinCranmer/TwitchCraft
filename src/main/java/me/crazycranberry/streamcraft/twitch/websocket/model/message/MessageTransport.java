@@ -16,4 +16,5 @@ import lombok.ToString;
 public class MessageTransport {
     private String method;
     private String session_id;
+    private String callback;
 }
