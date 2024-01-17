@@ -5,7 +5,12 @@ import me.crazycranberry.streamcraft.actions.soupman.SoupManManager;
 import me.crazycranberry.streamcraft.commands.CreatePollCommand;
 import me.crazycranberry.streamcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.streamcraft.commands.RefreshConfigCommand;
+import me.crazycranberry.streamcraft.commands.TriggerChannelCheerEvent;
 import me.crazycranberry.streamcraft.commands.TriggerChannelFollowEvent;
+import me.crazycranberry.streamcraft.commands.TriggerChannelResubscribeEvent;
+import me.crazycranberry.streamcraft.commands.TriggerChannelSubscribeEvent;
+import me.crazycranberry.streamcraft.commands.TriggerPollEndEvent;
+import me.crazycranberry.streamcraft.commands.TriggerSubscriptionGiftEvent;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.managers.ActionManager;
 import me.crazycranberry.streamcraft.actions.chestofgoodies.ChestOfGoodiesManager;
@@ -72,8 +77,13 @@ public final class StreamCraft extends JavaPlugin {
     private void registerCommands() {
         setCommandManager("screfresh", new RefreshConfigCommand());
         setCommandManager("screconnect", new ReconnectToTwitchCommand());
-        setCommandManager("cf", new TriggerChannelFollowEvent());
-        setCommandManager("cp", new CreatePollCommand());
+        setCommandManager("ChannelFollow", new TriggerChannelFollowEvent());
+        setCommandManager("ChannelSubscribe", new TriggerChannelSubscribeEvent());
+        setCommandManager("ChannelResubscribe", new TriggerChannelResubscribeEvent());
+        setCommandManager("ChannelCheer", new TriggerChannelCheerEvent());
+        setCommandManager("SubGift", new TriggerSubscriptionGiftEvent());
+        setCommandManager("PollResult", new TriggerPollEndEvent());
+        setCommandManager("CreatePoll", new CreatePollCommand());
     }
 
     private void setCommandManager(String command, CommandExecutor commandManager) {

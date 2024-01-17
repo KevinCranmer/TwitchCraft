@@ -13,11 +13,21 @@ commands:
     description: Restart the Twitch WebSocket connection
     permission: admin
     permission-message: You do not have permission to refresh.
-  cf:
-    description: Only for testing. Delete me.
-  cp:
-    description: Only for testing. Delete me.
+  CreatePoll:
+    description: Used to create a poll on your channel. These should be created automatically but just in case, this command exists.
+  ChannelFollow:
+    description: Trigger a fake follow notification. Used for testing.
+  ChannelSubscribe:
+    description: Trigger a fake subscribe notification. Used for testing.
+  ChannelResubscribe:
+    description: Trigger a fake resubscribe notification. Used for testing.
+  ChannelCheer:
+    description: Trigger a fake cheer notification. Used for testing.
+  SubGift:
+    description: Trigger a fake Sub Gift notification. Used for testing.
+  PollResult:
+    description: Trigger a fake Poll Result notification. Used for testing.
 permissions:
   admin:
-    description: Vanilla Hunger Games Admin permission
+    description: StreamCraft Admin permission
     default: op
