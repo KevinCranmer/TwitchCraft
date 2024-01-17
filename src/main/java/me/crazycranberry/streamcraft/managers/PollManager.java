@@ -2,7 +2,6 @@ package me.crazycranberry.streamcraft.managers;
 
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.config.StreamCraftConfig;
-import me.crazycranberry.streamcraft.config.Trigger;
 import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.events.PollEndEvent;
 import me.crazycranberry.streamcraft.events.WebSocketConnectedEvent;
@@ -14,10 +13,9 @@ import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
+import static me.crazycranberry.streamcraft.StreamCraft.SECRET;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
@@ -88,6 +86,7 @@ public class PollManager implements Listener {
             .duration(config.getPollDuration())
             .title(config.getPollTitle())
             .choices(selectedPollActions.stream().map(a -> PollChoice.of(a.pollMessage())).toList())
+            .secret(SECRET)
             .build();
         getPlugin().createTwitchPoll(poll);
     }

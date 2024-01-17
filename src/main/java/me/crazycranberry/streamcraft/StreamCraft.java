@@ -1,5 +1,6 @@
 package me.crazycranberry.streamcraft;
 
+import lombok.SneakyThrows;
 import me.crazycranberry.streamcraft.actions.sendtonether.SendToNetherManager;
 import me.crazycranberry.streamcraft.actions.soupman.SoupManManager;
 import me.crazycranberry.streamcraft.commands.CreatePollCommand;
@@ -29,8 +30,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.InputStream;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static me.crazycranberry.streamcraft.utils.FileUtils.loadConfig;
@@ -40,6 +43,7 @@ public final class StreamCraft extends JavaPlugin {
     private static StreamCraft plugin;
     private StreamCraftConfig config;
     private TwitchClient twitchClient;
+    public final static String SECRET = getSecret();
 
     @Override
     public void onEnable() {
@@ -47,7 +51,7 @@ public final class StreamCraft extends JavaPlugin {
         plugin = this;
         logger = this.getLogger();
         refreshConfigs();
-        //twitchClient = new TwitchClient();
+        twitchClient = new TwitchClient();
         registerCommands();
         registerManagers();
     }
@@ -55,7 +59,7 @@ public final class StreamCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        //twitchClient.close();
+        twitchClient.close();
     }
 
     private void registerManagers() {
@@ -127,5 +131,14 @@ public final class StreamCraft extends JavaPlugin {
             e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    @SneakyThrows
+    private static String getSecret() {
+        InputStream stream = StreamCraft.class.getClassLoader().getResource("secret.txt").openStream();
+        Scanner scan = new Scanner(stream);
+        String secret = scan.next();
+        System.out.println("The secret: " + secret);
+        return secret;
     }
 }

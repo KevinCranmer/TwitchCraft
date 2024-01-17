@@ -28,6 +28,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
 
+import static me.crazycranberry.streamcraft.StreamCraft.SECRET;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 
@@ -185,19 +186,51 @@ public class TwitchClient {
     private void subscribeToEvents() {
         subscribeToFollowEvents();
         subscribeToPollEvents();
+        subscribeToCheerEvents();
+        subscribetoResubscribeEvents();
+        subscribetoSubscribeEvents();
+        subscribeToGiftedEvents();
+    }
+
+    private boolean subscribeToGiftedEvents() {
+        EventSubscription eventSubscription = eventSubscription("channel.subscription.gift", "1", sessionId);
+        HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
+        logger().info("response from subscribeToGiftedEvents: " + response.statusCode() + response.body());
+        return logResponse(response);
+    }
+
+    private boolean subscribetoSubscribeEvents() {
+        EventSubscription eventSubscription = eventSubscription("channel.subscribe", "1", sessionId);
+        HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
+        logger().info("response from subscribetoSubscribeEvents: " + response.statusCode() + response.body());
+        return logResponse(response);
+    }
+
+    private boolean subscribetoResubscribeEvents() {
+        EventSubscription eventSubscription = eventSubscription("channel.subscription.message", "1", sessionId);
+        HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
+        logger().info("response from subscribetoResubscribeEvents: " + response.statusCode() + response.body());
+        return logResponse(response);
+    }
+
+    private boolean subscribeToCheerEvents() {
+        EventSubscription eventSubscription = eventSubscription("channel.cheer", "1", sessionId);
+        HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
+        logger().info("response from subscribeToCheerEvents: " + response.statusCode() + response.body());
+        return logResponse(response);
     }
 
     private boolean subscribeToPollEvents() {
         EventSubscription eventSubscription = eventSubscription("channel.follow", "2", sessionId);
         HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
-        logger().info("response from subscription: " + response.statusCode() + response.body());
+        logger().info("response from subscribeToPollEvents: " + response.statusCode() + response.body());
         return logResponse(response);
     }
 
     private boolean subscribeToFollowEvents() {
         EventSubscription eventSubscription = eventSubscription("channel.poll.end", "1", sessionId);
         HttpResponse<?> response = sendTwitchSubscription(eventSubscription);
-        logger().info("response from subscription: " + response.statusCode() + response.body());
+        logger().info("response from subscribeToFollowEvents: " + response.statusCode() + response.body());
         return logResponse(response);
     }
 
@@ -254,6 +287,7 @@ public class TwitchClient {
                     .POST(HttpRequest.BodyPublishers.ofString(
                             mapper.writeValueAsString(
                                     Refresh.builder()
+                                            .secret(SECRET)
                                             .refresh_token(getPlugin().config().getRefreshToken())
                                             .build())))
                     .build();
@@ -320,6 +354,7 @@ public class TwitchClient {
                         .method("websocket")
                         .session_id(sessionId)
                         .build())
+                .secret(SECRET)
                 .build();
     }
 
