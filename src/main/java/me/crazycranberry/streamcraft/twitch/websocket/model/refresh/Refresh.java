@@ -11,4 +11,5 @@ import lombok.ToString;
 @Setter
 public class Refresh {
     private String refresh_token;
+    private String secret;
 }

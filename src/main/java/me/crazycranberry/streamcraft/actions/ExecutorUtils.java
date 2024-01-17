@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.config.TriggerType.CHANNEL_CHEER;
 import static me.crazycranberry.streamcraft.config.TriggerType.SUB_GIFT;
 

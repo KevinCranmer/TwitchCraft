@@ -8,12 +8,10 @@ import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.config.ActionType;
 import me.crazycranberry.streamcraft.config.Trigger;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 
 import java.util.LinkedHashMap;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
-import static me.crazycranberry.streamcraft.config.ActionUtils.anyNull;
 
 @Getter
 @Setter

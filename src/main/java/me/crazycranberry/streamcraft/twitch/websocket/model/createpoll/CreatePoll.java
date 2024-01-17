@@ -17,4 +17,5 @@ public class CreatePoll {
     private final String title;
     private final Integer duration;
     private final List<PollChoice> choices;
+    private final String secret;
 }

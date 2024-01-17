@@ -15,4 +15,5 @@ public class EventSubscription {
     private final String version;
     private final Condition condition;
     private final Transport transport;
+    private final String secret;
 }
