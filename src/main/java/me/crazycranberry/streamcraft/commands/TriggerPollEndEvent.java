@@ -47,8 +47,14 @@ public class TriggerPollEndEvent implements CommandExecutor, TabCompleter {
             return getPlugin().config().getActions()
                     .stream()
                     .filter(a -> a.getTrigger().getType().equals(TriggerType.POLL))
-                    .map(Action::pollMessage)
-                    .filter(a -> a.contains(String.join(" ", args)))
+                    .filter(a -> a.pollMessage().startsWith(String.join(" ", args)))
+                    .map(a -> {
+                        String pollMessage = a.pollMessage();
+                        for (int i = 0; i < args.length - 1; i++) {
+                            pollMessage = pollMessage.substring(pollMessage.indexOf(" ") + 1);
+                        }
+                        return pollMessage;
+                    })
                     .toList();
         }
         return null;

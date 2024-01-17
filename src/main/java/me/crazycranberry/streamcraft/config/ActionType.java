@@ -13,6 +13,8 @@ import me.crazycranberry.streamcraft.actions.entityspawn.EntitySpawnExecutor;
 import me.crazycranberry.streamcraft.actions.Executor;
 import me.crazycranberry.streamcraft.actions.explosion.ExplosionExecutor;
 import me.crazycranberry.streamcraft.actions.flyingcow.FlyingCowExecutor;
+import me.crazycranberry.streamcraft.actions.giveitem.GiveItem;
+import me.crazycranberry.streamcraft.actions.giveitem.GiveItemExecutor;
 import me.crazycranberry.streamcraft.actions.megajump.MegaJumpExecutor;
 import me.crazycranberry.streamcraft.actions.nojumping.NoJumpingExecutor;
 import me.crazycranberry.streamcraft.actions.pinatachickens.PinataChickensExecutor;
@@ -51,6 +53,7 @@ public enum ActionType {
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),
     EXPLOSION("EXPLOSION", Explosion.class, ExplosionExecutor.class),
     FLYING_COW("FLYING_COW", FlyingCow.class, FlyingCowExecutor.class),
+    GIVE_ITEM("GIVE_ITEM", GiveItem.class, GiveItemExecutor.class),
     MEGA_JUMP("MEGA_JUMP", MegaJump.class, MegaJumpExecutor.class),
     NO_JUMPING("NO_JUMPING", NoJumping.class, NoJumpingExecutor.class),
     PINATA_CHICKENS("PINATA_CHICKENS", PinataChickens.class, PinataChickensExecutor.class),

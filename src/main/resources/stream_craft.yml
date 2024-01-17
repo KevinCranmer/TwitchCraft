@@ -104,3 +104,8 @@ actions:
     trigger:
       type: CHANNEL_FOLLOW
     minutes_till_angry: 20
+  - type: GIVE_ITEM
+    trigger:
+      type: CHANNEL_FOLLOW
+    item: DIAMOND_CHESTPLATE
+    quantity: 2
