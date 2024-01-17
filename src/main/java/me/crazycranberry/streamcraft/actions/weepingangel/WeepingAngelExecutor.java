@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import me.crazycranberry.streamcraft.actions.Executor;
-import me.crazycranberry.streamcraft.actions.megajump.MegaJump;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import net.kyori.adventure.key.Key;

@@ -4,18 +4,12 @@ import me.crazycranberry.streamcraft.actions.Executor;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
-import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getPossibleSpawnLocations;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
-import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.triggerer;
 
 public class GiveItemExecutor implements Executor {

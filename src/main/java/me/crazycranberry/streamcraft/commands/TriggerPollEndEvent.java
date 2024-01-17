@@ -1,9 +1,6 @@
 package me.crazycranberry.streamcraft.commands;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.command.Command;
@@ -14,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
