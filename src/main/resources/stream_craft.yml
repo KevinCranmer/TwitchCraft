@@ -77,6 +77,8 @@ actions:
         min: 3
         max: 9
   - type: BUILD_A_HOUSE
+    action_message: Let's build a {COLOR:GOLD}house!{COLOR:WHITE} {TRIGGER_TYPE} was triggered
+      by {TRIGGER_CAUSE} with {QUANTITY} gifted subs!
     trigger:
       type: CHANNEL_FOLLOW
   - type: ROTATING_HOTBAR
