@@ -24,7 +24,7 @@ public class CustomCommandExecutor implements Executor {
         for (Player p : getTargetedPlayers(cc)) {
             String command = cc.getCommand().replaceAll("\\{PLAYER}", p.getName())
                     .replaceAll("\\{PLAYER_LOCATION}", String.format("%s %s %s", p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ()));
-            maybeSendPlayerMessage(p, String.format("Running %s\"%s\" Courtesy of %s%s", ChatColor.GOLD, command, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Running %s\"%s\" Courtesy of %s%s", ChatColor.GOLD, command, triggerer(twitchMessage, action), ChatColor.RESET), action);
             dispatchCommand(getServer().getConsoleSender(), command);
         }
     }

@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 
+import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 
 @Getter
@@ -19,28 +20,30 @@ public abstract class Action {
     private ActionType type;
     private Trigger trigger;
     private String target;
+    private String actionMessage;
     private Boolean sendMessage;
 
-    public static Action fromYaml(LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(LinkedHashMap<String, ?> input, Boolean sendMessageByDefault) {
         ActionType type = validateType(input.get("type"));
         Trigger trigger = validateTrigger(input.get("trigger"));
         String target = validateTarget(input.get("target"));
-        Boolean sendMessage = validateSendMessage(input.get("send_message"));
+        Boolean sendMessage = validateSendMessage(input.get("send_message"), sendMessageByDefault);
+        String actionMessage = validateField(input.get("action_message"), String.class, "action_message", false);
         if (type == null || trigger == null) {
             return null;
         }
         try {
-            Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, Boolean.class, LinkedHashMap.class);
-            return (Action) m.invoke(null, type, trigger, target, sendMessage, input);
+            Method m = type.actionDefinition().getMethod("fromYaml", ActionType.class, Trigger.class, String.class, String.class, Boolean.class, LinkedHashMap.class);
+            return (Action) m.invoke(null, type, trigger, target, actionMessage, sendMessage, input);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private static <T> Boolean validateSendMessage(T send_message) {
+    private static <T> Boolean validateSendMessage(T send_message, Boolean sendMessageByDefault) {
         if (!(send_message instanceof Boolean)) {
-            return true;
+            return sendMessageByDefault;
         }
         return (Boolean) send_message;
     }

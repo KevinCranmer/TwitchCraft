@@ -25,7 +25,7 @@ public class RaidExecutor implements Executor {
         }
         Raid r = (Raid) action;
         for (Player p : getTargetedPlayers(r)) {
-            maybeSendPlayerMessage(p, String.format("Incoming %sraid%s courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Incoming %sraid%s courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             Location playerLoc = p.getLocation();
             playerLoc.getBlock().getRelative(1, 0, 0).setType(Material.COMPOSTER);
             p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 1200, r.getBadOmenLevel()));

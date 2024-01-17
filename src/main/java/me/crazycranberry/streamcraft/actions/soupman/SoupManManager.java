@@ -3,9 +3,11 @@ package me.crazycranberry.streamcraft.actions.soupman;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,6 +26,7 @@ import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor.isPlayerTradingCorrectSoupMan;
 import static me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor.playerDied;
 import static me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor.soupDelivered;
+import static me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor.soupManDied;
 import static me.crazycranberry.streamcraft.actions.soupman.SoupManExecutor.wasASoupTrade;
 import static org.bukkit.event.inventory.InventoryType.SlotType.RESULT;
 
@@ -60,6 +63,13 @@ public class SoupManManager implements Listener {
             Player p = (Player) event.getWhoClicked();
             removeTheSoup(p.getInventory());
             soupDelivered((Player) event.getWhoClicked());
+        }
+    }
+
+    @EventHandler
+    private void onSoupManDied(EntityDeathEvent event) {
+        if (event.getEntity().getMetadata("soupman").stream().anyMatch(m -> "true".equals(m.value()))) {
+            soupManDied((WanderingTrader) event.getEntity());
         }
     }
 

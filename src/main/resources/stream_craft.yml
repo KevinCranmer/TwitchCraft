@@ -2,9 +2,11 @@ access_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 refresh_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 broadcaster_id: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 send_action_message_by_default: true
+allow_test_commands: false
 channel_follows:
     allow_repeats: false
 polls:
+  title: Which StreamCraft Action?
   duration_seconds: 30
   seconds_until_next_poll: 120
   num_choices: 3
@@ -75,6 +77,8 @@ actions:
         min: 3
         max: 9
   - type: BUILD_A_HOUSE
+    action_message: Let's build a {COLOR:GOLD}house!{COLOR:WHITE} {TRIGGER_TYPE} was triggered
+      by {TRIGGER_CAUSE} with {QUANTITY} gifted subs!
     trigger:
       type: CHANNEL_FOLLOW
   - type: ROTATING_HOTBAR

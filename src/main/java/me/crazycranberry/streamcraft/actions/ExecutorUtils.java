@@ -3,6 +3,7 @@ package me.crazycranberry.streamcraft.actions;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -49,8 +50,18 @@ public class ExecutorUtils {
         return list.get(randomIndex);
     }
 
-    public static void maybeSendPlayerMessage(Player p, String message, Action action) {
-        if (getPlugin().config().isSendActionMessageByDefault() && action.getSendMessage()) {
+    public static void maybeSendPlayerMessage(Player p, Message twitchMessage, String message, Action action) {
+        if (action.getSendMessage()) {
+            if (action.getActionMessage() != null) {
+                p.sendMessage(beautifyActionMessage(action.getActionMessage(), twitchMessage, action));
+            } else {
+                p.sendMessage(message);
+            }
+        }
+    }
+
+    public static void maybeSendPlayerSecondaryMessage(Player p, String message, Action action) {
+        if (action.getSendMessage()) {
             p.sendMessage(message);
         }
     }
@@ -192,5 +203,40 @@ public class ExecutorUtils {
     public static boolean isAboveGround(Player p) {
         RayTraceResult result = p.getWorld().rayTraceBlocks(p.getLocation(), new Vector(0, 1, 0), 256);
         return result == null || result.getHitBlock() == null;
+    }
+
+    public static String beautifyActionMessage(String actionMessage, Message twitchMessage, Action action) {
+        String userThatTriggered = twitchMessage.getPayload().getEvent().getUser_name();
+        Integer quantity = null;
+        if (action.getTrigger().getType().equals(SUB_GIFT)) {
+            quantity = twitchMessage.getPayload().getEvent().getTotal();
+        } else {
+            quantity = twitchMessage.getPayload().getEvent().getBits();
+        }
+        return actionMessage
+                .replace("{COLOR:AQUA}", ChatColor.AQUA.toString())
+                .replace("{COLOR:BLACK}",  ChatColor.BLACK.toString())
+                .replace("{COLOR:BLUE}",  ChatColor.BLUE.toString())
+                .replace("{COLOR:BOLD}",  ChatColor.BOLD.toString())
+                .replace("{COLOR:DARK_AQUA}",  ChatColor.DARK_AQUA.toString())
+                .replace("{COLOR:DARK_BLUE}",  ChatColor.DARK_BLUE.toString())
+                .replace("{COLOR:DARK_GRAY}",  ChatColor.DARK_GRAY.toString())
+                .replace("{COLOR:DARK_GREEN}",  ChatColor.DARK_GREEN.toString())
+                .replace("{COLOR:DARK_PURPLE}",  ChatColor.DARK_PURPLE.toString())
+                .replace("{COLOR:DARK_RED}",  ChatColor.DARK_RED.toString())
+                .replace("{COLOR:GOLD}",  ChatColor.GOLD.toString())
+                .replace("{COLOR:GRAY}",  ChatColor.GRAY.toString())
+                .replace("{COLOR:GREEN}",  ChatColor.GREEN.toString())
+                .replace("{COLOR:ITALIC}",  ChatColor.ITALIC.toString())
+                .replace("{COLOR:LIGHT_PURPLE}",  ChatColor.LIGHT_PURPLE.toString())
+                .replace("{COLOR:MAGIC}",  ChatColor.MAGIC.toString())
+                .replace("{COLOR:RED}",  ChatColor.RED.toString())
+                .replace("{COLOR:STRIKETHROUGH}",  ChatColor.STRIKETHROUGH.toString())
+                .replace("{COLOR:UNDERLINE}",  ChatColor.UNDERLINE.toString())
+                .replace("{COLOR:WHITE}",  ChatColor.WHITE.toString())
+                .replace("{COLOR:YELLOW}",  ChatColor.YELLOW.toString())
+                .replace("{TRIGGER_TYPE}", action.getTrigger().getType().toString())
+                .replace("{TRIGGER_CAUSE}", userThatTriggered == null ? "a channel poll" : userThatTriggered)
+                .replace("{QUANTITY}", quantity == null ? "ERROR" : String.valueOf(quantity));
     }
 }

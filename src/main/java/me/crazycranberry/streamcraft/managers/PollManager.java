@@ -1,6 +1,7 @@
 package me.crazycranberry.streamcraft.managers;
 
 import me.crazycranberry.streamcraft.config.Action;
+import me.crazycranberry.streamcraft.config.StreamCraftConfig;
 import me.crazycranberry.streamcraft.config.Trigger;
 import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.events.PollEndEvent;
@@ -57,14 +58,15 @@ public class PollManager implements Listener {
     }
 
     public static void createRandomPoll() {
+        StreamCraftConfig config = getPlugin().config();
         List<Action> pollActions = new ArrayList<>(pollActions());
         List<Action> selectedPollActions = new ArrayList<>();
-        if (pollActions.size() <= getPlugin().config().getPollNumChoices()) {
+        if (pollActions.size() <= config.getPollNumChoices()) {
             selectedPollActions = pollActions;
         } else {
             cleanPollActions(pollActions);
             Double randMultiplier = pollActions.stream().map(a -> a.getTrigger().getWeight()).reduce(0.0, Double::sum);
-            for (int i = 0; i < getPlugin().config().getPollNumChoices(); i++) {
+            for (int i = 0; i < config.getPollNumChoices(); i++) {
                 double rand = Math.random() * randMultiplier;
                 Double tracker = 0.0;
                 for (Action a : pollActions) {
@@ -81,10 +83,10 @@ public class PollManager implements Listener {
         }
         Collections.shuffle(selectedPollActions);
         CreatePoll poll = CreatePoll.builder()
-            .access_token(getPlugin().config().getAccessToken())
-            .broadcaster_user_id(getPlugin().config().getBroadcasterId())
-            .duration(getPlugin().config().getPollDuration())
-            .title("Which StreamCraft Action?")
+            .access_token(config.getAccessToken())
+            .broadcaster_user_id(config.getBroadcasterId())
+            .duration(config.getPollDuration())
+            .title(config.getPollTitle())
             .choices(selectedPollActions.stream().map(a -> PollChoice.of(a.pollMessage())).toList())
             .build();
         getPlugin().createTwitchPoll(poll);

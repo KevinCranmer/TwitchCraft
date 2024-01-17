@@ -21,18 +21,21 @@ public class ChestOfGoodies extends Action {
     private List<ChestItem> chestItems;
 
     @Builder
-    private ChestOfGoodies(ActionType type, Trigger trigger, String target, Boolean sendMessage, List<ChestItem> chestItems) {
-        super(type, trigger, target, sendMessage);
+    private ChestOfGoodies(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, List<ChestItem> chestItems) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.chestItems = chestItems;
     }
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return "Chest of Goodies";
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         if (input.get("chest_items") == null || !(input.get("chest_items") instanceof ArrayList<?>)) {
             logger().warning("The chest_items in a Chest Of Goodies actions was not a valid list");
             return null;
@@ -43,6 +46,7 @@ public class ChestOfGoodies extends Action {
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .chestItems(chestItems)
                 .build();
     }

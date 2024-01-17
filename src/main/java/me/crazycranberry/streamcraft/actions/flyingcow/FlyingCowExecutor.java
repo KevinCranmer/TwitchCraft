@@ -45,13 +45,12 @@ public class FlyingCowExecutor implements Executor {
         FlyingCow fc = (FlyingCow) action;
         cowsLeft = fc.getNumCows();
         for (Player p : getTargetedPlayers(fc)) {
-            maybeSendPlayerMessage(p, String.format("You better Moooove away from the exploding cows! Courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("You better Moooove away from the exploding cows! Courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             mainTaskId = Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> {
                 if (cowsLeft > 0) {
                     sendCow(p, fc);
                     cowsLeft--;
                 } else {
-                    maybeSendPlayerMessage(p, "No more cows", action);
                     Bukkit.getScheduler().cancelTask(mainTaskId);
                 }
             }, 0 /*<-- the initial delay */, fc.getSecondsBetweenCows() * TICKS_PER_SECOND /*<-- the interval */).getTaskId();

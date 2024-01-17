@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.LinkedHashMap;
 
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
+import static me.crazycranberry.streamcraft.config.Action.validateField;
 import static me.crazycranberry.streamcraft.config.TriggerType.POLL;
 
 @Getter
@@ -20,6 +21,7 @@ public class Trigger {
     private Integer max;
     private TriggerType type;
     private Double weight;
+    private String pollMessage;
 
     public static Trigger fromYaml(LinkedHashMap<String, ?> input) {
         TriggerType type = validateType(input.get("type"));
@@ -34,7 +36,8 @@ public class Trigger {
         Integer max = validateMax(input.get("max"));
         min = min == null ? 0 : Math.max(min, 0);
         max = max == null ? Integer.MAX_VALUE : Math.max(min, max);
-        return new Trigger(min, max, type, weight);
+        String pollMessage = validateField(input.get("poll_message"), String.class, "poll_message", false);
+        return new Trigger(min, max, type, weight, pollMessage);
     }
 
     private static <T> Integer validateMin(T min) {

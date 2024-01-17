@@ -15,38 +15,32 @@ import java.util.LinkedHashMap;
 @ToString(callSuper = true)
 public class CustomCommand extends Action {
     private String command;
-    private String pollMessage;
 
     @Builder
-    private CustomCommand(ActionType type, Trigger trigger, String target, Boolean sendMessage, String command, String pollMessage) {
-        super(type, trigger, target, sendMessage);
+    private CustomCommand(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, String command) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.command = command;
-        this.pollMessage = pollMessage;
     }
 
     @Override
     public String pollMessage() {
-        return command.substring(0, 24);
+        return this.getTrigger().getPollMessage() == null ? command.substring(0, 24) : this.getTrigger().getPollMessage();
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         String command = validateField(input.get("command"), String.class, "command");
-        String pollMessage = validateField(input.get("poll_message"), String.class, "poll_message");
         if (command == null) {
             return null;
         }
         command = command.startsWith("/") ? command.substring(1) : command;
-        if (pollMessage == null) {
-            pollMessage = command.substring(0, Math.min(25, command.length()));
-        }
         return CustomCommand.builder()
                 .type(actionType)
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .command(command)
-                .pollMessage(pollMessage)
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 package me.crazycranberry.streamcraft.actions.nojumping;
 
 import me.crazycranberry.streamcraft.actions.Executor;
+import me.crazycranberry.streamcraft.actions.megajump.MegaJump;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.Bukkit;
@@ -13,8 +14,10 @@ import java.util.Map;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.beautifyActionMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.triggerer;
 
 public class NoJumpingExecutor implements Executor {
@@ -42,16 +45,24 @@ public class NoJumpingExecutor implements Executor {
                         timeLeftMap.put(p, secondsLeft);
                     }
                     if (timeLeftMap.isEmpty() && timeLeftTaskId != null) {
-                        maybeSendPlayerMessage(p, "You can jump again.", action);
+                        sendEndMessage(p, twitchMessage, nj);
                         Bukkit.getScheduler().cancelTask(timeLeftTaskId);
                     }
                 }
             }, TICKS_PER_SECOND /*<-- the initial delay */, TICKS_PER_SECOND /*<-- the interval */).getTaskId();
         }
         for (Player p : getTargetedPlayers(nj)) {
-            maybeSendPlayerMessage(p, String.format("You cannot jump for %s%s seconds%s, courtesy of %s%s%s", ChatColor.GOLD, nj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, nj), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("You cannot jump for %s%s seconds%s, courtesy of %s%s%s", ChatColor.GOLD, nj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, nj), ChatColor.RESET), action);
             timeLeftMap.put(p, nj.getDurationSeconds());
         }
+    }
+
+    private void sendEndMessage(Player p, Message twitchMessage, NoJumping nj) {
+        String endMessage = "You can jump again.";
+        if (nj.getEndMessage() != null) {
+            endMessage = beautifyActionMessage(nj.getEndMessage(), twitchMessage, nj);
+        }
+        maybeSendPlayerSecondaryMessage(p, endMessage, nj);
     }
 
     public static boolean playerCanJump(Player p) {

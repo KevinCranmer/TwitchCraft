@@ -28,7 +28,7 @@ public class RotatingHotbarExecutor implements Executor {
         }
         RotatingHotbar rh = (RotatingHotbar) action;
         for (Player p : getTargetedPlayers(rh)) {
-            maybeSendPlayerMessage(p, String.format("Rotating Hotbar!%s Courtesy of %s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Rotating Hotbar!%s Courtesy of %s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             rotationsLeft.put(p, rh.getNumRotations());
             rotateHotbar(p, rh);
         }

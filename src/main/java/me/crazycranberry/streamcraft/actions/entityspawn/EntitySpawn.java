@@ -23,8 +23,8 @@ public class EntitySpawn extends Action {
     private Integer radiusFromPlayer;
 
     @Builder
-    private EntitySpawn(ActionType type, Trigger trigger, String target, Boolean sendMessage, EntityType entity, Integer quantity, Integer radiusFromPlayer) {
-        super(type, trigger, target, sendMessage);
+    private EntitySpawn(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, EntityType entity, Integer quantity, Integer radiusFromPlayer) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.entity = entity;
         this.quantity = quantity;
         this.radiusFromPlayer = radiusFromPlayer;
@@ -32,11 +32,14 @@ public class EntitySpawn extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return String.format("%s %s%s", getQuantity(), getEntity().name(), getQuantity() > 1 ?  "'s" : "");
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         EntityType entity = validateEntity(input.get("entity"));
         Integer quantity = validateField(input.get("quantity"), Integer.class, "quantity");
         Integer radiusFromPlayer = validateField(input.get("radius_from_player"), Integer.class, "radius_from_player");
@@ -48,6 +51,7 @@ public class EntitySpawn extends Action {
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .entity(entity)
                 .quantity(quantity)
                 .radiusFromPlayer(radiusFromPlayer)

@@ -14,7 +14,7 @@ import static me.crazycranberry.streamcraft.commands.CommandUtils.mapper;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.handleNotificationMessage;
 
 /** This is just for testing. */
-public class TriggerChannelFollowEvent implements CommandExecutor {
+public class TriggerSubscriptionGiftEvent implements CommandExecutor {
     @SneakyThrows
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -22,35 +22,38 @@ public class TriggerChannelFollowEvent implements CommandExecutor {
             sender.sendMessage("Could not execute because the `allow_test_commands` configuration is set to false");
             return false;
         }
-        if (command.getName().equalsIgnoreCase("ChannelFollow")) {
-            Message twitchMessage = mapper().readValue(notification(), Message.class);
+        if (command.getName().equalsIgnoreCase("SubGift")) {
+            int quantity = 1;
+            if (args.length >= 1) {
+                quantity = Integer.parseInt(args[0]);
+            }
+            Message twitchMessage = mapper().readValue(notification(quantity), Message.class);
             handleNotificationMessage(twitchMessage);
         }
         return true;
     }
 
-    private static String notification() {
-        return """
+    private static String notification(int quantity) {
+        return String.format("""
                 {
                     "metadata": {
                         "message_id": "befa7b53-d79d-478f-86b9-120f112b044e",
                         "message_type": "notification",
                         "message_timestamp": "2022-11-16T10:11:12.464757833Z",
-                        "subscription_type": "channel.follow",
+                        "subscription_type": "channel.subscription.gift",
                         "subscription_version": "1"
                     },
                     "payload": {
                         "subscription": {
                             "id": "f1c2a387-161a-49f9-a165-0f21d7a4e1c4",
-                            "type": "channel.follow",
-                            "version": "2",
+                            "type": "channel.subscription.gift",
+                            "version": "1",
                             "status": "enabled",
                             "cost": 0,
                             "condition": {
-                               "broadcaster_user_id": "1337",
-                               "moderator_user_id": "1337"
+                               "broadcaster_user_id": "1337"
                             },
-                            "transport": {
+                             "transport": {
                                "method": "websocket",
                                "session_id": "123"
                             },
@@ -63,10 +66,13 @@ public class TriggerChannelFollowEvent implements CommandExecutor {
                             "broadcaster_user_id": "1337",
                             "broadcaster_user_login": "Crazy_Cranberry",
                             "broadcaster_user_name": "Crazy_Cranberry",
-                            "followed_at": "2020-07-15T18:16:11.17106713Z"
+                            "total": %s,
+                            "tier": "1000",
+                            "cumulative_total": 284,
+                            "is_anonymous": false
                         }
                     }
                 }
-                    """;
+                    """, quantity);
     }
 }
