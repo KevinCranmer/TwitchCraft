@@ -26,6 +26,9 @@ public class NoJumping extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return "No Jumping";
     }
 

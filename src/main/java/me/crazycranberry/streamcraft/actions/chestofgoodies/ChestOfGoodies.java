@@ -28,6 +28,9 @@ public class ChestOfGoodies extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return "Chest of Goodies";
     }
 

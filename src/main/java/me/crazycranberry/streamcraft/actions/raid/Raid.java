@@ -26,6 +26,9 @@ public class Raid extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return String.format("Level %s Raid", badOmenLevel);
     }
 

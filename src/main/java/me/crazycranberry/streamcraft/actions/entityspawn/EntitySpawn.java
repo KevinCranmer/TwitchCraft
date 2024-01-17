@@ -32,6 +32,9 @@ public class EntitySpawn extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return String.format("%s %s%s", getQuantity(), getEntity().name(), getQuantity() > 1 ?  "'s" : "");
     }
 

@@ -26,6 +26,9 @@ public class Explosion extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return String.format("Power %s Explosion", getPower());
     }
 

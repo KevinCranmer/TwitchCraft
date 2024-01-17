@@ -35,6 +35,9 @@ public class PotionEffect extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         String pollMessage = String.format("%s", getPotionType() == null ? getPotionRandom().name().toLowerCase().replace("_", " ") + " potion effect" : getPotionType().getName().toLowerCase().replace("_", " "));
         return pollMessage.substring(0, 1).toUpperCase() + pollMessage.substring(1);
     }

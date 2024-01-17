@@ -83,6 +83,7 @@ public class ActionManager implements Listener {
         }
         Optional<Action> winningAction = getPlugin().config().getActions()
                 .stream()
+                .filter(a -> a.getTrigger().getType().equals(TriggerType.POLL))
                 .filter(a -> a.pollMessage().equals(winningPollChoice.get().getTitle()))
                 .findFirst();
         if (winningAction.isEmpty()) {

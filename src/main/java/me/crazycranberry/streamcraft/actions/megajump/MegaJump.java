@@ -28,6 +28,9 @@ public class MegaJump extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return "Mega Jump";
     }
 

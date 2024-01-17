@@ -26,6 +26,9 @@ public class RandomItemRemoval extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return String.format("Remove %s x %s item%s", getNumPerStack(), getNumStacks(), getNumPerStack() * getNumStacks() > 1 ? "s" : "");
     }
 

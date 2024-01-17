@@ -21,6 +21,9 @@ public class BuildAHouse extends Action {
 
     @Override
     public String pollMessage() {
+        if (this.getTrigger().getPollMessage() != null) {
+            return this.getTrigger().getPollMessage();
+        }
         return "Build a House";
     }
 
