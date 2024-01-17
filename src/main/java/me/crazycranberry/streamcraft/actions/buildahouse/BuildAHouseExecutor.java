@@ -47,7 +47,7 @@ public class BuildAHouseExecutor implements Executor {
         }
         BuildAHouse bah = (BuildAHouse) action;
         for (Player p : getTargetedPlayers(bah)) {
-            maybeSendPlayerMessage(p, twitchMessage, String.format("This looks like a good place for a %shouse%s. Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, bah), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("This looks like a good place for a %shouse%s, courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, bah), ChatColor.RESET), action);
             int randomAccentIndex = (int) (Math.random() * houseAccent.size());
             houses.put(p, HouseTracker.builder()
                 .startingBlock(p.getLocation().getBlock())
