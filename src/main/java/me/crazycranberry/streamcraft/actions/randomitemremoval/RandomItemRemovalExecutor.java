@@ -58,7 +58,7 @@ public class RandomItemRemovalExecutor implements Executor {
         if (itemsBeingRemovedStr.isBlank()) {
             return;
         }
-        maybeSendPlayerMessage(p, String.format("Randomly removed %s%s%s, courtesy of %s%s%s",
+        maybeSendPlayerMessage(p, twitchMessage, String.format("Randomly removed %s%s%s, courtesy of %s%s%s",
                 ChatColor.GOLD,
                 itemsBeingRemovedStr,
                 ChatColor.RESET,

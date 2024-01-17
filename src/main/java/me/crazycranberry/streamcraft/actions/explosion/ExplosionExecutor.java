@@ -25,7 +25,7 @@ public class ExplosionExecutor implements Executor {
         }
         Explosion e = (Explosion) action;
         for (Player p : getTargetedPlayers(e)) {
-            maybeSendPlayerMessage(p, String.format("Boom! courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, e), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Boom! courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, e), ChatColor.RESET), action);
             protectedPlayers.add(p);
             p.getWorld().createExplosion(p.getLocation(), e.getPower());
         }

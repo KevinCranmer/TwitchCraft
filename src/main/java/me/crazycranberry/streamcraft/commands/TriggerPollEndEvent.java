@@ -43,11 +43,12 @@ public class TriggerPollEndEvent implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player && command.getName().equalsIgnoreCase("PollResult") && args.length == 1) {
+        if (sender instanceof Player && command.getName().equalsIgnoreCase("PollResult")) {
             return getPlugin().config().getActions()
                     .stream()
                     .filter(a -> a.getTrigger().getType().equals(TriggerType.POLL))
                     .map(Action::pollMessage)
+                    .filter(a -> a.contains(String.join(" ", args)))
                     .toList();
         }
         return null;

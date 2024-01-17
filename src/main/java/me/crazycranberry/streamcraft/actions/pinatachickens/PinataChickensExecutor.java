@@ -44,7 +44,7 @@ public class PinataChickensExecutor implements Executor {
         }
         PinataChickens pc = (PinataChickens) action;
         for (Player p : getTargetedPlayers(pc)) {
-            maybeSendPlayerMessage(p, String.format("Piñata chickens! courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Piñata chickens! courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             List<Location> possibleSpawnLocations = getPossibleSpawnLocations(p, 5);
             for (int l = 0; l < pc.getNumChickens(); l++) {
                 Chicken chicken = (Chicken) p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), EntityType.CHICKEN);

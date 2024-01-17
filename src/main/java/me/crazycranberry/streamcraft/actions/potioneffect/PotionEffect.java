@@ -25,8 +25,8 @@ public class PotionEffect extends Action {
     private Integer durationSeconds;
 
     @Builder
-    private PotionEffect(ActionType type, Trigger trigger, String target, Boolean sendMessage, PotionEffectType potionType, PotionRandom potionRandom, Integer level, Integer durationSeconds) {
-        super(type, trigger, target, sendMessage);
+    private PotionEffect(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, PotionEffectType potionType, PotionRandom potionRandom, Integer level, Integer durationSeconds) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.potionType = potionType;
         this.potionRandom = potionRandom;
         this.level = level;
@@ -43,7 +43,7 @@ public class PotionEffect extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         PotionEffectType potionType = validatePotionType(input.get("potion_type"));
         PotionRandom potionRandom = validatePotionRandom(input.get("potion_type"));
         Integer level = validateField(input.get("level"), Integer.class, "level");
@@ -56,6 +56,7 @@ public class PotionEffect extends Action {
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .potionType(potionType)
                 .potionRandom(potionRandom)
                 .level(level)

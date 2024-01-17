@@ -33,14 +33,17 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.beautifyActionMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getPossibleSpawnLocations;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.isAboveGround;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
 
 public class SoupManExecutor implements Executor {
@@ -59,7 +62,7 @@ public class SoupManExecutor implements Executor {
                 logger().warning("A player is already being bothered by a soup man");
                 continue;
             }
-            maybeSendPlayerMessage(p, "<SoupMan>Hello traveler! Could I bother you for some soup please?", action);
+            maybeSendPlayerMessage(p, twitchMessage, "<SoupMan>Hello traveler! Could I bother you for some soup please?", action);
             WanderingTrader soupMan = (WanderingTrader) p.getWorld().spawnEntity(randomFromList(getPossibleSpawnLocations(p, 5)), EntityType.WANDERING_TRADER);
             soupMan.setRecipes(soupManTrades());
             soupMan.setTarget(p);
@@ -72,12 +75,14 @@ public class SoupManExecutor implements Executor {
                     .intervalsLeft((int) (sm.getMinutesTillAngry() * (60 / (intervalTicks / TICKS_PER_SECOND))))
                     .soupMan(soupMan)
                     .action(sm)
+                    .twitchMessage(twitchMessage)
                     .taskId(Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> {
                         SoupManStats sms = stats.get(p);
                         if (sms != null) {
                             if (sms.getIntervalsLeft() == (int) (sm.getMinutesTillAngry() * (30 / (intervalTicks / TICKS_PER_SECOND)))) {
-                                maybeSendPlayerMessage(p, String.format("<SoupMan>If I don't get my soup in %s minutes, I might get %sANGRY!%s", (sm.getMinutesTillAngry() / 2), ChatColor.RED, ChatColor.RESET), action);
+                                sendHalfwayMessage(p, twitchMessage, sm);
                             } else if (sms.getIntervalsLeft() <= 0 && sms.getSoupMan().getMetadata("ispissed").stream().anyMatch(m -> "false".equals(m.value()))) {
+                                sendAngryMessage(p, twitchMessage, sm);
                                 makeSoupManAngry(p, sms.getSoupMan(), sm);
                             } else if (sms.getIntervalsLeft() <= 0 && p.getLocation().toVector().subtract(sms.getSoupMan().getLocation().toVector()).lengthSquared() <= 81) {
                                 int x = (int)(Math.random() * 6) - 3;
@@ -96,6 +101,30 @@ public class SoupManExecutor implements Executor {
         }
     }
 
+    private static void sendHalfwayMessage(Player p, Message twitchMessage, SoupMan sm) {
+        String halfwayMessage = String.format("<SoupMan>If I don't get my soup in %s minutes, I might get %sANGRY!%s", (sm.getMinutesTillAngry() / 2), ChatColor.RED, ChatColor.RESET);
+        if (sm.getHalfwayMessage() != null) {
+            halfwayMessage = beautifyActionMessage(sm.getHalfwayMessage().replace("{TIME}", String.valueOf(sm.getMinutesTillAngry() / 2)), twitchMessage, sm);
+        }
+        maybeSendPlayerSecondaryMessage(p, halfwayMessage, sm);
+    }
+
+    private static void sendAngryMessage(Player p, Message twitchMessage, SoupMan sm) {
+        String angryMessage = String.format("<SoupMan>%sNO SOUP?! NOW YOU MUST DIE!%s", ChatColor.RED, ChatColor.RESET);
+        if (sm.getAngryMessage() != null) {
+            angryMessage = beautifyActionMessage(sm.getAngryMessage(), twitchMessage, sm);
+        }
+        maybeSendPlayerSecondaryMessage(p, angryMessage, sm);
+    }
+
+    private static void sendSatisfiedMessage(Player p, Message twitchMessage, SoupMan sm) {
+        String satisfiedMessage = "<SoupMan>Ahh delicious! Thank you Traveler!";
+        if (sm.getSatisfiedMessage() != null) {
+            satisfiedMessage = beautifyActionMessage(sm.getSatisfiedMessage(), twitchMessage, sm);
+        }
+        maybeSendPlayerSecondaryMessage(p, satisfiedMessage, sm);
+    }
+
     private List<MerchantRecipe> soupManTrades() {
         MerchantRecipe seedTrade = new MerchantRecipe(new ItemStack(Material.BEETROOT_SEEDS), 1);
         seedTrade.addIngredient(new ItemStack(Material.WHEAT_SEEDS));
@@ -111,7 +140,6 @@ public class SoupManExecutor implements Executor {
     }
 
     private void makeSoupManAngry(Player p, WanderingTrader soupMan, SoupMan sm) {
-        maybeSendPlayerMessage(p, String.format("<SoupMan>%sNO SOUP?! NOW YOU MUST DIE!%s", ChatColor.RED, ChatColor.RESET), sm);
         soupMan.customName(Component.text("ANGRY!", Style.style(NamedTextColor.RED)));
         soupMan.setMetadata("ispissed", new FixedMetadataValue(getPlugin(), "true"));
         soupMan.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 36000, 2));
@@ -125,8 +153,13 @@ public class SoupManExecutor implements Executor {
     }
 
     public static void soupDelivered(Player p) {
-        maybeSendPlayerMessage(p, "<SoupMan>Ahh delicious! Thank you Traveler!", stats.get(p).getAction());
+        sendSatisfiedMessage(p, stats.get(p).getTwitchMessage(), stats.get(p).getAction());
         doneWithSoupMan(p);
+    }
+
+    public static void soupManDied(WanderingTrader soupMan) {
+        Optional<Player> playerOptional = stats.entrySet().stream().filter(e -> e.getValue().getSoupMan().equals(soupMan)).map(e -> e.getKey()).findFirst();
+        playerOptional.ifPresent(SoupManExecutor::doneWithSoupMan);
     }
 
     private static void doneWithSoupMan(Player p) {
@@ -156,6 +189,7 @@ public class SoupManExecutor implements Executor {
         private Integer taskId;
         private Integer intervalsLeft;
         private WanderingTrader soupMan;
-        private Action action;
+        private SoupMan action;
+        private Message twitchMessage;
     }
 }

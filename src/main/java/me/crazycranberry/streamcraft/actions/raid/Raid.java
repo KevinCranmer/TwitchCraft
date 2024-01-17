@@ -19,8 +19,8 @@ public class Raid extends Action {
     private Integer badOmenLevel;
 
     @Builder
-    private Raid(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer badOmenLevel) {
-        super(type, trigger, target, sendMessage);
+    private Raid(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, Integer badOmenLevel) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.badOmenLevel = badOmenLevel;
     }
 
@@ -33,7 +33,7 @@ public class Raid extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer badOmenLevel = validateBadOmenLevel(input.get("bad_omen_level"));
         if (badOmenLevel == null) {
             return null;
@@ -43,6 +43,7 @@ public class Raid extends Action {
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .badOmenLevel(badOmenLevel)
                 .build();
     }

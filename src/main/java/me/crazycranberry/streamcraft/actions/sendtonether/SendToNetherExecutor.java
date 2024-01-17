@@ -44,7 +44,7 @@ public class SendToNetherExecutor implements Executor {
                 logger().warning("Player is already in the nether.");
                 return;
             }
-            maybeSendPlayerMessage(p, String.format("A quick trip to the %sNether%s (return portal somewhere nearby). Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("A quick trip to the %sNether%s (return portal somewhere nearby). Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             Location startingLoc = p.getLocation().clone();
             p.teleport(nether.getSpawnLocation());
             List<Location> possiblePortalLocations = getPossibleSpawnLocations(p, stn.getNetherPortalPossibleRadius(), SendToNetherExecutor::isValidPortalSpot);

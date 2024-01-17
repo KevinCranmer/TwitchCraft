@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import me.crazycranberry.streamcraft.actions.Executor;
+import me.crazycranberry.streamcraft.actions.megajump.MegaJump;
 import me.crazycranberry.streamcraft.config.Action;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import net.kyori.adventure.key.Key;
@@ -35,9 +36,11 @@ import java.util.Map;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.beautifyActionMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getPossiblePerimeterSpawnLocations;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.randomFromList;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.triggerer;
 
@@ -53,7 +56,7 @@ public class WeepingAngelExecutor implements Executor {
         }
         WeepingAngel wa = (WeepingAngel) action;
         for (Player p : getTargetedPlayers(wa)) {
-            maybeSendPlayerMessage(p, String.format("A %sWeeping Angel%s is hunting you. Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, wa), ChatColor.RESET), wa);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("A %sWeeping Angel%s is hunting you. Courtesy of %s%s%s", ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, wa), ChatColor.RESET), wa);
             Vector spawnOffset = randomFromList(getPossiblePerimeterSpawnLocations(wa.getDistanceFromPlayer(), 5, p, false));
             Zombie weepingAngel = (Zombie) p.getWorld().spawnEntity(p.getLocation().add(spawnOffset), EntityType.ZOMBIE, false);
             pimpOutAngel(weepingAngel, wa.getSecondsTillDespawn());
@@ -74,6 +77,7 @@ public class WeepingAngelExecutor implements Executor {
                     .zombie(weepingAngel)
                     .secondsLeft(wa.getSecondsTillDespawn())
                     .taskId(checkWhenToRemoveAngelTask(p))
+                    .twitchMessage(twitchMessage)
                     .build());
         }
         Bukkit.getServer().getPluginManager().registerEvents(listener, getPlugin());
@@ -107,7 +111,7 @@ public class WeepingAngelExecutor implements Executor {
     public static void removeAngel(Player p) {
         WeepingAngelStats stats = playerAngels.get(p);
         if (stats != null) {
-            maybeSendPlayerMessage(p, "The Weeping Angel has crumbled away", stats.getAction());
+            sendEndMessage(p, stats.getTwitchMessage(), stats.getAction());
             stats.getZombie().remove();
         }
         playerAngels.remove(p);
@@ -115,6 +119,14 @@ public class WeepingAngelExecutor implements Executor {
             HandlerList.unregisterAll(listener); // The PlayerMoveEvent sends A LOT, so lets disable it if we're not using it
         }
         Bukkit.getScheduler().cancelTask(stats.getTaskId());
+    }
+
+    private static void sendEndMessage(Player p, Message twitchMessage, WeepingAngel wa) {
+        String endMessage = "The Weeping Angel has crumbled away";
+        if (wa.getEndMessage() != null) {
+            endMessage = beautifyActionMessage(wa.getEndMessage(), twitchMessage, wa);
+        }
+        maybeSendPlayerSecondaryMessage(p, endMessage, wa);
     }
 
     public static Zombie getAngelForPlayer(Player p) {
@@ -189,6 +201,7 @@ public class WeepingAngelExecutor implements Executor {
         private Zombie zombie;
         private Integer secondsLeft;
         private Integer taskId;
+        private Message twitchMessage;
     }
 
     public static void cleanUp() {

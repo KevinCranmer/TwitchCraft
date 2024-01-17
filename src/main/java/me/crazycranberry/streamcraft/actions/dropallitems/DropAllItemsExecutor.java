@@ -21,7 +21,7 @@ public class DropAllItemsExecutor implements Executor {
         }
         DropAllItems dai = (DropAllItems) action;
         for (Player p : getTargetedPlayers(dai)) {
-            maybeSendPlayerMessage(p, String.format("Oops, looks like you %sdropped%s something. Courtesy of %s%s%s",ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, dai), ChatColor.RESET), action);
+            maybeSendPlayerMessage(p, twitchMessage, String.format("Oops, looks like you %sdropped%s something. Courtesy of %s%s%s",ChatColor.GOLD, ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, dai), ChatColor.RESET), action);
             for (int i = 0; i < p.getInventory().getContents().length; i++) {
                 if (p.getInventory().getContents()[i] != null) {
                     double randXOffset = Math.random() * 10 - 5;

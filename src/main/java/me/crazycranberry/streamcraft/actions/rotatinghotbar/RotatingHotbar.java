@@ -18,8 +18,8 @@ public class RotatingHotbar extends Action {
     private Integer secondsBetweenRotations;
 
     @Builder
-    private RotatingHotbar(ActionType type, Trigger trigger, String target, Boolean sendMessage, Integer numRotations, Integer secondsBetweenRotations) {
-        super(type, trigger, target, sendMessage);
+    private RotatingHotbar(ActionType type, Trigger trigger, String target, String actionMessage, Boolean sendMessage, Integer numRotations, Integer secondsBetweenRotations) {
+        super(type, trigger, target, actionMessage, sendMessage);
         this.numRotations = numRotations;
         this.secondsBetweenRotations = secondsBetweenRotations;
     }
@@ -33,7 +33,7 @@ public class RotatingHotbar extends Action {
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */
-    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, Boolean sendMessage, LinkedHashMap<String, ?> input) {
+    public static Action fromYaml(ActionType actionType, Trigger trigger, String target, String actionMessage, Boolean sendMessage, LinkedHashMap<String, ?> input) {
         Integer numRotations = validateField(input.get("num_rotations"), Integer.class, "num_rotations");
         Integer secondsBetweenRotations = validateField(input.get("seconds_between_rotations"), Integer.class, "seconds_between_rotations");
         if (numRotations == null || secondsBetweenRotations == null) {
@@ -44,6 +44,7 @@ public class RotatingHotbar extends Action {
                 .trigger(trigger)
                 .target(target)
                 .sendMessage(sendMessage)
+                .actionMessage(actionMessage)
                 .numRotations(numRotations)
                 .secondsBetweenRotations(secondsBetweenRotations)
                 .build();

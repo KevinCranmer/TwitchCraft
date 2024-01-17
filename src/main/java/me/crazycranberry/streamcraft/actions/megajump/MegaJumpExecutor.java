@@ -15,8 +15,10 @@ import java.util.Set;
 import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.StreamCraft.logger;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.beautifyActionMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
+import static me.crazycranberry.streamcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
 import static me.crazycranberry.streamcraft.actions.ExecutorUtils.triggerer;
 
 public class MegaJumpExecutor implements Executor {
@@ -46,7 +48,7 @@ public class MegaJumpExecutor implements Executor {
                         timeLeftMap.put(p, secondsLeft);
                     }
                     if (timeLeftMap.isEmpty() && timeLeftTaskId != null) {
-                        maybeSendPlayerMessage(p, "Mega Jump Ended.", action);
+                        sendEndMessage(p, twitchMessage, mj);
                         Bukkit.getScheduler().cancelTask(timeLeftTaskId);
                     }
                 }
@@ -54,13 +56,21 @@ public class MegaJumpExecutor implements Executor {
         }
         for (Player p : getTargetedPlayers(mj)) {
             if (mj.getDurationSeconds() != null) {
-                maybeSendPlayerMessage(p, String.format("You've been granted %s%s seconds of mega jump%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
+                maybeSendPlayerMessage(p, twitchMessage, String.format("You've been granted %s%s seconds of mega jump%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getDurationSeconds(), ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
                 timeLeftMap.put(p, mj.getDurationSeconds());
             } else {
-                maybeSendPlayerMessage(p, String.format("You've been granted %s%s mega jump%s%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getNumJumps(), mj.getNumJumps() > 1 ? "s" : "", ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
+                maybeSendPlayerMessage(p, twitchMessage, String.format("You've been granted %s%s mega jump%s%s, courtesy of %s%s%s", ChatColor.GOLD, mj.getNumJumps(), mj.getNumJumps() > 1 ? "s" : "", ChatColor.RESET, ChatColor.GOLD, triggerer(twitchMessage, mj), ChatColor.RESET), action);
                 jumpsLeftMap.put(p, mj.getNumJumps());
             }
         }
+    }
+
+    private void sendEndMessage(Player p, Message twitchMessage, MegaJump mj) {
+        String endMessage = "Mega Jump Ended.";
+        if (mj.getEndMessage() != null) {
+            endMessage = beautifyActionMessage(mj.getEndMessage(), twitchMessage, mj);
+        }
+        maybeSendPlayerSecondaryMessage(p, endMessage, mj);
     }
 
     public static boolean shouldPlayerMegaJump(Player p) {
