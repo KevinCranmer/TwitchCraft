@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.commands.CommandUtils.mapper;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.handleNotificationMessage;
 
@@ -17,6 +18,10 @@ public class TriggerChannelSubscribeEvent implements CommandExecutor {
     @SneakyThrows
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!getPlugin().config().isAllowTestCommands()) {
+            sender.sendMessage("Could not execute because the `allow_test_commands` configuration is set to false");
+            return false;
+        }
         if (command.getName().equalsIgnoreCase("ChannelSubscribe")) {
             Message twitchMessage = mapper().readValue(notification(), Message.class);
             handleNotificationMessage(twitchMessage);

@@ -2,6 +2,7 @@ access_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 refresh_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 broadcaster_id: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 send_action_message_by_default: true
+allow_test_commands: false
 channel_follows:
     allow_repeats: false
 polls:

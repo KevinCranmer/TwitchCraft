@@ -3,30 +3,54 @@ package me.crazycranberry.streamcraft.commands;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import me.crazycranberry.streamcraft.config.Action;
+import me.crazycranberry.streamcraft.config.TriggerType;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.commands.CommandUtils.mapper;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.handleNotificationMessage;
 
 /** This is just for testing. */
-public class TriggerPollEndEvent implements CommandExecutor {
+public class TriggerPollEndEvent implements CommandExecutor, TabCompleter {
     @SneakyThrows
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!getPlugin().config().isAllowTestCommands()) {
+            sender.sendMessage("Could not execute because the `allow_test_commands` configuration is set to false");
+            return false;
+        }
         if (command.getName().equalsIgnoreCase("PollResult")) {
-            if (args.length <= 1 && sender instanceof Player) {
-                ((Player) sender).sendMessage("You must provide a Poll Option Name");
+            if (args.length <= 1) {
+                sender.sendMessage("You must provide a Poll Message string");
             }
-            String winningPollOption = args[0];
+            String winningPollOption = String.join(" ", args);
             Message twitchMessage = mapper().readValue(notification(winningPollOption), Message.class);
             handleNotificationMessage(twitchMessage);
         }
         return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (sender instanceof Player && command.getName().equalsIgnoreCase("PollResult") && args.length == 1) {
+            return getPlugin().config().getActions()
+                    .stream()
+                    .filter(a -> a.getTrigger().getType().equals(TriggerType.POLL))
+                    .map(Action::pollMessage)
+                    .toList();
+        }
+        return null;
     }
 
     private static String notification(String winningPollOption) {
@@ -64,7 +88,7 @@ public class TriggerPollEndEvent implements CommandExecutor {
                             "choices": [
                                 {"id": "123", "title": "Can't Stop, Won't Stop", "bits_votes": 50, "channel_points_votes": 0, "votes": 50},
                                 {"id": "124", "title": "%s", "bits_votes": 100, "channel_points_votes": 0, "votes": 100},
-                                {"id": "125", "title": "Random Bad Potion Effect": 10, "channel_points_votes": 0, "votes": 10}
+                                {"id": "125", "title": "Random Bad Potion Effect", "bits_votes": 10, "channel_points_votes": 0, "votes": 10}
                             ],
                             "bits_voting": {
                                 "is_enabled": false,

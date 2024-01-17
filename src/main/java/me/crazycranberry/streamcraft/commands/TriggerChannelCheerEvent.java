@@ -1,7 +1,5 @@
 package me.crazycranberry.streamcraft.commands;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import me.crazycranberry.streamcraft.twitch.websocket.model.message.Message;
 import org.bukkit.command.Command;
@@ -9,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import static me.crazycranberry.streamcraft.StreamCraft.getPlugin;
 import static me.crazycranberry.streamcraft.commands.CommandUtils.mapper;
 import static me.crazycranberry.streamcraft.twitch.websocket.TwitchClient.handleNotificationMessage;
 
@@ -17,6 +16,10 @@ public class TriggerChannelCheerEvent implements CommandExecutor {
     @SneakyThrows
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!getPlugin().config().isAllowTestCommands()) {
+            sender.sendMessage("Could not execute because the `allow_test_commands` configuration is set to false");
+            return false;
+        }
         if (command.getName().equalsIgnoreCase("ChannelCheer")) {
             int quantity = 1;
             if (args.length >= 1) {
