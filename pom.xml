@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.crazycranberry</groupId>
-    <artifactId>StreamCraft</artifactId>
+    <artifactId>TwitchCraft</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>StreamCraft</name>
+    <name>TwitchCraft</name>
 
     <description>A plugin that allows users to interact with the minecraft world.</description>
     <properties>
