@@ -120,7 +120,6 @@ actions:
     quantity: 20
     radius_from_player: 8
   - type: EXPLOSION
-    target: Crazy_Cranberry
     trigger:
       type: SUB_GIFT
       min: 1
