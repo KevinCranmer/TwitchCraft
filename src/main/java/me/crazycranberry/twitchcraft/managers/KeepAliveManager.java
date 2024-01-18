@@ -24,6 +24,13 @@ public class KeepAliveManager implements Listener {
             Bukkit.getScheduler().cancelTask(taskId);
         }
         taskId = Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> {
+            if (getPlugin().isClientNull()) {
+                logger().info("The client is null. Turning off the KeepAliveManager");
+                if (taskId != null) {
+                    Bukkit.getScheduler().cancelTask(taskId);
+                }
+                return;
+            }
             Duration duration = Duration.between(getPlugin().timeOfLastTwitchMessage(), Instant.now());
             if (duration.getSeconds() > KEEP_ALIVE_SECONDS) {
                 logger().warning("The Websocket connection has timed out. Attempting to reconnect.");
