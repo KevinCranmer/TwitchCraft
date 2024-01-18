@@ -531,7 +531,7 @@ Additional Configuration:
 
 `type`: `SEND_TO_NETHER`
 
-![SendToNetherGif](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOG5lejk4OHJodmk1bXdncW85cjgxNmNqNTI5cXBrcmNzdzk5dDQ0cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CXXhXCKtJekRDSty6m/source.gif)
+![SendToNetherGif](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjhmc3V0b3duYm1pNWI3d2xmYXB3eTV4N2V0dG9vcTNqOHBldDVjNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YFiF9cCbhnRX90JK8R/source.gif)
 
 Send the player to the nether's spawn location. A Return portal is spawned in somewhere nearby to take them back to where they were.
 
