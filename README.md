@@ -558,7 +558,7 @@ Additional Configuration:
 
 `type`: `SOUP_MAN`
 
-![SoupManGif](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3E0bW9pd2J1OW1seW9xaGQ5cndvMmdrbmpxczZueXM0NHF6dnF3aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CtDcpyzz1Q5saXZBH3/source.gif)
+![SoupManGif](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnp6ZWhiNWMwNmNpNm44b2picTl5Nnk0NXBta253ZjVndWN1ZTdpYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2beehan2lrlKADp3XW/source.gif)
 
 The soup man really wants soup and you better give it to him.
 
