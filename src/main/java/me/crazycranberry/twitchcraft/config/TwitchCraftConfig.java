@@ -72,7 +72,7 @@ public class TwitchCraftConfig {
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
         pollDefaultWeight = config.getDouble("polls.default_weight", originalConfig.getInt("polls.default_weight"));
-        actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c, sendActionMessageByDefault, defaultTarget)).peek(a -> logger().info(a.toString())).filter(Objects::nonNull).toList();
+        actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c, sendActionMessageByDefault, defaultTarget)).filter(Objects::nonNull).peek(a -> logger().info(a.toString())).toList();
     }
 
     private Integer validatePollNumChoices(Integer maybeNumChoices) {

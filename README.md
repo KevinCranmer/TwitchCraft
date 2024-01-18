@@ -554,7 +554,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details><summary style="font-weight: bold; font-size: large">Soup Man</summary>
+<details><summary style="font-weight: bold; font-size: large">Soup Man (Paper only)</summary>
 
 `type`: `SOUP_MAN`
 
