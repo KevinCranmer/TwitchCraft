@@ -104,6 +104,8 @@ public final class TwitchCraft extends JavaPlugin {
 
     public void createTwitchPoll(CreatePoll poll) {
         HttpResponse<?> r = twitchClient.sendCreatePoll(poll);
+        logger().info("Status trying to create poll: " + r.statusCode());
+        logger().info("Response trying to create poll: " + r.body());
     }
 
     public Instant timeOfLastTwitchMessage() {
