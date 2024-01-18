@@ -13,7 +13,7 @@ Then just copy those codes over to the `twitch_craft.yml` file in the Plugins re
 start letting your viewers interact with your Minecraft world!
 
 
-<details open><summary style="font-weight: bold; font-size: large">Additional Global Plugin Configurations (optional)</summary>
+<details><summary style="font-weight: bold; font-size: large">Additional Global Plugin Configurations (optional)</summary>
 
 | Configuration                    | Default Value               | Other Example's                                          | Description                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |----------------------------------|-----------------------------|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -36,7 +36,7 @@ you'd rather not think and just play, you can ignore this section too. However, 
 cool possible configurations you can do to set up various different unique actions for your stream.
 
 
-<details open><summary style="font-weight: bold; font-size: large">[Configurations that exist on all actions]</summary>
+<details><summary style="font-weight: bold; font-size: large">[Configurations that exist on all actions]</summary>
 
 | Configuration         | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |-----------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -52,7 +52,7 @@ cool possible configurations you can do to set up various different unique actio
 
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Build a House</summary>
+<details><summary style="font-weight: bold; font-size: large">Build a House</summary>
 
 `type`: `BUILD_A_HOUSE`
 
@@ -62,7 +62,7 @@ Constructs a house around the targeted player with a random wood type and random
 creates a sign out front for whoever triggered this event.
 
 Additional Configuration: `None`
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: BUILD_A_HOUSE
@@ -76,7 +76,7 @@ Additional Configuration: `None`
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Can't Stop Won't Stop</summary>
+<details><summary style="font-weight: bold; font-size: large">Can't Stop Won't Stop</summary>
 
 `type`: `CANT_STOP_WONT_STOP`
 
@@ -90,7 +90,7 @@ Additional Configuration:
 |--------------------|----------|-----------------------------------|
 | `duration_seconds` | Yes      | How long this Action should last. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: CANT_STOP_WONT_STOP
@@ -105,7 +105,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Chest of Goodies</summary>
+<details><summary style="font-weight: bold; font-size: large">Chest of Goodies</summary>
 
 `type`: `CHEST_OF_GOODIES`
 
@@ -123,7 +123,7 @@ Additional Configuration:
 | `chest_items[*].min`    | Yes      | If the item happens to be in the chest (randomly determined from `chest_items[*].chance`), what is the minimum number of this item that should appear in the chest. |
 | `chest_items[*].max`    | Yes      | If the item happens to be in the chest (randomly determined from `chest_items[*].chance`), what is the maximum number of this item that should appear in the chest. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: CHEST_OF_GOODIES
@@ -148,7 +148,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Custom Command</summary>
+<details><summary style="font-weight: bold; font-size: large">Custom Command</summary>
 
 `type`: `CUSTOM_COMMAND`
 
@@ -162,7 +162,7 @@ Additional Configuration:
 |---------------|----------|----------------------------------------------------------------------------|
 | `command`     | Yes      | The command to be executed (Do **not** include the starting forward slash) |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: CUSTOM_COMMAND
@@ -175,7 +175,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Drop All Items</summary>
+<details><summary style="font-weight: bold; font-size: large">Drop All Items</summary>
 
 `type`: `DROP_ALL_ITEMS`
 
@@ -185,7 +185,7 @@ Drop all a players items around them, a minor inconvenience that could turn ugly
 
 Additional Configuration: `None`
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: DROP_ALL_ITEMS
@@ -197,7 +197,7 @@ Additional Configuration: `None`
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Entity Spawn</summary>
+<details><summary style="font-weight: bold; font-size: large">Entity Spawn</summary>
 
 `type`: `ENTITY_SPAWN`
 
@@ -213,7 +213,7 @@ Additional Configuration:
 | `quantity`           | Yes      | How many of this entity to be spawned in around the player.                                                                                                  |
 | `radius_from_player` | Yes      | How far away the entities should spawn from the player. The entities will spawn in a random spot within this radius.                                         |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: ENTITY_SPAWN
@@ -231,7 +231,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Explosion</summary>
+<details><summary style="font-weight: bold; font-size: large">Explosion</summary>
 
 `type`: `EXPLOSION`
 
@@ -245,7 +245,7 @@ Additional Configuration:
 |----------------------|----------|----------------------------------------------------------------------------------------------------------------------|
 | `power`              | Yes      | How powerful the explosion should be. For reference, TNT is power 4.                                                 |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: EXPLOSION
@@ -260,7 +260,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Flying Cow</summary>
+<details><summary style="font-weight: bold; font-size: large">Flying Cow</summary>
 
 `type`: `FLYING_COW`
 
@@ -277,7 +277,7 @@ Additional Configuration:
 | `distance_from_player` | Yes      | How far away the cows are from the player when launched.                                                 |
 | `cow_velocity`         | Yes      | How fast the cow should be traveling. Trajectory is calculated based on this and `distance_from_player`. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: FLYING_COW
@@ -293,7 +293,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Give Item</summary>
+<details><summary style="font-weight: bold; font-size: large">Give Item</summary>
 
 `type`: `GIVE_ITEM`
 
@@ -308,7 +308,7 @@ Additional Configuration:
 | `item`                 | Yes      | The item type. Must match an ENUM constant from [Material.html](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html). |
 | `quantity`             | Yes      | How many of the item should be given to the player.                                                                                 |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: GIVE_ITEM
@@ -323,7 +323,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Mega Jump (Paper only)</summary>
+<details><summary style="font-weight: bold; font-size: large">Mega Jump (Paper only)</summary>
 
 `type`: `MEGA_JUMP`
 
@@ -339,7 +339,7 @@ Additional Configuration:
 | `duration_seconds` | Either `num_jumps` or `duration_seconds` must be set | How long mega jump lasts.                                 |
 | `end_message`      | No                                                   | A message to let the player know the mega jumps are over. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: MEGA_JUMP
@@ -353,7 +353,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">No Jumping (Paper only)</summary>
+<details><summary style="font-weight: bold; font-size: large">No Jumping (Paper only)</summary>
 
 `type`: `NO_JUMPING`
 
@@ -368,7 +368,7 @@ Additional Configuration:
 | `duration_seconds` | Yes      | How long the player will be unable to jump.           |
 | `end_message`      | No       | A message to let the player know they can jump again. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: NO_JUMPING
@@ -382,7 +382,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Piñata Chickens</summary>
+<details><summary style="font-weight: bold; font-size: large">Piñata Chickens</summary>
 
 `type`: `PINATA_CHICKENS`
 
@@ -396,7 +396,7 @@ Additional Configuration:
 |--------------------|----------|-----------------------------------|
 | `num_chickens`     | Yes      | How many Piñata Chickens to spawn |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: PINATA_CHICKENS
@@ -410,7 +410,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Potion Effect</summary>
+<details><summary style="font-weight: bold; font-size: large">Potion Effect</summary>
 
 `type`: `POTION_EFFECT`
 
@@ -426,7 +426,7 @@ Additional Configuration:
 | `duration_seconds` | Yes      | How strong the potion effect should last.                                                                                                                                                                        |
 | `potion_type`      | Yes      | Must match an ENUM constant from [PotionEffectType.html](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html). Or use `RANDOM`, `RANDOM_GOOD`, or `RANDOM_BAD` for a random effect. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: POTION_EFFECT
@@ -442,7 +442,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Raid</summary>
+<details><summary style="font-weight: bold; font-size: large">Raid</summary>
 
 `type`: `RAID`
 
@@ -456,7 +456,7 @@ Additional Configuration:
 |------------------|----------|-----------------------------------------------------------------|
 | `bad_omen_level` | Yes      | The Bad Omen level to give the player before the raid triggers. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: RAID
@@ -469,7 +469,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Random Item Removal</summary>
+<details><summary style="font-weight: bold; font-size: large">Random Item Removal</summary>
 
 `type`: `RANDOM_ITEM_REMOVAL`
 
@@ -484,7 +484,7 @@ Additional Configuration:
 | `num_stacks`    | Yes      | The number of item stacks to remove from.    |
 | `num_per_stack` | Yes      | The number of items to be removed per stack. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: RANDOM_ITEM_REMOVAL
@@ -498,7 +498,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Rotating Hotbar</summary>
+<details><summary style="font-weight: bold; font-size: large">Rotating Hotbar</summary>
 
 `type`: `ROTATING_HOTBAR`
 
@@ -513,7 +513,7 @@ Additional Configuration:
 | `num_rotations`             | Yes      | The number of rotations.  |
 | `seconds_between_rotations` | Yes      | How long before rotating. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: ROTATING_HOTBAR
@@ -527,7 +527,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Send to Nether</summary>
+<details><summary style="font-weight: bold; font-size: large">Send to Nether</summary>
 
 `type`: `SEND_TO_NETHER`
 
@@ -541,7 +541,7 @@ Additional Configuration:
 |---------------------------------|----------|----------------------------------------------------|
 | `nether_portal_possible_radius` | Yes      | The radius of which the return portal can spawn in |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: SEND_TO_NETHER
@@ -554,7 +554,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Soup Man</summary>
+<details><summary style="font-weight: bold; font-size: large">Soup Man</summary>
 
 `type`: `SOUP_MAN`
 
@@ -571,7 +571,7 @@ Additional Configuration:
 | `angry_message`      | No       | The message to send to the player when time has expired and now the soup man will kill the player. |
 | `satisfied_message`  | No       | The message to send to the player when they have successfully completed the soup quest.            |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: SOUP_MAN
@@ -584,7 +584,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">WaterLog</summary>
+<details><summary style="font-weight: bold; font-size: large">WaterLog</summary>
 
 `type`: `WATERLOG`
 
@@ -598,7 +598,7 @@ Additional Configuration:
 |---------------------|----------|------------------------------------|
 | `duration_seconds`  | Yes      | How long the waterlog should last. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: WATERLOG
@@ -611,7 +611,7 @@ Additional Configuration:
 <br/>
 </details>
 
-<details open><summary style="font-weight: bold; font-size: large">Weeping Angel</summary>
+<details><summary style="font-weight: bold; font-size: large">Weeping Angel</summary>
 
 `type`: `WEEPING_ANGEL`
 
@@ -627,7 +627,7 @@ Additional Configuration:
 | `distance_from_player` | Yes      | How far away the Weeping Angel spawns from the player.                        |
 | `end_message`          | Yes      | The message to send to the player to let them know the Weeping Angel is gone. |
 
-<details open><summary>Example Action Configuration</summary>
+<details><summary>Example Action Configuration</summary>
 
 ```
 - type: WEEPING_ANGEL
