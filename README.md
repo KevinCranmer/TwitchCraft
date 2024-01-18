@@ -502,7 +502,7 @@ Additional Configuration:
 
 `type`: `ROTATING_HOTBAR`
 
-![RotatingHotbarGif](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2o1ZHN3OGw5MmprZzYydjViMWE0YWs0ZzhhbHBldXV2NXQ0YmJvdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2RqDgYI5LDxPu2IIle/source.gif)
+![RotatingHotbarGif](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2ZiMmNjN2NwcHR4c2docjRjenczZ2Q2NG5hZGNzZDBhN3BybW1kciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/63K9nV3z8RTpYk9DxR/source.gif)
 
 Rotate the players hotbar, making it very annoying to do even the simplest tasks.
 
