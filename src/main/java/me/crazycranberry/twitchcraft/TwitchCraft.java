@@ -149,7 +149,6 @@ public final class TwitchCraft extends JavaPlugin {
         InputStream stream = TwitchCraft.class.getClassLoader().getResource("secret.txt").openStream();
         Scanner scan = new Scanner(stream);
         String secret = scan.next();
-        System.out.println("The secret: " + secret);
         return secret;
     }
 }
