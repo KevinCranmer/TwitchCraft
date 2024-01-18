@@ -27,12 +27,12 @@ import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.triggerer;
 
 public class PinataChickensExecutor implements Executor {
     public static final List<Consumer<Location>> nonItemGoodies = List.of(
-//        Goodies::spawnZombie,
-//        Goodies::spawnHorseAndSaddle,
-//        Goodies::spawnWater,
-//        Goodies::spawnSuperChargedCreeper,
-//        Goodies::spawnLava,
-//        Goodies::doNothing,
+        Goodies::spawnZombie,
+        Goodies::spawnHorseAndSaddle,
+        Goodies::spawnWater,
+        Goodies::spawnSuperChargedCreeper,
+        Goodies::spawnLava,
+        Goodies::doNothing,
         Goodies::spawnArmorStand
     );
 
