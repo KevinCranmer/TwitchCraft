@@ -6,15 +6,16 @@ import lombok.Setter;
 import me.crazycranberry.twitchcraft.actions.Executor;
 import me.crazycranberry.twitchcraft.config.Action;
 import me.crazycranberry.twitchcraft.twitch.websocket.model.message.Message;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
+//import net.kyori.adventure.key.Key;
+//import net.kyori.adventure.sound.Sound;
+//import net.kyori.adventure.text.Component;
+//import net.kyori.adventure.text.format.NamedTextColor;
+//import net.kyori.adventure.text.format.Style;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -61,13 +62,14 @@ public class WeepingAngelExecutor implements Executor {
             pimpOutAngel(weepingAngel, wa.getSecondsTillDespawn());
             weepingAngel.setTarget(p);
             WeepingAngelStats was = playerAngels.get(p);
-            p.playSound(
-                    Sound.sound()
-                            .source(Sound.Source.AMBIENT)
-                            .volume(1)
-                            .seed(1)
-                            .type(Key.key("ambient.cave"))
-                            .build());
+            p.playSound(p, Sound.AMBIENT_CAVE, 1, 1);
+//            p.playSound(
+//                    Sound.sound()
+//                            .source(Sound.Source.AMBIENT)
+//                            .volume(1)
+//                            .seed(1)
+//                            .type(Key.key("ambient.cave"))
+//                            .build());
             if (was != null) {
                 removeAngel(p);
             }
@@ -83,7 +85,8 @@ public class WeepingAngelExecutor implements Executor {
     }
 
     private void pimpOutAngel(Zombie weepingAngel, int durationSeconds) {
-        weepingAngel.customName(Component.text("Weeping Angel", Style.style(NamedTextColor.BLACK)));
+        //weepingAngel.customName(Component.text("Weeping Angel", Style.style(NamedTextColor.BLACK)));
+        weepingAngel.setCustomName(String.format("%sWeeping Angel%s", ChatColor.BLACK, ChatColor.RESET));
         weepingAngel.setCustomNameVisible(true);
         weepingAngel.setMetadata("weepingangel", new FixedMetadataValue(getPlugin(), "true"));
         giveArmor(weepingAngel);

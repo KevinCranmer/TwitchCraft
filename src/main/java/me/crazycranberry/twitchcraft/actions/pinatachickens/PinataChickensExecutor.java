@@ -27,12 +27,12 @@ import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.triggerer;
 
 public class PinataChickensExecutor implements Executor {
     public static final List<Consumer<Location>> nonItemGoodies = List.of(
-        Goodies::spawnZombie,
-        Goodies::spawnHorseAndSaddle,
-        Goodies::spawnWater,
-        Goodies::spawnSuperChargedCreeper,
-        Goodies::spawnLava,
-        Goodies::doNothing,
+//        Goodies::spawnZombie,
+//        Goodies::spawnHorseAndSaddle,
+//        Goodies::spawnWater,
+//        Goodies::spawnSuperChargedCreeper,
+//        Goodies::spawnLava,
+//        Goodies::doNothing,
         Goodies::spawnArmorStand
     );
 
@@ -140,10 +140,10 @@ public class PinataChickensExecutor implements Executor {
 
         public static void spawnArmorStand(Location loc) {
             ArmorStand armorStand = loc.getWorld().spawn(loc, ArmorStand.class);
-            armorStand.setItem(EquipmentSlot.HEAD, randomFromList(armorHeads));
-            armorStand.setItem(EquipmentSlot.CHEST, randomFromList(armorChests));
-            armorStand.setItem(EquipmentSlot.LEGS, randomFromList(armorLegs));
-            armorStand.setItem(EquipmentSlot.FEET, randomFromList(armorBoots));
+            armorStand.getEquipment().setHelmet(randomFromList(armorHeads));
+            armorStand.getEquipment().setChestplate(randomFromList(armorChests));
+            armorStand.getEquipment().setLeggings(randomFromList(armorLegs));
+            armorStand.getEquipment().setBoots(randomFromList(armorBoots));
         }
 
         private static final List<ItemStack> armorHeads = Arrays.asList(

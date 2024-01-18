@@ -2,7 +2,6 @@ package me.crazycranberry.twitchcraft;
 
 import lombok.SneakyThrows;
 import me.crazycranberry.twitchcraft.actions.sendtonether.SendToNetherManager;
-import me.crazycranberry.twitchcraft.actions.soupman.SoupManManager;
 import me.crazycranberry.twitchcraft.commands.CreatePollCommand;
 import me.crazycranberry.twitchcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.twitchcraft.commands.RefreshConfigCommand;
@@ -19,8 +18,6 @@ import me.crazycranberry.twitchcraft.actions.explosion.ExplosionManager;
 import me.crazycranberry.twitchcraft.actions.flyingcow.FlyingCowManager;
 import me.crazycranberry.twitchcraft.managers.CleanUpManager;
 import me.crazycranberry.twitchcraft.managers.KeepAliveManager;
-import me.crazycranberry.twitchcraft.actions.megajump.MegaJumpManager;
-import me.crazycranberry.twitchcraft.actions.nojumping.NoJumpingManager;
 import me.crazycranberry.twitchcraft.actions.pinatachickens.PinataChickenManager;
 import me.crazycranberry.twitchcraft.managers.PollManager;
 import me.crazycranberry.twitchcraft.managers.ReconnectRequestedManager;
@@ -70,13 +67,10 @@ public final class TwitchCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
-        getServer().getPluginManager().registerEvents(new MegaJumpManager(), this);
-        getServer().getPluginManager().registerEvents(new NoJumpingManager(), this);
         getServer().getPluginManager().registerEvents(new PinataChickenManager(), this);
         getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
         getServer().getPluginManager().registerEvents(new SendToNetherManager(), this);
-        getServer().getPluginManager().registerEvents(new SoupManManager(), this);
     }
 
     private void registerCommands() {
