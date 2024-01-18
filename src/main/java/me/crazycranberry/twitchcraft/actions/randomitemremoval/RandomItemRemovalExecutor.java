@@ -25,9 +25,9 @@ public class RandomItemRemovalExecutor implements Executor {
             logger().warning("Somehow the following action was passed to " + this.getClass().getName() + ": " + action + "\nAborting execution.");
             return;
         }
-        Map<String, Integer> itemsBeingRemoved = new HashMap<>();
         RandomItemRemoval rir = (RandomItemRemoval) action;
         for (Player p : getTargetedPlayers(rir)) {
+            Map<String, Integer> itemsBeingRemoved = new HashMap<>();
             List<Integer> potentialItemIndices = new ArrayList<>();
             for (int i = 0; i < p.getInventory().getContents().length; i++) {
                 if (p.getInventory().getContents()[i] != null) {

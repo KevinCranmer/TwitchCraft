@@ -1,71 +1,56 @@
 access_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 refresh_token: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
 broadcaster_id: <retrieve from https://streamcraft-0a9a58085ccc.herokuapp.com/>
+default_target: '*'
+connect_to_twitch: true
 send_action_message_by_default: true
 allow_test_commands: false
 channel_follows:
-    allow_repeats: false
+  allow_repeats: false
 polls:
   title: Which TwitchCraft Action?
   duration_seconds: 30
   seconds_until_next_poll: 120
-  num_choices: 3
+  num_choices: 4
   default_weight: 1.0
 actions:
-  - type: ENTITY_SPAWN
+  - type: BUILD_A_HOUSE
+    action_message: "{TRIGGER_CAUSE} has triggered {TRIGGER_TYPE}. Let's build them
+    a {COLOR:GOLD}house!"
     trigger:
       type: CHANNEL_FOLLOW
-    entity: ZOMBIE
-    quantity: 5
-    radius_from_player: 5
-  - type: POTION_EFFECT
-    trigger:
-      type: CHANNEL_FOLLOW
-    potion_type: STRENGTH
-    level: 2
-    duration_seconds: 15
-  - type: RANDOM_ITEM_REMOVAL
-    trigger:
-      type: CHANNEL_FOLLOW
-    num_stacks: 2
-    num_per_stack: 2
-  - type: WATERLOG
-    trigger:
-     type: CHANNEL_FOLLOW
-    duration_seconds: 10
-  - type: MEGA_JUMP
-    trigger:
-      type: CHANNEL_FOLLOW
-    num_jumps: 3
-  - type: NO_JUMPING
-    trigger:
-     type: CHANNEL_FOLLOW
-    duration_seconds: 10
-  - type: DROP_ALL_ITEMS
-    trigger:
-      type: CHANNEL_FOLLOW
-  - type: FLYING_COW
+  - type: CANT_STOP_WONT_STOP
     trigger:
       type: POLL
       weight: 0.5
-    num_cows: 5
-    seconds_between_cows: 5
-    distance_from_player: 10
-    cow_velocity: 0.8
-  - type: EXPLOSION
-    trigger:
-      type: CHANNEL_FOLLOW
-    power: 6
-  - type: PINATA_CHICKENS
-    trigger:
-      type: CHANNEL_FOLLOW
-    num_chickens: 6
+      poll_message: Zoom Zoom
+    duration_seconds: 60
   - type: CHEST_OF_GOODIES
     trigger:
-      type: CHANNEL_FOLLOW
+      type: POLL
     chest_items:
+      - name: BOW
+        chance: 0.25
+        min: 1
+        max: 1
+      - name: ARROW
+        chance: 0.45
+        min: 10
+        max: 32
+      - name: IRON_PICKAXE
+        chance: 0.45
+        min: 1
+        max: 3
+      - name: GOAT_HORN
+        chance: 0.3
+        min: 1
+        max: 1
+      - name: TRIDENT
+        chance: 0.05
+        min: 1
+        max: 1
       - name: LEATHER_HELMET
-        chance: 0.8
+        chance: 0.4
         min: 1
         max: 2
       - name: LEATHER
@@ -75,37 +60,199 @@ actions:
       - name: BREAD
         chance: 0.9
         min: 3
-        max: 9
-  - type: BUILD_A_HOUSE
-    action_message: Let's build a {COLOR:GOLD}house!{COLOR:WHITE} {TRIGGER_TYPE} was triggered
-      by {TRIGGER_CAUSE} with {QUANTITY} gifted subs!
+        max: 18
+      - name: APPLE
+        chance: 0.5
+        min: 1
+        max: 4
+      - name: MUSIC_DISC_PIGSTEP
+        chance: 0.1
+        min: 1
+        max: 1
+      - name: CHAINMAIL_CHESTPLATE
+        chance: 0.2
+        min: 1
+        max: 1
+      - name: IRON_LEGGINGS
+        chance: 0.15
+        min: 1
+        max: 1
+      - name: GOLDEN_HELMET
+        chance: 0.15
+        min: 1
+        max: 1
+  - type: DROP_ALL_ITEMS
     trigger:
-      type: CHANNEL_FOLLOW
-  - type: ROTATING_HOTBAR
+      type: POLL
+  - type: ENTITY_SPAWN
     trigger:
-      type: CHANNEL_FOLLOW
-    num_rotations: 10
-    seconds_between_rotations: 2
-  - type: CUSTOM_COMMAND
+      type: POLL
+      weight: 0.3
+    entity: DONKEY
+    quantity: 3
+    radius_from_player: 5
+  - type: ENTITY_SPAWN
     trigger:
-      type: CHANNEL_FOLLOW
-    command: summon zombie {PLAYER_LOCATION}
-    poll_message: Spawn Zombie
-  - type: WEEPING_ANGEL
+      type: POLL
+      weight: 0.3
+    entity: SKELETON
+    quantity: 8
+    radius_from_player: 10
+  - type: ENTITY_SPAWN
     trigger:
-      type: CHANNEL_FOLLOW
-    seconds_till_despawn: 1800
-    distance_from_player: 20
-  - type: SEND_TO_NETHER
+      type: POLL
+      weight: 0.3
+    entity: VEX
+    quantity: 3
+    radius_from_player: 5
+  - type: ENTITY_SPAWN
     trigger:
-      type: CHANNEL_FOLLOW
-    nether_portal_possible_radius: 30
-  - type: SOUP_MAN
+      type: POLL
+      weight: 0.01
+    entity: WITHER
+    quantity: 1
+    radius_from_player: 20
+  - type: ENTITY_SPAWN
     trigger:
-      type: CHANNEL_FOLLOW
-    minutes_till_angry: 20
+      type: POLL
+      weight: 0.3
+    entity: FROG
+    quantity: 20
+    radius_from_player: 8
+  - type: EXPLOSION
+    target: Crazy_Cranberry
+    trigger:
+      type: SUB_GIFT
+      min: 1
+      max: 1
+    power: 6
+  - type: FLYING_COW
+    trigger:
+      type: POLL
+    num_cows: 8
+    seconds_between_cows: 5
+    distance_from_player: 15
+    cow_velocity: 0.9
   - type: GIVE_ITEM
     trigger:
-      type: CHANNEL_FOLLOW
-    item: DIAMOND_CHESTPLATE
-    quantity: 2
+      type: POLL
+      weight: 0.1
+    item: BREAD
+    quantity: 6
+  - type: GIVE_ITEM
+    trigger:
+      type: POLL
+      weight: 0.1
+    item: ENDER_PEARL
+    quantity: 5
+  - type: GIVE_ITEM
+    trigger:
+      type: POLL
+      weight: 0.1
+    item: DIAMOND_AXE
+    quantity: 1
+  - type: GIVE_ITEM
+    trigger:
+      type: POLL
+      weight: 0.1
+    item: DIAMOND
+    quantity: 3
+  - type: GIVE_ITEM
+    trigger:
+      type: POLL
+      weight: 0.1
+    item: GOAT_HORN
+    quantity: 1
+  - type: GIVE_ITEM
+    trigger:
+      type: POLL
+      weight: 0.1
+    item: DIRT
+    quantity: 64
+  - type: MEGA_JUMP
+    trigger:
+      type: POLL
+    num_jumps: 3
+    end_message: "No more mega jumps."
+  - type: NO_JUMPING
+    trigger:
+      type: POLL
+    duration_seconds: 60
+    end_message: "Okay you can jump again."
+  - type: PINATA_CHICKENS
+    trigger:
+      type: POLL
+      weight: 0.7
+    num_chickens: 5
+  - type: PINATA_CHICKENS
+    trigger:
+      type: POLL
+      weight: 0.4
+    num_chickens: 10
+  - type: PINATA_CHICKENS
+    trigger:
+      type: CHANNEL_SUBSCRIBE
+    num_chickens: 10
+  - type: PINATA_CHICKENS
+    trigger:
+      type: CHANNEL_RESUBSCRIBE
+    num_chickens: 10
+  - type: POTION_EFFECT
+    trigger:
+      type: CHANNEL_CHEER
+    level: 3
+    duration_seconds: 45
+    potion_type: INCREASE_DAMAGE
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.5
+    level: 2
+    duration_seconds: 45
+    potion_type: RANDOM
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.3
+    level: 2
+    duration_seconds: 45
+    potion_type: RANDOM_GOOD
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.3
+    level: 2
+    duration_seconds: 45
+    potion_type: RANDOM_BAD
+  - type: RAID
+    trigger:
+      type: POLL
+    bad_omen_level: 2
+  - type: RANDOM_ITEM_REMOVAL
+    trigger:
+      type: POLL
+    num_stacks: 2
+    num_per_stack: 1
+  - type: ROTATING_HOTBAR
+    trigger:
+      type: POLL
+    num_rotations: 10
+    seconds_between_rotations: 3
+  - type: SEND_TO_NETHER
+    trigger:
+      type: POLL
+    nether_portal_possible_radius: 25
+  - type: SOUP_MAN
+    trigger:
+      type: POLL
+    minutes_till_angry: 20
+  - type: WATERLOG
+    trigger:
+      type: POLL
+    duration_seconds: 60
+  - type: WEEPING_ANGEL
+    trigger:
+      type: POLL
+    seconds_till_despawn: 1800
+    distance_from_player: 30
+    end_message: "The Weeping Angel has withered"

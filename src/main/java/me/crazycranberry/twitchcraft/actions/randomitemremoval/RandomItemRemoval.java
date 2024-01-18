@@ -29,7 +29,7 @@ public class RandomItemRemoval extends Action {
         if (this.getTrigger().getPollMessage() != null) {
             return this.getTrigger().getPollMessage();
         }
-        return String.format("Remove %s x %s item%s", getNumPerStack(), getNumStacks(), getNumPerStack() * getNumStacks() > 1 ? "s" : "");
+        return String.format("Randomly remove %s item%s", (getNumPerStack() * getNumStacks()), getNumPerStack() * getNumStacks() > 1 ? "s" : "");
     }
 
     /** Any Action subclass MUST implement this method or it will not be able to be created in Action.java. */

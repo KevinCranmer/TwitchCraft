@@ -22,10 +22,10 @@ public abstract class Action {
     private String actionMessage;
     private Boolean sendMessage;
 
-    public static Action fromYaml(LinkedHashMap<String, ?> input, Boolean sendMessageByDefault) {
+    public static Action fromYaml(LinkedHashMap<String, ?> input, Boolean sendMessageByDefault, String defaultTarget) {
         ActionType type = validateType(input.get("type"));
         Trigger trigger = validateTrigger(input.get("trigger"));
-        String target = validateTarget(input.get("target"));
+        String target = validateTarget(input.get("target"), defaultTarget);
         Boolean sendMessage = validateSendMessage(input.get("send_message"), sendMessageByDefault);
         String actionMessage = validateField(input.get("action_message"), String.class, "action_message", false);
         if (type == null || trigger == null) {
@@ -49,13 +49,13 @@ public abstract class Action {
 
     public abstract String pollMessage();
 
-    private static <T> String validateTarget(T target) {
+    private static <T> String validateTarget(T target, String defaultTarget) {
         if (target == null) {
-            return "*";
+            return defaultTarget;
         }
         if (!(target instanceof String)) {
             logger().warning("An Action target was not a String.");
-            return "*";
+            return defaultTarget;
         }
         return (String) target;
     }

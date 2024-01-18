@@ -20,6 +20,8 @@ public class TwitchCraftConfig {
     private String accessToken;
     private String refreshToken;
     private String broadcasterId;
+    private String defaultTarget;
+    private boolean connectToTwitch;
     private boolean sendActionMessageByDefault;
     private boolean followAllowRepeats;
     private boolean allowTestCommands;
@@ -60,6 +62,8 @@ public class TwitchCraftConfig {
         accessToken = config.getString("access_token", originalConfig.getString("access_token")).trim();
         refreshToken = config.getString("refresh_token", originalConfig.getString("refresh_token")).trim();
         broadcasterId = config.getString("broadcaster_id", originalConfig.getString("broadcaster_id")).trim();
+        defaultTarget = config.getString("default_target", originalConfig.getString("default_target")).trim().replace(" ", ",");
+        connectToTwitch = config.getBoolean("connect_to_twitch", originalConfig.getBoolean("connect_to_twitch"));
         sendActionMessageByDefault = config.getBoolean("send_action_message_by_default", originalConfig.getBoolean("send_action_message_by_default"));
         followAllowRepeats = config.getBoolean("channel_follows.allow_repeats", originalConfig.getBoolean("channel_follows.allow_repeats"));
         allowTestCommands = config.getBoolean("allow_test_commands", originalConfig.getBoolean("allow_test_commands"));
@@ -68,7 +72,7 @@ public class TwitchCraftConfig {
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
         pollDefaultWeight = config.getDouble("polls.default_weight", originalConfig.getInt("polls.default_weight"));
-        actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c, sendActionMessageByDefault)).peek(System.out::println).filter(Objects::nonNull).toList();
+        actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c, sendActionMessageByDefault, defaultTarget)).peek(a -> logger().info(a.toString())).filter(Objects::nonNull).toList();
     }
 
     private Integer validatePollNumChoices(Integer maybeNumChoices) {

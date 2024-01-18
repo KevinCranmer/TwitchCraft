@@ -51,7 +51,6 @@ public final class TwitchCraft extends JavaPlugin {
         plugin = this;
         logger = this.getLogger();
         refreshConfigs();
-        twitchClient = new TwitchClient();
         registerCommands();
         registerManagers();
     }
@@ -59,7 +58,9 @@ public final class TwitchCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        twitchClient.close();
+        if (twitchClient != null) {
+            twitchClient.close();
+        }
     }
 
     private void registerManagers() {
@@ -99,6 +100,10 @@ public final class TwitchCraft extends JavaPlugin {
         }
     }
 
+    public boolean isClientNull() {
+        return twitchClient == null;
+    }
+
     public void reconnectToTwitch(String connectionUrl) {
         twitchClient.reconnect(connectionUrl);
     }
@@ -126,6 +131,12 @@ public final class TwitchCraft extends JavaPlugin {
     public String refreshConfigs() {
         try {
             config = new TwitchCraftConfig(loadConfig("twitch_craft.yml"));
+            if (config().isConnectToTwitch() && twitchClient == null) {
+                twitchClient = new TwitchClient();
+            } else if (!config().isConnectToTwitch() && twitchClient != null) {
+                twitchClient.close();
+                twitchClient = null;
+            }
             return "Successfully loaded configs.";
         } catch (Exception e) {
             e.printStackTrace();

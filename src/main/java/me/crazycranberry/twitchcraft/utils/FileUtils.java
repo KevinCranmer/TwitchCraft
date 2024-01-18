@@ -13,7 +13,6 @@ import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 
 public class FileUtils {
     public static YamlConfiguration loadConfig(String configName) throws InvalidConfigurationException {
-        System.out.println("ATTEMPTING TO LOAD " + (getPlugin().getDataFolder() + "" + File.separatorChar + configName));
         File configFile = new File(getPlugin().getDataFolder() + "" + File.separatorChar + configName);
         if(!configFile.exists()){
             getPlugin().saveResource(configName, true);
