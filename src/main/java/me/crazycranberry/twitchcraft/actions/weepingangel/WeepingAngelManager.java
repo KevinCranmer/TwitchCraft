@@ -30,8 +30,7 @@ public class WeepingAngelManager implements Listener {
     @EventHandler
     private void onHitByWeepingAngel(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager().getMetadata("weepingangel").stream().anyMatch(m -> "true".equals(m.value()))) {
-            event.setDamage(EntityDamageEvent.DamageModifier.BASE, 20);
-            event.setDamage(EntityDamageEvent.DamageModifier.HARD_HAT, 0);
+            event.setDamage(EntityDamageEvent.DamageModifier.BASE, 40);
             event.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, 0);
             event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, 0);
             event.setDamage(EntityDamageEvent.DamageModifier.RESISTANCE, 0);
