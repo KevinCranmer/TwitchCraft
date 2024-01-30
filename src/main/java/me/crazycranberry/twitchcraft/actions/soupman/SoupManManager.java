@@ -2,6 +2,7 @@ package me.crazycranberry.twitchcraft.actions.soupman;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;
@@ -48,7 +49,7 @@ public class SoupManManager implements Listener {
 
     @EventHandler
     private void onSoupTradeOpened(PlayerInteractEntityEvent event) {
-        if (!isPlayerTradingCorrectSoupMan(event.getPlayer(), event.getRightClicked())) {
+        if (event.getRightClicked().getMetadata("soupman").stream().anyMatch(m -> "true".equals(m.value())) && !isPlayerTradingCorrectSoupMan(event.getPlayer(), event.getRightClicked())) {
             event.setCancelled(true);
         }
     }

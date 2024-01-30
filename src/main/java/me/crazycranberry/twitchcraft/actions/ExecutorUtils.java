@@ -204,15 +204,8 @@ public class ExecutorUtils {
         return result == null || result.getHitBlock() == null;
     }
 
-    public static String beautifyActionMessage(String actionMessage, Message twitchMessage, Action action) {
-        String userThatTriggered = twitchMessage.getPayload().getEvent().getUser_name();
-        Integer quantity = null;
-        if (action.getTrigger().getType().equals(SUB_GIFT)) {
-            quantity = twitchMessage.getPayload().getEvent().getTotal();
-        } else {
-            quantity = twitchMessage.getPayload().getEvent().getBits();
-        }
-        return actionMessage
+    public static String beautifyString(String str) {
+        return str
                 .replace("{COLOR:AQUA}", ChatColor.AQUA.toString())
                 .replace("{COLOR:BLACK}",  ChatColor.BLACK.toString())
                 .replace("{COLOR:BLUE}",  ChatColor.BLUE.toString())
@@ -233,7 +226,18 @@ public class ExecutorUtils {
                 .replace("{COLOR:STRIKETHROUGH}",  ChatColor.STRIKETHROUGH.toString())
                 .replace("{COLOR:UNDERLINE}",  ChatColor.UNDERLINE.toString())
                 .replace("{COLOR:WHITE}",  ChatColor.WHITE.toString())
-                .replace("{COLOR:YELLOW}",  ChatColor.YELLOW.toString())
+                .replace("{COLOR:YELLOW}",  ChatColor.YELLOW.toString());
+    }
+
+    public static String beautifyActionMessage(String actionMessage, Message twitchMessage, Action action) {
+        String userThatTriggered = twitchMessage.getPayload().getEvent().getUser_name();
+        Integer quantity = null;
+        if (action.getTrigger().getType().equals(SUB_GIFT)) {
+            quantity = twitchMessage.getPayload().getEvent().getTotal();
+        } else {
+            quantity = twitchMessage.getPayload().getEvent().getBits();
+        }
+        return beautifyString(actionMessage)
                 .replace("{TRIGGER_TYPE}", action.getTrigger().getType().toString())
                 .replace("{TRIGGER_CAUSE}", userThatTriggered == null ? "a channel poll" : userThatTriggered)
                 .replace("{QUANTITY}", quantity == null ? "ERROR" : String.valueOf(quantity));

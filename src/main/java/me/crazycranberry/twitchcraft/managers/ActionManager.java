@@ -90,7 +90,11 @@ public class ActionManager implements Listener {
             logger().warning("Somehow the action for \"" + winningPollChoice.get().getTitle() + "\" could not be found.");
             return;
         }
-        executeAction(event.twitchMessage(), winningAction.get());
+        if (winningPollChoice.get().getVotes() > 0) {
+            executeAction(event.twitchMessage(), winningAction.get());
+        } else {
+            logger().warning("No votes recorded for the poll");
+        }
     }
 
     private void executeAction(Message twitchMessage, Action action) {

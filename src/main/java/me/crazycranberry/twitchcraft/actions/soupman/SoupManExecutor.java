@@ -73,6 +73,9 @@ public class SoupManExecutor implements Executor {
                     .taskId(Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> {
                         SoupManStats sms = stats.get(p);
                         if (sms != null) {
+                            if (sms.getIntervalsLeft() % (60 / (intervalTicks / TICKS_PER_SECOND)) == 0 && soupMan.getLocation().distanceSquared(p.getLocation()) > 50) {
+                                soupMan.teleport(p);
+                            }
                             if (sms.getIntervalsLeft() == (int) (sm.getMinutesTillAngry() * (30 / (intervalTicks / TICKS_PER_SECOND)))) {
                                 sendHalfwayMessage(p, twitchMessage, sm);
                             } else if (sms.getIntervalsLeft() <= 0 && sms.getSoupMan().getMetadata("ispissed").stream().anyMatch(m -> "false".equals(m.value()))) {
@@ -120,7 +123,7 @@ public class SoupManExecutor implements Executor {
     }
 
     private List<MerchantRecipe> soupManTrades() {
-        MerchantRecipe seedTrade = new MerchantRecipe(new ItemStack(Material.BEETROOT_SEEDS), 1);
+        MerchantRecipe seedTrade = new MerchantRecipe(new ItemStack(Material.BEETROOT_SEEDS, 6), 1);
         seedTrade.addIngredient(new ItemStack(Material.WHEAT_SEEDS));
         MerchantRecipe soupTrade1 = new MerchantRecipe(new ItemStack(Material.EXPERIENCE_BOTTLE), 1);
         soupTrade1.addIngredient(new ItemStack(Material.BEETROOT_SOUP));

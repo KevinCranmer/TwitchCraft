@@ -164,8 +164,9 @@ public class TwitchClient {
     private void handleWelcomeMessage(Message twitchMessage) {
         logger().info("Welcome message received");
         sessionId = twitchMessage.getPayload().getSession().getId();
-        subscribeToEvents();
-        sendWebSocketConnectedEvent();
+        if (subscribeToEvents()) {
+            sendWebSocketConnectedEvent();
+        }
     }
 
     private void sendWebSocketConnectedEvent() {
@@ -183,13 +184,21 @@ public class TwitchClient {
         );
     }
 
-    private void subscribeToEvents() {
-        subscribeToFollowEvents();
-        subscribeToPollEvents();
-        subscribeToCheerEvents();
-        subscribetoResubscribeEvents();
-        subscribetoSubscribeEvents();
-        subscribeToGiftedEvents();
+    private boolean subscribeToEvents() {
+        if (subscribeToFollowEvents()) {
+            if (subscribeToPollEvents()) {
+                if (subscribetoResubscribeEvents()) {
+                    if (subscribetoSubscribeEvents()) {
+                        if (subscribeToGiftedEvents()) {
+                            if (subscribeToCheerEvents()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private boolean subscribeToGiftedEvents() {

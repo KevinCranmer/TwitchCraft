@@ -9,14 +9,15 @@ channel_follows:
   allow_repeats: false
 polls:
   title: Which TwitchCraft Action?
-  duration_seconds: 30
-  seconds_until_next_poll: 120
+  duration_seconds: 60
+  seconds_until_next_poll: 80
   num_choices: 4
   default_weight: 1.0
+  message_when_live: '{COLOR:AQUA}A Twitch Poll is live. Vote now!!'
 actions:
   - type: BUILD_A_HOUSE
-    action_message: "{TRIGGER_CAUSE} has triggered {TRIGGER_TYPE}. Let's build them
-    a {COLOR:GOLD}house!"
+    action_message: '{TRIGGER_CAUSE} has triggered {TRIGGER_TYPE}. Let''s build them
+    a {COLOR:GOLD}house!'
     trigger:
       type: CHANNEL_FOLLOW
   - type: CANT_STOP_WONT_STOP
@@ -87,21 +88,21 @@ actions:
   - type: ENTITY_SPAWN
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.2
     entity: DONKEY
     quantity: 3
     radius_from_player: 5
   - type: ENTITY_SPAWN
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.15
     entity: SKELETON
     quantity: 8
     radius_from_player: 10
   - type: ENTITY_SPAWN
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.15
     entity: VEX
     quantity: 3
     radius_from_player: 5
@@ -115,23 +116,56 @@ actions:
   - type: ENTITY_SPAWN
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.2
     entity: FROG
     quantity: 20
     radius_from_player: 8
+  - type: ENTITY_SPAWN
+    trigger:
+      type: POLL
+      weight: 0.2
+    entity: CREEPER
+    quantity: 3
+    radius_from_player: 5
+  - type: ENTITY_SPAWN
+    trigger:
+      type: POLL
+      weight: 0.1
+    entity: RAVAGER
+    quantity: 1
+    radius_from_player: 5
+  - type: ENTITY_SPAWN
+    trigger:
+      type: POLL
+      weight: 0.1
+    entity: GHAST
+    quantity: 3
+    radius_from_player: 15
+  - type: ENTITY_SPAWN
+    trigger:
+      type: POLL
+      weight: 0.2
+    entity: SILVERFISH
+    quantity: 15
+    radius_from_player: 10
+  - type: ENTITY_SPAWN
+    trigger:
+      type: POLL
+      weight: 0.2
+    entity: ENDERMAN
+    quantity: 8
+    radius_from_player: 7
   - type: EXPLOSION
     trigger:
-      type: SUB_GIFT
-      min: 1
-      max: 1
+      type: POLL
     power: 6
   - type: FLYING_COW
     trigger:
       type: POLL
-    num_cows: 8
+    num_cows: 6
     seconds_between_cows: 5
-    distance_from_player: 15
-    cow_velocity: 0.9
+    distance_from_player: 20
+    cow_velocity: 0.7
   - type: GIVE_ITEM
     trigger:
       type: POLL
@@ -147,46 +181,46 @@ actions:
   - type: GIVE_ITEM
     trigger:
       type: POLL
-      weight: 0.1
+      weight: 0.15
     item: DIAMOND_AXE
     quantity: 1
   - type: GIVE_ITEM
     trigger:
       type: POLL
-      weight: 0.1
+      weight: 0.15
     item: DIAMOND
     quantity: 3
   - type: GIVE_ITEM
     trigger:
       type: POLL
-      weight: 0.1
+      weight: 0.15
     item: GOAT_HORN
     quantity: 1
   - type: GIVE_ITEM
     trigger:
       type: POLL
-      weight: 0.1
+      weight: 0.15
     item: DIRT
     quantity: 64
   - type: MEGA_JUMP
     trigger:
       type: POLL
     num_jumps: 3
-    end_message: "No more mega jumps."
+    end_message: No more mega jumps.
   - type: NO_JUMPING
     trigger:
       type: POLL
     duration_seconds: 60
-    end_message: "Okay you can jump again."
+    end_message: Okay you can jump again.
   - type: PINATA_CHICKENS
     trigger:
       type: POLL
-      weight: 0.7
+      weight: 0.8
     num_chickens: 5
   - type: PINATA_CHICKENS
     trigger:
       type: POLL
-      weight: 0.4
+      weight: 0.5
     num_chickens: 10
   - type: PINATA_CHICKENS
     trigger:
@@ -195,6 +229,10 @@ actions:
   - type: PINATA_CHICKENS
     trigger:
       type: CHANNEL_RESUBSCRIBE
+    num_chickens: 10
+  - type: PINATA_CHICKENS
+    trigger:
+      type: SUB_GIFT
     num_chickens: 10
   - type: POTION_EFFECT
     trigger:
@@ -205,24 +243,66 @@ actions:
   - type: POTION_EFFECT
     trigger:
       type: POLL
-      weight: 0.5
+      weight: 0.7
     level: 2
     duration_seconds: 45
     potion_type: RANDOM
   - type: POTION_EFFECT
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.4
     level: 2
     duration_seconds: 45
     potion_type: RANDOM_GOOD
   - type: POTION_EFFECT
     trigger:
       type: POLL
-      weight: 0.3
+      weight: 0.4
     level: 2
     duration_seconds: 45
     potion_type: RANDOM_BAD
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: SPEED
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: CONFUSION
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: REGENERATION
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: BLINDNESS
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: LEVITATION
+  - type: POTION_EFFECT
+    trigger:
+      type: POLL
+      weight: 0.17
+    level: 2
+    duration_seconds: 45
+    potion_type: INVISIBILITY
   - type: RAID
     trigger:
       type: POLL
@@ -240,7 +320,8 @@ actions:
   - type: SEND_TO_NETHER
     trigger:
       type: POLL
-    nether_portal_possible_radius: 25
+      weight: 0.5
+    nether_portal_possible_radius: 30
   - type: SOUP_MAN
     trigger:
       type: POLL
@@ -254,4 +335,4 @@ actions:
       type: POLL
     seconds_till_despawn: 1800
     distance_from_player: 30
-    end_message: "The Weeping Angel has withered"
+    end_message: The Weeping Angel has withered away.

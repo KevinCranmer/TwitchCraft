@@ -26,6 +26,7 @@ public class TwitchCraftConfig {
     private boolean followAllowRepeats;
     private boolean allowTestCommands;
     private String pollTitle;
+    private String pollMessageWhenLive;
     private Integer pollDuration;
     private Integer pollInterval;
     private Integer pollNumChoices;
@@ -68,6 +69,7 @@ public class TwitchCraftConfig {
         followAllowRepeats = config.getBoolean("channel_follows.allow_repeats", originalConfig.getBoolean("channel_follows.allow_repeats"));
         allowTestCommands = config.getBoolean("allow_test_commands", originalConfig.getBoolean("allow_test_commands"));
         pollTitle = config.getString("polls.title", originalConfig.getString("polls.title"));
+        pollMessageWhenLive = config.getString("polls.message_when_live", originalConfig.getString("polls.message_when_live"));
         pollDuration = config.getInt("polls.duration_seconds", originalConfig.getInt("polls.duration_seconds"));
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
