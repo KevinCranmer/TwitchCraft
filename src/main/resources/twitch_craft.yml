@@ -13,6 +13,8 @@ polls:
   seconds_until_next_poll: 80
   num_choices: 4
   default_weight: 1.0
+  channel_points_voting_enabled: false
+  channel_points_per_additional_vote: 10
   message_when_live: '{COLOR:AQUA}A Twitch Poll is live. Vote now!!'
 actions:
   - type: BUILD_A_HOUSE

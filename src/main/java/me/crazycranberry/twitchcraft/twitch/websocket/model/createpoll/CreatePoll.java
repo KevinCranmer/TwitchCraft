@@ -17,5 +17,7 @@ public class CreatePoll {
     private final String title;
     private final Integer duration;
     private final List<PollChoice> choices;
+    private final Boolean channel_points_voting_enabled;
+    private final Integer channel_points_per_vote;
     private final String secret;
 }

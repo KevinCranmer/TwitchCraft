@@ -30,6 +30,8 @@ public class TwitchCraftConfig {
     private Integer pollDuration;
     private Integer pollInterval;
     private Integer pollNumChoices;
+    private boolean pollChannelPointsVotingEnabled;
+    private Integer pollChannelPointsPerVote;
     private Double pollDefaultWeight;
     private List<Action> actions;
 
@@ -73,7 +75,9 @@ public class TwitchCraftConfig {
         pollDuration = config.getInt("polls.duration_seconds", originalConfig.getInt("polls.duration_seconds"));
         pollInterval = config.getInt("polls.seconds_until_next_poll", originalConfig.getInt("polls.seconds_until_next_poll"));
         pollNumChoices = validatePollNumChoices(config.getInt("polls.num_choices", originalConfig.getInt("polls.num_choices")));
-        pollDefaultWeight = config.getDouble("polls.default_weight", originalConfig.getInt("polls.default_weight"));
+        pollDefaultWeight = config.getDouble("polls.default_weight", originalConfig.getDouble("polls.default_weight"));
+        pollChannelPointsVotingEnabled = config.getBoolean("polls.channel_points_voting_enabled", originalConfig.getBoolean("polls.channel_points_voting_enabled"));
+        pollChannelPointsPerVote = config.getInt("polls.channel_points_per_additional_vote", originalConfig.getInt("polls.channel_points_per_additional_vote"));
         actions = config.getList("actions", List.of()).stream().map(c -> Action.fromYaml((LinkedHashMap<String, ?>) c, sendActionMessageByDefault, defaultTarget)).filter(Objects::nonNull).peek(a -> logger().info(a.toString())).toList();
     }
 

@@ -86,6 +86,8 @@ public class PollManager implements Listener {
             .duration(config.getPollDuration())
             .title(config.getPollTitle())
             .choices(selectedPollActions.stream().map(a -> PollChoice.of(a.pollMessage())).toList())
+            .channel_points_voting_enabled(config.isPollChannelPointsVotingEnabled())
+            .channel_points_per_vote(config.getPollChannelPointsPerVote())
             .secret(SECRET)
             .build();
         getPlugin().createTwitchPoll(poll);
