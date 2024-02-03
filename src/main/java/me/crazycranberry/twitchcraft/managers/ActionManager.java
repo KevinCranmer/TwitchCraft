@@ -42,6 +42,9 @@ public class ActionManager implements Listener {
 
     @EventHandler
     private void onSubscribeTrigger(ChannelSubscribeEvent event) {
+        if (event.twitchMessage().getPayload().getEvent().getIs_gift()) {
+            return;
+        }
         getPlugin().config().getActions().stream()
                 .filter(a -> a.getTrigger().getType().equals(TriggerType.CHANNEL_SUBSCRIBE))
                 .forEach(a -> executeAction(event.twitchMessage(), a));
