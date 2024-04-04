@@ -18,5 +18,6 @@ public class MessageSession {
     private String status;
     private Integer keepalive_timeout_seconds;
     private String reconnect_url;
+    private String recovery_url;
     private String connected_at;
 }
