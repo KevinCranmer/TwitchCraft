@@ -15,7 +15,7 @@ import java.util.Set;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyActionMessage;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateActionMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
@@ -68,7 +68,7 @@ public class MegaJumpExecutor implements Executor {
     private void sendEndMessage(Player p, Message twitchMessage, MegaJump mj) {
         String endMessage = "Mega Jump Ended.";
         if (mj.getEndMessage() != null) {
-            endMessage = beautifyActionMessage(mj.getEndMessage(), twitchMessage, mj);
+            endMessage = interpolateActionMessage(mj.getEndMessage(), twitchMessage, mj);
         }
         maybeSendPlayerSecondaryMessage(p, endMessage, mj);
     }

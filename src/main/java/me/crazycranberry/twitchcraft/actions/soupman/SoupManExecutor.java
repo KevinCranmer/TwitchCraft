@@ -32,7 +32,7 @@ import java.util.Optional;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyActionMessage;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateActionMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getPossibleSpawnLocations;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.isAboveGround;
@@ -101,7 +101,7 @@ public class SoupManExecutor implements Executor {
     private static void sendHalfwayMessage(Player p, Message twitchMessage, SoupMan sm) {
         String halfwayMessage = String.format("<SoupMan>If I don't get my soup in %s minutes, I might get %sANGRY!%s", (sm.getMinutesTillAngry() / 2), ChatColor.RED, ChatColor.RESET);
         if (sm.getHalfwayMessage() != null) {
-            halfwayMessage = beautifyActionMessage(sm.getHalfwayMessage().replace("{TIME}", String.valueOf(sm.getMinutesTillAngry() / 2)), twitchMessage, sm);
+            halfwayMessage = interpolateActionMessage(sm.getHalfwayMessage().replace("{TIME}", String.valueOf(sm.getMinutesTillAngry() / 2)), twitchMessage, sm);
         }
         maybeSendPlayerSecondaryMessage(p, halfwayMessage, sm);
     }
@@ -109,7 +109,7 @@ public class SoupManExecutor implements Executor {
     private static void sendAngryMessage(Player p, Message twitchMessage, SoupMan sm) {
         String angryMessage = String.format("<SoupMan>%sNO SOUP?! NOW YOU MUST DIE!%s", ChatColor.RED, ChatColor.RESET);
         if (sm.getAngryMessage() != null) {
-            angryMessage = beautifyActionMessage(sm.getAngryMessage(), twitchMessage, sm);
+            angryMessage = interpolateActionMessage(sm.getAngryMessage(), twitchMessage, sm);
         }
         maybeSendPlayerSecondaryMessage(p, angryMessage, sm);
     }
@@ -117,7 +117,7 @@ public class SoupManExecutor implements Executor {
     private static void sendSatisfiedMessage(Player p, Message twitchMessage, SoupMan sm) {
         String satisfiedMessage = "<SoupMan>Ahh delicious! Thank you Traveler!";
         if (sm.getSatisfiedMessage() != null) {
-            satisfiedMessage = beautifyActionMessage(sm.getSatisfiedMessage(), twitchMessage, sm);
+            satisfiedMessage = interpolateActionMessage(sm.getSatisfiedMessage(), twitchMessage, sm);
         }
         maybeSendPlayerSecondaryMessage(p, satisfiedMessage, sm);
     }

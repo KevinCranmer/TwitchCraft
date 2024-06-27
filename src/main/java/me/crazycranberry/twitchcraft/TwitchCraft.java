@@ -27,7 +27,6 @@ import me.crazycranberry.twitchcraft.managers.ReconnectRequestedManager;
 import me.crazycranberry.twitchcraft.twitch.websocket.TwitchClient;
 import me.crazycranberry.twitchcraft.twitch.websocket.model.createpoll.CreatePoll;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Server;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,8 +37,7 @@ import java.time.Instant;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyActionMessage;
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyString;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateColors;
 import static me.crazycranberry.twitchcraft.utils.FileUtils.loadConfig;
 
 public final class TwitchCraft extends JavaPlugin {
@@ -114,7 +112,7 @@ public final class TwitchCraft extends JavaPlugin {
 
     public void createTwitchPoll(CreatePoll poll) {
         HttpResponse<?> r = twitchClient.sendCreatePoll(poll);
-        getServer().sendMessage(Component.text(beautifyString(config().getPollMessageWhenLive())));
+        getServer().sendMessage(Component.text(interpolateColors(config().getPollMessageWhenLive())));
         logger().info("Status trying to create poll: " + r.statusCode());
         logger().info("Response trying to create poll: " + r.body());
     }

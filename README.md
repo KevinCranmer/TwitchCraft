@@ -154,7 +154,7 @@ Additional Configuration:
 
 ![CustomCommandGif](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXB3Z3B1bnR2dHRjcnJ4eGgzMG95dzZpN3B1ODM1bHY4emJtbXpmOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/h4oYG5J6Pgcva4zdpS/source.gif)
 
-A customizable command. Whatever you type in for the `command` configuration will be executed on the server. Use `{PLAYER}` and `{PLAYER_LOCATION}` to interpolate respectively. 
+A customizable command. Whatever you type in for the `command` configuration will be executed on the server. Use `{TRIGGER_TYPE}`, `{QUANTITY}`, `{PLAYER}` and `{PLAYER_LOCATION}` to interpolate respectively. 
 
 Additional Configuration:
 

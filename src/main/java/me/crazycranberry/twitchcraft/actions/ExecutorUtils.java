@@ -52,7 +52,7 @@ public class ExecutorUtils {
     public static void maybeSendPlayerMessage(Player p, Message twitchMessage, String message, Action action) {
         if (action.getSendMessage()) {
             if (action.getActionMessage() != null) {
-                p.sendMessage(beautifyActionMessage(action.getActionMessage(), twitchMessage, action));
+                p.sendMessage(interpolateActionMessage(action.getActionMessage(), twitchMessage, action));
             } else {
                 p.sendMessage(message);
             }
@@ -204,7 +204,7 @@ public class ExecutorUtils {
         return result == null || result.getHitBlock() == null;
     }
 
-    public static String beautifyString(String str) {
+    public static String interpolateColors(String str) {
         return str
                 .replace("{COLOR:AQUA}", ChatColor.AQUA.toString())
                 .replace("{COLOR:BLACK}",  ChatColor.BLACK.toString())
@@ -229,7 +229,7 @@ public class ExecutorUtils {
                 .replace("{COLOR:YELLOW}",  ChatColor.YELLOW.toString());
     }
 
-    public static String beautifyActionMessage(String actionMessage, Message twitchMessage, Action action) {
+    public static String interpolateActionMessage(String actionMessage, Message twitchMessage, Action action) {
         String userThatTriggered = twitchMessage.getPayload().getEvent().getUser_name();
         Integer quantity = null;
         if (action.getTrigger().getType().equals(SUB_GIFT)) {
@@ -237,7 +237,7 @@ public class ExecutorUtils {
         } else {
             quantity = twitchMessage.getPayload().getEvent().getBits();
         }
-        return beautifyString(actionMessage)
+        return interpolateColors(actionMessage)
                 .replace("{TRIGGER_TYPE}", action.getTrigger().getType().toString())
                 .replace("{TRIGGER_CAUSE}", userThatTriggered == null ? "a channel poll" : userThatTriggered)
                 .replace("{QUANTITY}", quantity == null ? "ERROR" : String.valueOf(quantity));

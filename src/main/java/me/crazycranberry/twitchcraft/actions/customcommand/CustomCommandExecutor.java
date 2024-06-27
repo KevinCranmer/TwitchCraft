@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getTargetedPlayers;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateActionMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.triggerer;
 import static org.bukkit.Bukkit.dispatchCommand;
@@ -24,6 +25,7 @@ public class CustomCommandExecutor implements Executor {
         for (Player p : getTargetedPlayers(cc)) {
             String command = cc.getCommand().replaceAll("\\{PLAYER}", p.getName())
                     .replaceAll("\\{PLAYER_LOCATION}", String.format("%s %s %s", p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ()));
+            command = interpolateActionMessage(command, twitchMessage, action);
             maybeSendPlayerMessage(p, twitchMessage, String.format("Running %s\"%s\", courtesy of %s%s", ChatColor.GOLD, command, triggerer(twitchMessage, action), ChatColor.RESET), action);
             dispatchCommand(getServer().getConsoleSender(), command);
         }

@@ -35,7 +35,7 @@ import java.util.Map;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyActionMessage;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateActionMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getPossiblePerimeterSpawnLocations;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
@@ -123,7 +123,7 @@ public class WeepingAngelExecutor implements Executor {
     private static void sendEndMessage(Player p, Message twitchMessage, WeepingAngel wa) {
         String endMessage = "The Weeping Angel has crumbled away";
         if (wa.getEndMessage() != null) {
-            endMessage = beautifyActionMessage(wa.getEndMessage(), twitchMessage, wa);
+            endMessage = interpolateActionMessage(wa.getEndMessage(), twitchMessage, wa);
         }
         maybeSendPlayerSecondaryMessage(p, endMessage, wa);
     }

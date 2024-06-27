@@ -13,7 +13,7 @@ import java.util.Map;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.TICKS_PER_SECOND;
-import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.beautifyActionMessage;
+import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateActionMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.getTargetedPlayers;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerMessage;
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.maybeSendPlayerSecondaryMessage;
@@ -59,7 +59,7 @@ public class NoJumpingExecutor implements Executor {
     private void sendEndMessage(Player p, Message twitchMessage, NoJumping nj) {
         String endMessage = "You can jump again.";
         if (nj.getEndMessage() != null) {
-            endMessage = beautifyActionMessage(nj.getEndMessage(), twitchMessage, nj);
+            endMessage = interpolateActionMessage(nj.getEndMessage(), twitchMessage, nj);
         }
         maybeSendPlayerSecondaryMessage(p, endMessage, nj);
     }
