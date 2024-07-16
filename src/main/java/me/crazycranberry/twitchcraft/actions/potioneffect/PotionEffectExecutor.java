@@ -39,13 +39,13 @@ public class PotionEffectExecutor implements Executor {
     }
 
     private boolean applyPossibleInstantEffects(Player p, PotionEffectType type, int amplifier) {
-        if (type.equals(PotionEffectType.HEAL)) {
+        if (type.equals(PotionEffectType.INSTANT_HEALTH)) {
             p.setHealth(Math.min(p.getHealth() + 4 * amplifier, p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
             return true;
         } else if (type.equals(PotionEffectType.HEALTH_BOOST)) {
             p.setAbsorptionAmount(p.getAbsorptionAmount() + 4 * amplifier);
             return true;
-        } else if (type.equals(PotionEffectType.HARM)) {
+        } else if (type.equals(PotionEffectType.INSTANT_DAMAGE)) {
             p.damage(4 * amplifier);
             return true;
         }
@@ -67,25 +67,25 @@ public class PotionEffectExecutor implements Executor {
     private static final List<PotionEffectType> badPotionEffects = List.of(
             PotionEffectType.POISON,
             PotionEffectType.BLINDNESS,
-            PotionEffectType.CONFUSION,
+            PotionEffectType.NAUSEA,
             PotionEffectType.DARKNESS,
-            PotionEffectType.HARM,
+            PotionEffectType.INSTANT_DAMAGE,
             PotionEffectType.HUNGER,
             PotionEffectType.LEVITATION,
-            PotionEffectType.SLOW,
-            PotionEffectType.SLOW_DIGGING,
+            PotionEffectType.SLOWNESS,
+            PotionEffectType.MINING_FATIGUE,
             PotionEffectType.WEAKNESS,
             PotionEffectType.WITHER,
             PotionEffectType.GLOWING);
 
     private static final List<PotionEffectType> goodPotionEffects = List.of(
             PotionEffectType.SPEED,
-            PotionEffectType.FAST_DIGGING,
-            PotionEffectType.INCREASE_DAMAGE,
-            PotionEffectType.HEAL,
-            PotionEffectType.JUMP,
+            PotionEffectType.HASTE,
+            PotionEffectType.STRENGTH,
+            PotionEffectType.INSTANT_HEALTH,
+            PotionEffectType.JUMP_BOOST,
             PotionEffectType.REGENERATION,
-            PotionEffectType.DAMAGE_RESISTANCE,
+            PotionEffectType.RESISTANCE,
             PotionEffectType.FIRE_RESISTANCE,
             PotionEffectType.WATER_BREATHING,
             PotionEffectType.INVISIBILITY,

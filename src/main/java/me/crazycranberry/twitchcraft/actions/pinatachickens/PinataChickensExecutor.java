@@ -140,10 +140,10 @@ public class PinataChickensExecutor implements Executor {
 
         public static void spawnArmorStand(Location loc) {
             ArmorStand armorStand = loc.getWorld().spawn(loc, ArmorStand.class);
-            armorStand.setItem(EquipmentSlot.HEAD, randomFromList(armorHeads));
-            armorStand.setItem(EquipmentSlot.CHEST, randomFromList(armorChests));
-            armorStand.setItem(EquipmentSlot.LEGS, randomFromList(armorLegs));
-            armorStand.setItem(EquipmentSlot.FEET, randomFromList(armorBoots));
+            armorStand.setBoots(randomFromList(armorBoots));
+            armorStand.setHelmet(randomFromList(armorHeads));
+            armorStand.setLeggings(randomFromList(armorLegs));
+            armorStand.setChestplate(randomFromList(armorChests));
         }
 
         private static final List<ItemStack> armorHeads = Arrays.asList(

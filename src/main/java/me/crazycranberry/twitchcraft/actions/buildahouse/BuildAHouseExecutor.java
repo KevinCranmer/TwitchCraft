@@ -16,7 +16,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Bed;
-import net.kyori.adventure.text.Component;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.sign.Side;
@@ -101,8 +100,8 @@ public class BuildAHouseExecutor implements Executor {
 
     private void handleSign(String triggererUsername, Block blockToChange) {
         Sign sign = (Sign) blockToChange.getState();
-        sign.getSide(Side.FRONT).line(1, Component.text(String.format("%s's", triggererUsername == null ? "Chat" : triggererUsername)));
-        sign.getSide(Side.FRONT).line(2, Component.text("House"));
+        //sign.getSide(Side.FRONT).line(1, Component.text(String.format("%s's", triggererUsername == null ? "Chat" : triggererUsername)));
+        //sign.getSide(Side.FRONT).line(2, Component.text("House"));
         sign.update();
     }
 

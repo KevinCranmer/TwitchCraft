@@ -62,7 +62,7 @@ public class PinataChickenManager implements Listener {
     }
 
     private void spawnFirework(Entity chicken) {
-        Firework fw = (Firework) chicken.getWorld().spawnEntity(chicken.getLocation().add(new Vector(0, 0.25, 0)), EntityType.FIREWORK);
+        Firework fw = (Firework) chicken.getWorld().spawnEntity(chicken.getLocation().add(new Vector(0, 0.25, 0)), EntityType.FIREWORK_ROCKET);
         FireworkMeta fwm = fw.getFireworkMeta();
         fwm.setPower(1);
         fwm.addEffect(FireworkEffect.builder().withColor(randomFromList(fireworkColors)).flicker(true).build());

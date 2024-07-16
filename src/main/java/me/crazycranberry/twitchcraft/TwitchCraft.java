@@ -2,7 +2,6 @@ package me.crazycranberry.twitchcraft;
 
 import lombok.SneakyThrows;
 import me.crazycranberry.twitchcraft.actions.sendtonether.SendToNetherManager;
-import me.crazycranberry.twitchcraft.actions.soupman.SoupManManager;
 import me.crazycranberry.twitchcraft.commands.CreatePollCommand;
 import me.crazycranberry.twitchcraft.commands.ReconnectToTwitchCommand;
 import me.crazycranberry.twitchcraft.commands.RefreshConfigCommand;
@@ -19,14 +18,11 @@ import me.crazycranberry.twitchcraft.actions.explosion.ExplosionManager;
 import me.crazycranberry.twitchcraft.actions.flyingcow.FlyingCowManager;
 import me.crazycranberry.twitchcraft.managers.CleanUpManager;
 import me.crazycranberry.twitchcraft.managers.KeepAliveManager;
-import me.crazycranberry.twitchcraft.actions.megajump.MegaJumpManager;
-import me.crazycranberry.twitchcraft.actions.nojumping.NoJumpingManager;
 import me.crazycranberry.twitchcraft.actions.pinatachickens.PinataChickenManager;
 import me.crazycranberry.twitchcraft.managers.PollManager;
 import me.crazycranberry.twitchcraft.managers.ReconnectRequestedManager;
 import me.crazycranberry.twitchcraft.twitch.websocket.TwitchClient;
 import me.crazycranberry.twitchcraft.twitch.websocket.model.createpoll.CreatePoll;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,13 +68,10 @@ public final class TwitchCraft extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ExplosionManager(), this);
         getServer().getPluginManager().registerEvents(new FlyingCowManager(), this);
         getServer().getPluginManager().registerEvents(new KeepAliveManager(), this);
-        getServer().getPluginManager().registerEvents(new MegaJumpManager(), this);
-        getServer().getPluginManager().registerEvents(new NoJumpingManager(), this);
         getServer().getPluginManager().registerEvents(new PinataChickenManager(), this);
         getServer().getPluginManager().registerEvents(new PollManager(), this);
         getServer().getPluginManager().registerEvents(new ReconnectRequestedManager(), this);
         getServer().getPluginManager().registerEvents(new SendToNetherManager(), this);
-        getServer().getPluginManager().registerEvents(new SoupManManager(), this);
     }
 
     private void registerCommands() {
@@ -112,7 +105,7 @@ public final class TwitchCraft extends JavaPlugin {
 
     public void createTwitchPoll(CreatePoll poll) {
         HttpResponse<?> r = twitchClient.sendCreatePoll(poll);
-        getServer().sendMessage(Component.text(interpolateColors(config().getPollMessageWhenLive())));
+        getServer().broadcastMessage(interpolateColors(config().getPollMessageWhenLive()));
         logger().info("Status trying to create poll: " + r.statusCode());
         logger().info("Response trying to create poll: " + r.body());
     }
