@@ -1,7 +1,5 @@
 package me.crazycranberry.twitchcraft.managers;
 
-import lombok.Getter;
-import lombok.Setter;
 import me.crazycranberry.twitchcraft.config.Action;
 import me.crazycranberry.twitchcraft.config.TwitchCraftConfig;
 import me.crazycranberry.twitchcraft.config.TriggerType;
@@ -23,7 +21,7 @@ import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
 public class PollManager implements Listener {
-    @Setter @Getter private static boolean pollActive = false;
+    private static boolean pollActive = false;
 
     @EventHandler
     private void onRefreshTokenSuccessful(WebSocketConnectedEvent event) {
@@ -51,7 +49,8 @@ public class PollManager implements Listener {
                     Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
                         if (isPollActive()) {
                             logger().warning("A poll was requested to be created but another poll is already active. No poll will be created at this time.");
-                            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberr) on discord.");
+                            logger().warning("A new poll should get queued for creation once the current one ends.");
+                            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberry) on discord.");
                         } else {
                             createRandomPoll();
                         }
@@ -109,5 +108,13 @@ public class PollManager implements Listener {
 
     private static void cleanPollActions(List<Action> pollActions) {
         pollActions.stream().filter(p -> p.getTrigger().getWeight() == null).forEach(p -> p.getTrigger().setWeight(getPlugin().config().getPollDefaultWeight()));
+    }
+
+    public static void setPollActive(boolean isActive) {
+        pollActive = isActive;
+    }
+
+    public static boolean isPollActive() {
+        return pollActive;
     }
 }
