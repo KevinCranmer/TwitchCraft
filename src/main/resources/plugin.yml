@@ -1,7 +1,7 @@
 name: TwitchCraft
 version: ${project.version}
 main: me.crazycranberry.twitchcraft.TwitchCraft
-api-version: 1.20
+api-version: 1.21
 authors: [CrazyCranberry]
 description: A plugin that allows stream viewers to interact with the minecraft world.
 commands:
@@ -15,18 +15,32 @@ commands:
     permission-message: You do not have permission to refresh.
   CreatePoll:
     description: Used to create a poll on your channel. These should be created automatically but just in case, this command exists.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   ChannelFollow:
     description: Trigger a fake follow notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   ChannelSubscribe:
     description: Trigger a fake subscribe notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   ChannelResubscribe:
     description: Trigger a fake resubscribe notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   ChannelCheer:
     description: Trigger a fake cheer notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   SubGift:
     description: Trigger a fake Sub Gift notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
   PollResult:
     description: Trigger a fake Poll Result notification. Used for testing.
+    permission: admin
+    permission-message: You do not have permission to refresh.
 permissions:
   admin:
     description: TwitchCraft Admin permission
