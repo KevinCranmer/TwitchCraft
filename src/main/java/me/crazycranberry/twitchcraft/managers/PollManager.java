@@ -25,19 +25,15 @@ public class PollManager implements Listener {
 
     @EventHandler
     private void onRefreshTokenSuccessful(WebSocketConnectedEvent event) {
-        System.out.println("The refresh token was successful. I'm going to create a poll in " + (getPlugin().config().getPollInterval() * 1000) + "ms");
         sendARandomPollInIntervalSeconds();
     }
 
     @EventHandler
     private void onPreviousPollEnd(PollEndEvent event) {
-        System.out.println("A poll just ended");
         if (!event.twitchMessage().getPayload().getEvent().getStatus().equals("completed")) {
-            System.out.println("Yeah it ended. But it wasn't the completed status so meh");
             return;
         }
         setPollActive(false);
-        System.out.println("I'm going to create a new one in " + (getPlugin().config().getPollInterval() * 1000) + "ms");
         sendARandomPollInIntervalSeconds();
     }
 
@@ -47,13 +43,7 @@ public class PollManager implements Listener {
                 @Override
                 public void run() {
                     Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
-                        if (isPollActive()) {
-                            logger().warning("A poll was requested to be created but another poll is already active. No poll will be created at this time.");
-                            logger().warning("A new poll should get queued for creation once the current one ends.");
-                            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberry) on discord.");
-                        } else {
-                            createRandomPoll();
-                        }
+                        createRandomPoll();
                         return true;
                     });
                 }
@@ -63,6 +53,12 @@ public class PollManager implements Listener {
     }
 
     public static void createRandomPoll() {
+        if (isPollActive()) {
+            logger().warning("A poll was requested to be created but another poll is already active. No poll will be created at this time.");
+            logger().warning("A new poll should get queued for creation once the current one ends.");
+            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberry) on discord.");
+            return;
+        }
         TwitchCraftConfig config = getPlugin().config();
         List<Action> pollActions = new ArrayList<>(pollActions());
         List<Action> selectedPollActions = new ArrayList<>();
