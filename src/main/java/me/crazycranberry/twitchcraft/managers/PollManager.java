@@ -1,5 +1,7 @@
 package me.crazycranberry.twitchcraft.managers;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.crazycranberry.twitchcraft.config.Action;
 import me.crazycranberry.twitchcraft.config.TwitchCraftConfig;
 import me.crazycranberry.twitchcraft.config.TriggerType;
@@ -17,41 +19,47 @@ import java.util.List;
 
 import static me.crazycranberry.twitchcraft.TwitchCraft.SECRET;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
+import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
 public class PollManager implements Listener {
+    @Setter @Getter private static boolean pollActive = false;
+
     @EventHandler
     private void onRefreshTokenSuccessful(WebSocketConnectedEvent event) {
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
-                            createRandomPoll();
-                            return true;
-                        });
-                    }
-                },
-                getPlugin().config().getPollInterval() * 1000
-        );
+        System.out.println("The refresh token was successful. I'm going to create a poll in " + (getPlugin().config().getPollInterval() * 1000) + "ms");
+        sendARandomPollInIntervalSeconds();
     }
 
     @EventHandler
     private void onPreviousPollEnd(PollEndEvent event) {
+        System.out.println("A poll just ended");
         if (!event.twitchMessage().getPayload().getEvent().getStatus().equals("completed")) {
+            System.out.println("Yeah it ended. But it wasn't the completed status so meh");
             return;
         }
+        setPollActive(false);
+        System.out.println("I'm going to create a new one in " + (getPlugin().config().getPollInterval() * 1000) + "ms");
+        sendARandomPollInIntervalSeconds();
+    }
+
+    public static void sendARandomPollInIntervalSeconds() {
         new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
+                        if (isPollActive()) {
+                            logger().warning("A poll was requested to be created but another poll is already active. No poll will be created at this time.");
+                            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberr) on discord.");
+                        } else {
                             createRandomPoll();
-                            return true;
-                        });
-                    }
-                },
-                getPlugin().config().getPollInterval() * 1000
+                        }
+                        return true;
+                    });
+                }
+            },
+            getPlugin().config().getPollInterval() * 1000
         );
     }
 

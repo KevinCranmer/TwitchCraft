@@ -38,6 +38,8 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static me.crazycranberry.twitchcraft.actions.ExecutorUtils.interpolateColors;
+import static me.crazycranberry.twitchcraft.managers.PollManager.sendARandomPollInIntervalSeconds;
+import static me.crazycranberry.twitchcraft.managers.PollManager.setPollActive;
 import static me.crazycranberry.twitchcraft.utils.FileUtils.loadConfig;
 
 public final class TwitchCraft extends JavaPlugin {
@@ -112,9 +114,18 @@ public final class TwitchCraft extends JavaPlugin {
 
     public void createTwitchPoll(CreatePoll poll) {
         HttpResponse<?> r = twitchClient.sendCreatePoll(poll);
-        getServer().sendMessage(Component.text(interpolateColors(config().getPollMessageWhenLive())));
         logger().info("Status trying to create poll: " + r.statusCode());
         logger().info("Response trying to create poll: " + r.body());
+        if (r.statusCode() == 400) {
+            logger().warning("A 400 trying to create the poll is likely because another poll is already active.");
+            logger().info("The plugin will retry sending a poll in " + config().getPollInterval() + " seconds.");
+            sendARandomPollInIntervalSeconds();
+        } else if (r.statusCode() == 200) {
+            setPollActive(true);
+            getServer().sendMessage(Component.text(interpolateColors(config().getPollMessageWhenLive())));
+        } else {
+            logger().severe("I was not expecting this response from Twitch. Please contact Crazy_Cranberry on discord to debug this.");
+        }
     }
 
     public Instant timeOfLastTwitchMessage() {
