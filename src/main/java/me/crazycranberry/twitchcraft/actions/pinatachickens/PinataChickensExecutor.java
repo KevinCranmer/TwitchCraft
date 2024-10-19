@@ -3,6 +3,8 @@ package me.crazycranberry.twitchcraft.actions.pinatachickens;
 import me.crazycranberry.twitchcraft.actions.Executor;
 import me.crazycranberry.twitchcraft.config.Action;
 import me.crazycranberry.twitchcraft.twitch.websocket.model.message.Message;
+import me.crazycranberry.twitchcraft.twitch.websocket.model.message.MessageEvent;
+import me.crazycranberry.twitchcraft.twitch.websocket.model.message.MessagePayload;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
@@ -43,10 +46,16 @@ public class PinataChickensExecutor implements Executor {
             return;
         }
         PinataChickens pc = (PinataChickens) action;
+        Integer numChickens = pc.getNumChickens();
+        if (pc.getUseTriggerQuantity()) {
+            Integer numBits = Optional.ofNullable(twitchMessage.getPayload()).map(MessagePayload::getEvent).map(MessageEvent::getBits).orElse(-1);
+            Integer numGifts = Optional.ofNullable(twitchMessage.getPayload()).map(MessagePayload::getEvent).map(MessageEvent::getTotal).orElse(-1);
+            numChickens = (int) (Math.max(numBits, numGifts) * pc.getQuantityFactor());
+        }
         for (Player p : getTargetedPlayers(pc)) {
             maybeSendPlayerMessage(p, twitchMessage, String.format("Piñata chickens! Courtesy of %s%s%s", ChatColor.GOLD, triggerer(twitchMessage, action), ChatColor.RESET), action);
             List<Location> possibleSpawnLocations = getPossibleSpawnLocations(p, 5);
-            for (int l = 0; l < pc.getNumChickens(); l++) {
+            for (int l = 0; l < numChickens; l++) {
                 Chicken chicken = (Chicken) p.getWorld().spawnEntity(randomFromList(possibleSpawnLocations), EntityType.CHICKEN);
                 chicken.setCustomName("Piñata");
                 chicken.setCustomNameVisible(true);

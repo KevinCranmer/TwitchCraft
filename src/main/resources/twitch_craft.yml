@@ -236,6 +236,11 @@ actions:
     trigger:
       type: SUB_GIFT
     num_chickens: 10
+  - type: PINATA_CHICKENS
+    trigger:
+      type: CHANNEL_CHEER
+    use_trigger_quantity: true
+    quantity_factor: 0.1
   - type: POTION_EFFECT
     trigger:
       type: CHANNEL_CHEER
