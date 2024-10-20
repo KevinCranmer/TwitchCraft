@@ -421,18 +421,21 @@ Spawn chickens that are one-hittable and drop something random when killed. It c
 
 Additional Configuration:
 
-| Configuration      | Required | Description                       |
-|--------------------|----------|-----------------------------------|
-| `num_chickens`     | Yes      | How many Piñata Chickens to spawn |
+| Configuration          | Required | Description                                                                                                                                                                        |
+|------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `num_chickens`         | No       | How many Piñata Chickens to spawn                                                                                                                                                  |
+| `use_trigger_quantity` | Yes      | If true, it will use the number of bits or gifted subs to determine the number of chickens to spawn. If true, `quantity_factor` must be set. If false, `num_chickens` must be set. |
+| `quantity_factor`      | No       | What to multiple the number of bits/subs by to determine how many chickens to spawn                                                                                                |
 
 <details><summary>Example Action Configuration</summary>
 
 ```
 - type: PINATA_CHICKENS
   trigger:
-    type: POLL
-    weight: 0.7
-  num_chickens: 5
+    type: CHANNEL_CHEER
+  #num_chickens: 5
+  use_trigger_quantity: true
+  quantity_factor: 0.2
 ```
 
 </details>
