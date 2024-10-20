@@ -28,6 +28,11 @@ actions:
       weight: 0.5
       poll_message: Zoom Zoom
     duration_seconds: 60
+  - type: DELETE_A_CHUNK
+    trigger:
+      type: POLL
+    radius: 0
+    rows_per_tick: 0.5
   - type: CHEST_OF_GOODIES
     trigger:
       type: POLL
@@ -236,6 +241,11 @@ actions:
     trigger:
       type: SUB_GIFT
     num_chickens: 10
+  - type: PINATA_CHICKENS
+    trigger:
+      type: CHANNEL_CHEER
+    use_trigger_quantity: true
+    quantity_factor: 0.1
   - type: POTION_EFFECT
     trigger:
       type: CHANNEL_CHEER

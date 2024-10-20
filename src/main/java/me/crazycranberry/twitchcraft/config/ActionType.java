@@ -8,6 +8,8 @@ import me.crazycranberry.twitchcraft.actions.cantstopwontstop.CantStopWontStopEx
 import me.crazycranberry.twitchcraft.actions.chestofgoodies.ChestOfGoodiesExecutor;
 import me.crazycranberry.twitchcraft.actions.customcommand.CustomCommand;
 import me.crazycranberry.twitchcraft.actions.customcommand.CustomCommandExecutor;
+import me.crazycranberry.twitchcraft.actions.deleteachunk.DeleteAChunk;
+import me.crazycranberry.twitchcraft.actions.deleteachunk.DeleteAChunkExecutor;
 import me.crazycranberry.twitchcraft.actions.dropallitems.DropAllItemsExecutor;
 import me.crazycranberry.twitchcraft.actions.entityspawn.EntitySpawnExecutor;
 import me.crazycranberry.twitchcraft.actions.Executor;
@@ -49,6 +51,7 @@ public enum ActionType {
     CANT_STOP_WONT_STOP("CANT_STOP_WONT_STOP", CantStopWontStop.class, CantStopWontStopExecutor.class),
     CHEST_OF_GOODIES("CHEST_OF_GOODIES", ChestOfGoodies.class, ChestOfGoodiesExecutor.class),
     CUSTOM_COMMAND("CUSTOM_COMMAND", CustomCommand.class, CustomCommandExecutor.class),
+    DELETE_A_CHUNK("DELETE_A_CHUNK", DeleteAChunk.class, DeleteAChunkExecutor.class),
     DROP_ALL_ITEMS("DROP_ALL_ITEMS", DropAllItems.class, DropAllItemsExecutor.class),
     ENTITY_SPAWN("ENTITY_SPAWN", EntitySpawn.class, EntitySpawnExecutor.class),
     EXPLOSION("EXPLOSION", Explosion.class, ExplosionExecutor.class),

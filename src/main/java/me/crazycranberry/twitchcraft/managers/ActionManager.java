@@ -26,7 +26,7 @@ import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
 import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 
 public class ActionManager implements Listener {
-    private Set<String> usersWhoveAlreadyFollowed = new HashSet<>();
+    private final Set<String> usersWhoveAlreadyFollowed = new HashSet<>();
 
     @EventHandler
     private void onFollowTrigger(ChannelFollowEvent event) {
@@ -87,7 +87,7 @@ public class ActionManager implements Listener {
         Optional<Action> winningAction = getPlugin().config().getActions()
                 .stream()
                 .filter(a -> a.getTrigger().getType().equals(TriggerType.POLL))
-                .filter(a -> a.pollMessage().equals(winningPollChoice.get().getTitle()))
+                .filter(a -> a.pollMessage().startsWith(winningPollChoice.get().getTitle()))
                 .findFirst();
         if (winningAction.isEmpty()) {
             logger().warning("Somehow the action for \"" + winningPollChoice.get().getTitle() + "\" could not be found.");

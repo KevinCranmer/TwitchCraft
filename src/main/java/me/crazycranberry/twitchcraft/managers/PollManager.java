@@ -17,23 +17,15 @@ import java.util.List;
 
 import static me.crazycranberry.twitchcraft.TwitchCraft.SECRET;
 import static me.crazycranberry.twitchcraft.TwitchCraft.getPlugin;
+import static me.crazycranberry.twitchcraft.TwitchCraft.logger;
 
 /** A dedicated class that makes sure the WebSocket connection has been kept alive. And Attempts to reconnect otherwise. */
 public class PollManager implements Listener {
+    private static boolean pollActive = false;
+
     @EventHandler
     private void onRefreshTokenSuccessful(WebSocketConnectedEvent event) {
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
-                            createRandomPoll();
-                            return true;
-                        });
-                    }
-                },
-                getPlugin().config().getPollInterval() * 1000
-        );
+        sendARandomPollInIntervalSeconds();
     }
 
     @EventHandler
@@ -41,21 +33,32 @@ public class PollManager implements Listener {
         if (!event.twitchMessage().getPayload().getEvent().getStatus().equals("completed")) {
             return;
         }
+        setPollActive(false);
+        sendARandomPollInIntervalSeconds();
+    }
+
+    public static void sendARandomPollInIntervalSeconds() {
         new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
-                            createRandomPoll();
-                            return true;
-                        });
-                    }
-                },
-                getPlugin().config().getPollInterval() * 1000
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    Bukkit.getServer().getScheduler().callSyncMethod(getPlugin(), () -> {
+                        createRandomPoll();
+                        return true;
+                    });
+                }
+            },
+            getPlugin().config().getPollInterval() * 1000
         );
     }
 
     public static void createRandomPoll() {
+        if (isPollActive()) {
+            logger().warning("A poll was requested to be created but another poll is already active. No poll will be created at this time.");
+            logger().warning("A new poll should get queued for creation once the current one ends.");
+            logger().warning("If you believe this to be a mistake, please message me (Crazy_Cranberry) on discord.");
+            return;
+        }
         TwitchCraftConfig config = getPlugin().config();
         List<Action> pollActions = new ArrayList<>(pollActions());
         List<Action> selectedPollActions = new ArrayList<>();
@@ -101,5 +104,13 @@ public class PollManager implements Listener {
 
     private static void cleanPollActions(List<Action> pollActions) {
         pollActions.stream().filter(p -> p.getTrigger().getWeight() == null).forEach(p -> p.getTrigger().setWeight(getPlugin().config().getPollDefaultWeight()));
+    }
+
+    public static void setPollActive(boolean isActive) {
+        pollActive = isActive;
+    }
+
+    public static boolean isPollActive() {
+        return pollActive;
     }
 }
