@@ -175,6 +175,35 @@ Additional Configuration:
 <br/>
 </details>
 
+<details><summary style="font-weight: bold; font-size: large">Delete A Chunk</summary>
+
+`type`: `DELETE_A_CHUNK`
+
+![DeleteAChunkGif](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWNxYWV2eXp5N3F5aDZnZjdvY20ydTB1cXhkdWxmeXZ1dmdqa3RzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9muZV3cS6pubGuI9Gc/giphy-downsized-large.gif)
+
+Delete a nearby chunk slowly or quickly. (Leaves the bottom row of bedrock)
+
+Additional Configuration:
+
+| Configuration   | Required | Description                                                                                                |
+|-----------------|----------|------------------------------------------------------------------------------------------------------------|
+| `radius`        | Yes      | 0 for the chunk the player is in, 1 would create a 3x3 of chunks around the player and pick one at random. |
+| `rows_per_tick` | Yes      | This is a Double. 0.5 would delete 1 row every 2 ticks. 2.0 would delete 2 rows every 1 tick.              |
+
+<details><summary>Example Action Configuration</summary>
+
+```
+- type: DELETE_A_CHUNK
+  trigger:
+    type: CHANNEL_RESUBSCRIBE
+  radius: 0
+  rows_per_tick: 0.5
+```
+
+</details>
+<br/>
+</details>
+
 <details><summary style="font-weight: bold; font-size: large">Drop All Items</summary>
 
 `type`: `DROP_ALL_ITEMS`
