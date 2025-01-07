@@ -236,11 +236,14 @@ Spawn in entities around the player. This could be friendly entities... or 20 wi
 
 Additional Configuration:
 
-| Configuration        | Required | Description                                                                                                                                                  |
-|----------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `entity`             | Yes      | The entity to be spawned in. Must match an ENUM constant from [EntityType.html](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html). |
-| `quantity`           | Yes      | How many of this entity to be spawned in around the player.                                                                                                  |
-| `radius_from_player` | Yes      | How far away the entities should spawn from the player. The entities will spawn in a random spot within this radius.                                         |
+| Configuration          | Required | Description                                                                                                                                                                               |
+|------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `entity`               | Yes      | The entity to be spawned in. Must match an ENUM constant from [EntityType.html](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html).                              |
+| `quantity`             | No       | How many of this entity to be spawned in around the player.                                                                                                                               |
+| `use_trigger_quantity` | No       | If true, it will use the number of bits or gifted subs to determine the number of chickens to spawn. If true, `quantity_factor` must be set. If false or missing, `quantity` must be set. |
+| `quantity_factor`      | No       | What to multiple the number of bits/subs by to determine how many entities to spawn                                                                                                       |
+| `is_baby`              | No       | Spawn this entity as a baby if possible. Default: false.                                                                                                                                  |
+| `radius_from_player`   | Yes      | How far away the entities should spawn from the player. The entities will spawn in a random spot within this radius.                                                                      |
 
 <details><summary>Example Action Configuration</summary>
 
@@ -250,11 +253,25 @@ Additional Configuration:
   trigger:
     type: POLL
     weight: 0.3
-    poll_message: Spawn Donkeys!
-  entity: DONKEY
+    poll_message: Spawn Zombies!
+  entity: ZOMBIE
   quantity: 3
+  use_trigger_quantity: false
   radius_from_player: 5
+  is_baby: true
 ```
+or
+```
+- type: ENTITY_SPAWN
+  target: Crazy_Cranberry
+  trigger:
+    type: SUB_GIFT
+  entity: WITHER
+  use_trigger_quantity: true
+  quantity_factor: 1.0
+  radius_from_player: 50
+```
+
 
 </details>
 <br/>
