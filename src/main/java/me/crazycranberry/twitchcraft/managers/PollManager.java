@@ -62,9 +62,13 @@ public class PollManager implements Listener {
         TwitchCraftConfig config = getPlugin().config();
         List<Action> pollActions = new ArrayList<>(pollActions());
         List<Action> selectedPollActions = new ArrayList<>();
+        if (pollActions.isEmpty()) {
+            logger().info("The plugin tried to create a twitch poll but there are no poll actions so the twitch request was not sent.");
+            return;
+        }
         if (pollActions.size() <= config.getPollNumChoices()) {
             selectedPollActions = pollActions;
-        } else {
+        } else if (!pollActions.isEmpty()) {
             cleanPollActions(pollActions);
             Double randMultiplier = pollActions.stream().map(a -> a.getTrigger().getWeight()).reduce(0.0, Double::sum);
             for (int i = 0; i < config.getPollNumChoices(); i++) {
